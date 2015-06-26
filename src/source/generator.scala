@@ -176,6 +176,11 @@ package object generatorTools {
         createFolder("Objective-C++", spec.objcppOutFolder.get)
         new ObjcppGenerator(spec).generate(idl)
       }
+      if (spec.cxOutFolder.isDefined) {
+        createFolder("Cx", spec.cxOutFolder.get)
+        createFolder("Cx header", spec.cxHeaderOutFolder.get)
+        new CxGenerator(spec).generate(idl)
+      }
       None
     }
     catch {
