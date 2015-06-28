@@ -65,6 +65,15 @@ object Main {
     var objcFileIdentStyleOptional: Option[IdentConverter] = None
     var objcppNamespace: String = "djinni_generated"
     var objcBaseLibIncludePrefix: String = ""
+    var cxOutFolder: Option[File] = None
+    var cxNamespace: String = "djinni_generated"
+    var cxIdentStyle = IdentStyle.cxDefault
+    var cxTypeEnumIdentStyle: IdentConverter = null
+    var cxFileIdentStyle: IdentConverter = IdentStyle.underLower
+    var cxHeaderOutFolderOptional: Option[File] = None
+    var cxIncludePrefix: String = ""
+    var cxExt: String = "cx"
+    var cxHeaderExt: String = "hpp"
 
     val argParser = new scopt.OptionParser[Unit]("djinni") {
 
@@ -150,6 +159,19 @@ object Main {
         .text("The namespace name to use for generated Objective-C++ classes.")
       opt[String]("objc-base-lib-include-prefix").valueName("...").foreach(x => objcBaseLibIncludePrefix = x)
         .text("The Objective-C++ base library's include path, relative to the Objective-C++ classes.")
+      opt[File]("cx-out").valueName("<out-folder>").foreach(x => cxOutFolder = Some(x))
+        .text("The output folder for Cx files (Generator disabled if unspecified).")
+      opt[File]("cx-header-out").valueName("<out-folder>").foreach(x => cxHeaderOutFolderOptional = Some(x))
+        .text("The output folder for Cx header files (default: the same as --cx-out).")
+      opt[String]("cx-include-prefix").valueName("<prefix>").foreach(cxIncludePrefix = _)
+        .text("The prefix for #includes of header files from Cx files.")
+      opt[String]("cx-namespace").valueName("...").foreach(x => cxNamespace = x)
+        .text("The namespace name to use for generated Cx classes.")
+      opt[String]("cx-ext").valueName("<ext>").foreach(cxExt = _)
+        .text("The filename extension for Cx files (default: \"cpp\").")
+      opt[String]("hpp-ext").valueName("<ext>").foreach(cxHeaderExt = _)
+        .text("The filename extension for Cx header files (default: \"hpp\").")
+
 
       note("\nIdentifier styles (ex: \"FooBar\", \"fooBar\", \"foo_bar\", \"FOO_BAR\", \"m_fooBar\")\n")
       identStyle("ident-java-enum",      c => { javaIdentStyle = javaIdentStyle.copy(enum = c) })
@@ -171,6 +193,14 @@ object Main {
       identStyle("ident-objc-type-param", c => { objcIdentStyle = objcIdentStyle.copy(typeParam = c) })
       identStyle("ident-objc-local",      c => { objcIdentStyle = objcIdentStyle.copy(local = c) })
       identStyle("ident-objc-file",       c => { objcFileIdentStyleOptional = Some(c) })
+      identStyle("ident-cx-enum",       c => { cxIdentStyle = cxIdentStyle.copy(enum = c) })
+      identStyle("ident-cx-field",      c => { cxIdentStyle = cxIdentStyle.copy(field = c) })
+      identStyle("ident-cx-method",     c => { cxIdentStyle = cxIdentStyle.copy(method = c) })
+      identStyle("ident-cx-type",       c => { cxIdentStyle = cxIdentStyle.copy(ty = c) })
+      identStyle("ident-cx-enum-type",  c => { cppTypeEnumIdentStyle = c })
+      identStyle("ident-cx-type-param", c => { cxIdentStyle = cxIdentStyle.copy(typeParam = c) })
+      identStyle("ident-cx-local",      c => { cxIdentStyle = cxIdentStyle.copy(local = c) })
+      identStyle("ident-cx-file",       c => { cxFileIdentStyle = c })
 
     }
 
@@ -185,6 +215,7 @@ object Main {
     val jniFileIdentStyle = jniFileIdentStyleOptional.getOrElse(cppFileIdentStyle)
     var objcFileIdentStyle = objcFileIdentStyleOptional.getOrElse(objcIdentStyle.ty)
     val objcppIncludeObjcPrefix = objcppIncludeObjcPrefixOptional.getOrElse(objcppIncludePrefix)
+    val cxHeaderOutFolder = if (cxHeaderOutFolderOptional.isDefined) cxHeaderOutFolderOptional else cxOutFolder
 
     // Add ObjC prefix to identstyle
     objcIdentStyle = objcIdentStyle.copy(ty = IdentStyle.prefix(objcTypePrefix,objcIdentStyle.ty))
@@ -192,6 +223,10 @@ object Main {
 
     if (cppTypeEnumIdentStyle != null) {
       cppIdentStyle = cppIdentStyle.copy(enumType = cppTypeEnumIdentStyle)
+    }
+
+    if (cxTypeEnumIdentStyle != null) {
+      cxIdentStyle = cxIdentStyle.copy(enumType = cxTypeEnumIdentStyle)
     }
 
     // Parse IDL file.
@@ -252,7 +287,14 @@ object Main {
       objcppIncludeCppPrefix,
       objcppIncludeObjcPrefix,
       objcppNamespace,
-      objcBaseLibIncludePrefix)
+      objcBaseLibIncludePrefix,
+      cxOutFolder,
+      cxNamespace,
+      cxFileIdentStyle,
+      cxHeaderOutFolderOptional,
+      cxIncludePrefix,
+      cxExt,
+      cxHeaderExt)
 
     System.out.println("Generating...")
     val r = generate(idl, outSpec)
