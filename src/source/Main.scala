@@ -289,12 +289,14 @@ object Main {
       objcppNamespace,
       objcBaseLibIncludePrefix,
       cxOutFolder,
-      cxNamespace,
-      cxFileIdentStyle,
-      cxHeaderOutFolderOptional,
-      cxIncludePrefix,
       cxExt,
-      cxHeaderExt)
+      cxHeaderExt,
+      cxHeaderOutFolder,
+      cxIncludePrefix,
+      cxNamespace,
+      cxIdentStyle,
+      cxFileIdentStyle)
+
 
     System.out.println("Generating...")
     val r = generate(idl, outSpec)
