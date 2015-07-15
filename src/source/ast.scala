@@ -34,6 +34,10 @@ case class Doc(lines: Seq[String])
 case class TypeDecl(ident: Ident, params: Seq[TypeParam], body: TypeDef, doc: Doc, origin: String)
 
 case class Ext(java: Boolean, cpp: Boolean, objc: Boolean, cx: Boolean)
+  def any(): Boolean = {
+    java || cpp || objc || cx
+  }
+}
 
 case class TypeRef(expr: TypeExpr) {
   var resolved: MExpr = null

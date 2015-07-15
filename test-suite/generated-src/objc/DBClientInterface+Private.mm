@@ -17,19 +17,28 @@ class ClientInterface::ObjcProxy final
 {
 public:
     using Handle::Handle;
-    ::ClientReturnedRecord get_record(int64_t record_id, const std::string & utf8string, const std::experimental::optional<std::string> & misc) override
+    ::ClientReturnedRecord get_record(int64_t c_record_id, const std::string & c_utf8string, const std::experimental::optional<std::string> & c_misc) override
     {
         @autoreleasepool {
-            auto r = [Handle::get() getRecord:(::djinni::I64::fromCpp(record_id))
-                                   utf8string:(::djinni::String::fromCpp(utf8string))
-                                         misc:(::djinni::Optional<std::experimental::optional, ::djinni::String>::fromCpp(misc))];
+            auto r = [(ObjcType)Handle::get() getRecord:(::djinni::I64::fromCpp(c_record_id))
+                                             utf8string:(::djinni::String::fromCpp(c_utf8string))
+                                                   misc:(::djinni::Optional<std::experimental::optional, ::djinni::String>::fromCpp(c_misc))];
             return ::djinni_generated::ClientReturnedRecord::toCpp(r);
+        }
+    }
+    double identifier_check(const std::vector<uint8_t> & c_data, int32_t c_r, int64_t c_jret) override
+    {
+        @autoreleasepool {
+            auto r = [(ObjcType)Handle::get() identifierCheck:(::djinni::Binary::fromCpp(c_data))
+                                                            r:(::djinni::I32::fromCpp(c_r))
+                                                         jret:(::djinni::I64::fromCpp(c_jret))];
+            return ::djinni::F64::toCpp(r);
         }
     }
     std::string return_str() override
     {
         @autoreleasepool {
-            auto r = [Handle::get() returnStr];
+            auto r = [(ObjcType)Handle::get() returnStr];
             return ::djinni::String::toCpp(r);
         }
     }

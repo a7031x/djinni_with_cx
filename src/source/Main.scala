@@ -16,7 +16,7 @@
 
 package djinni
 
-import java.io.{IOException, FileInputStream, InputStreamReader, File}
+import java.io.{IOException, FileInputStream, InputStreamReader, File, BufferedWriter, FileWriter}
 
 import djinni.generatorTools._
 
@@ -74,6 +74,9 @@ object Main {
     var cxIncludePrefix: String = ""
     var cxExt: String = "cx"
     var cxHeaderExt: String = "hpp"
+    var inFileListPath: Option[File] = None
+    var outFileListPath: Option[File] = None
+    var skipGeneration: Boolean = false
 
     val argParser = new scopt.OptionParser[Unit]("djinni") {
 
@@ -172,6 +175,12 @@ object Main {
       opt[String]("hpp-ext").valueName("<ext>").foreach(cxHeaderExt = _)
         .text("The filename extension for Cx header files (default: \"hpp\").")
 
+      opt[File]("list-in-files").valueName("<list-in-files>").foreach(x => inFileListPath = Some(x))
+        .text("Optional file in which to write the list of input files parsed.")
+      opt[File]("list-out-files").valueName("<list-out-files>").foreach(x => outFileListPath = Some(x))
+        .text("Optional file in which to write the list of output files produced.")
+      opt[Boolean]("skip-generation").valueName("<true/false>").foreach(x => skipGeneration = x)
+        .text("Way of specifying if file generation should be skipped (default: false)")
 
       note("\nIdentifier styles (ex: \"FooBar\", \"fooBar\", \"foo_bar\", \"FOO_BAR\", \"m_fooBar\")\n")
       identStyle("ident-java-enum",      c => { javaIdentStyle = javaIdentStyle.copy(enum = c) })
@@ -231,13 +240,24 @@ object Main {
 
     // Parse IDL file.
     System.out.println("Parsing...")
+    val inFileListWriter = if (inFileListPath.isDefined) {
+      createFolder("input file list", inFileListPath.get.getParentFile)
+      Some(new BufferedWriter(new FileWriter(inFileListPath.get)))
+    } else {
+      None
+    }
     val idl = try {
-      (new Parser).parseFile(idlFile)
+      (new Parser).parseFile(idlFile, inFileListWriter)
     }
     catch {
       case ex: IOException =>
         System.err.println("Error reading from --idl file: " + ex.getMessage)
         System.exit(1); return
+    }
+    finally {
+      if (inFileListWriter.isDefined) {
+        inFileListWriter.get.close()
+      }
     }
 
     // Resolve names in IDL file, check types.
@@ -247,6 +267,14 @@ object Main {
         System.err.println(err)
         System.exit(1); return
       case _ =>
+    }
+
+    System.out.println("Generating...")
+    val outFileListWriter = if (outFileListPath.isDefined) {
+      createFolder("output file list", outFileListPath.get.getParentFile)
+      Some(new BufferedWriter(new FileWriter(outFileListPath.get)))
+    } else {
+      None
     }
 
     val outSpec = Spec(
@@ -295,11 +323,19 @@ object Main {
       cxIncludePrefix,
       cxNamespace,
       cxIdentStyle,
-      cxFileIdentStyle)
+      cxFileIdentStyle,
+      outFileListWriter,
+      skipGeneration)
 
 
-    System.out.println("Generating...")
-    val r = generate(idl, outSpec)
-    r.foreach(e => System.err.println("Error generating output: " + e))
+    try {
+      val r = generate(idl, outSpec)
+      r.foreach(e => System.err.println("Error generating output: " + e))
+    }
+    finally {
+      if (outFileListWriter.isDefined) {
+        outFileListWriter.get.close()
+      }
+    }
   }
 }
