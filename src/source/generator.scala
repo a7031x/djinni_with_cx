@@ -211,13 +211,17 @@ package object generatorTools {
         new ObjcppGenerator(spec).generate(idl)
       }
       if (spec.cxOutFolder.isDefined) {
-        createFolder("Cx", spec.cxOutFolder.get)
-        createFolder("Cx header", spec.cxHeaderOutFolder.get)
+        if (!spec.skipGeneration) {
+          createFolder("Cx", spec.cxOutFolder.get)
+          createFolder("Cx header", spec.cxHeaderOutFolder.get)
+        }
         new CxGenerator(spec).generate(idl)
       }
       if (spec.cxcppOutFolder.isDefined) {
-        createFolder("CxCpp", spec.cxcppOutFolder.get)
-        createFolder("CxCpp header", spec.cxcppHeaderOutFolder.get)
+        if (!spec.skipGeneration) {
+          createFolder("CxCpp", spec.cxcppOutFolder.get)
+          createFolder("CxCpp header", spec.cxcppHeaderOutFolder.get)
+        }
         new CxCppGenerator(spec).generate(idl)
       }
       None
