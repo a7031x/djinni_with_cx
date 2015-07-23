@@ -226,6 +226,8 @@ package object generatorTools {
           createFolder("CxCpp header", spec.cxcppHeaderOutFolder.get)
         }
         new CxCppGenerator(spec).generate(idl)
+      }
+
       if (spec.yamlOutFolder.isDefined) {
         if (!spec.skipGeneration) {
           createFolder("YAML", spec.yamlOutFolder.get)
