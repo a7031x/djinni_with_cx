@@ -84,7 +84,10 @@ package object generatorTools {
                    cxcppNamespace: String,
                    cxBaseLibIncludePrefix: String,
                    outFileListWriter: Option[Writer],
-                   skipGeneration: Boolean)
+                   skipGeneration: Boolean,
+                   yamlOutFolder: Option[File],
+                   yamlOutFile: Option[String],
+                   yamlPrefix: String)
 
   def preComma(s: String) = {
     if (s.isEmpty) s else ", " + s
@@ -223,6 +226,11 @@ package object generatorTools {
           createFolder("CxCpp header", spec.cxcppHeaderOutFolder.get)
         }
         new CxCppGenerator(spec).generate(idl)
+      if (spec.yamlOutFolder.isDefined) {
+        if (!spec.skipGeneration) {
+          createFolder("YAML", spec.yamlOutFolder.get)
+          new YamlGenerator(spec).generate(idl)
+        }
       }
       None
     }
@@ -240,7 +248,7 @@ abstract class Generator(spec: Spec)
 {
   protected val writtenFiles = mutable.HashMap[String,String]()
 
-  protected def createFile(folder: File, fileName: String, f: IndentWriter => Unit) {
+  protected def createFile(folder: File, fileName: String, makeWriter: OutputStreamWriter => IndentWriter, f: IndentWriter => Unit): Unit = {
     if (spec.outFileListWriter.isDefined) {
       spec.outFileListWriter.get.write(new File(folder, fileName).getPath + "\n")
     }
@@ -260,17 +268,19 @@ abstract class Generator(spec: Spec)
       case _ =>
     }
 
-      val fout = new FileOutputStream(file)
-      try {
-        val out = new OutputStreamWriter(fout, "UTF-8")
-        f(new IndentWriter(out))
-        out.flush()
-      }
-      finally {
-        fout.close()
-      }
+    val fout = new FileOutputStream(file)
+    try {
+      val out = new OutputStreamWriter(fout, "UTF-8")
+      f(makeWriter(out))
+      out.flush()
+    }
+    finally {
+      fout.close()
+    }
   }
 
+  protected def createFile(folder: File, fileName: String, f: IndentWriter => Unit): Unit = createFile(folder, fileName, out => new IndentWriter(out), f)
+  
   implicit def identToString(ident: Ident): String = ident.name
   val idCpp = spec.cppIdentStyle
   val idJava = spec.javaIdentStyle
@@ -335,14 +345,12 @@ abstract class Generator(spec: Spec)
   }
 
   def generate(idl: Seq[TypeDecl]) {
-    for (td <- idl) {
-      td.body match {
-        case e: Enum =>
-          assert(td.params.isEmpty)
-          generateEnum(td.origin, td.ident, td.doc, e)
-        case r: Record => generateRecord(td.origin, td.ident, td.doc, td.params, r)
-        case i: Interface => generateInterface(td.origin, td.ident, td.doc, td.params, i)
-      }
+    for (td <- idl.collect { case itd: InternTypeDecl => itd }) td.body match {
+      case e: Enum =>
+        assert(td.params.isEmpty)
+        generateEnum(td.origin, td.ident, td.doc, e)
+      case r: Record => generateRecord(td.origin, td.ident, td.doc, td.params, r)
+      case i: Interface => generateInterface(td.origin, td.ident, td.doc, td.params, i)
     }
   }
 
