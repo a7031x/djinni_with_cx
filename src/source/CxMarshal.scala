@@ -279,7 +279,7 @@ class CxMarshal(spec: Spec) extends Marshal(spec) {
         arg.base match {
           case MOptional => throw new AssertionError("nested optional?")
           case p: MPrimitive => (p.cxBoxed, true)
-          case m => base(arg, namespace, true)
+          case m => expr(arg, namespace, true)
         }
       case MList => ("Windows::Foundation::Collections::IVector", true)
       case MSet => ("Windows::Foundation::Collections::IMap", true)
@@ -308,13 +308,20 @@ class CxMarshal(spec: Spec) extends Marshal(spec) {
     def expr(tm: MExpr, namespace: Option[String], needRef: Boolean): (String, Boolean) = {
 
       val args = tm.base match {
-        case MOptional => ""
+        case MOptional =>
+          assert(tm.args.size == 1)
+          val arg = tm.args.head
+          arg.base match {
+            case MOptional => throw new AssertionError("nested optional?")
+//            case p: MPrimitive => ""
+            case m => "" //if (tm.args.isEmpty) "" else tm.args.map(arg => exprWithReference(arg, namespace, needRef)).mkString("<", ", ", ">") //(tm.args[0].typename, true)
+          }
         case MSet => if (tm.args.size == 1) (tm.args :+ tm.args(0)).map(arg => exprWithReference(arg, namespace, needRef)).mkString("<", ", ", ">") else tm.args.map(arg => exprWithReference(arg, namespace, needRef)).mkString("<", ", ", ">")
         case MMap => tm.args.map(arg => exprWithReference(arg, namespace, needRef)).mkString("<", ", ", ">")
         case d => if (tm.args.isEmpty) "" else tm.args.map(arg => exprWithReference(arg, namespace, needRef)).mkString("<", ", ", ">")
       }
       val (ret, ref) = base(tm, namespace, needRef)
-      (ret + args, ref)
+      (ret+ args, ref)
     }
     expr(tm, namespace, needRef)
   }
