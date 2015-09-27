@@ -9,8 +9,16 @@
 namespace System { namespace Cxns {
 
 public ref class RecordWithNestedDerivings sealed : public Platform::Object {
+public:
     property int32_t Key;
     property RecordWithDerivings^ Rec;
+
+    RecordWithNestedDerivings(int32_t Key,
+                              RecordWithDerivings^ Rec) {
+        this->Key = Key;
+        this->Rec = Rec;
+    }
+    RecordWithNestedDerivings() {}
 internal:
     ::cppns::RecordWithNestedDerivings toCpp();
     static RecordWithNestedDerivings^ fromCpp(const ::cppns::RecordWithNestedDerivings& value);

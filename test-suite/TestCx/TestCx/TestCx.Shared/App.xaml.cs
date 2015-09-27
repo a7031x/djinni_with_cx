@@ -38,15 +38,10 @@ namespace TestCx
             this.InitializeComponent();
             this.Suspending += this.OnSuspending;
 
-            var cc = System.Cxns.CppException.Get();
-            try
-            {
-                cc.ThrowAnException();
-            }
-            catch(Exception e)
-            {
-
-            }
+            var cc = System.Cxns.Constants.BoolConstant;
+            var dd = System.Cxns.Constants.ObjectConstant;
+            var ee = System.Cxns.Constants.OptionalIntegerConstant;
+            var ff = ee;
         }
 
         /// <summary>

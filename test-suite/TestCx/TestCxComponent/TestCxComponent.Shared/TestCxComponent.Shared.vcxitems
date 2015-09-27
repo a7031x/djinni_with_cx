@@ -19,7 +19,10 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\gen\cpp\assorted_primitives.hpp" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\gen\cpp\client_interface.hpp" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\gen\cpp\client_returned_record.hpp" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\gen\cpp\color.hpp" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\gen\cpp\constants.hpp" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\gen\cpp\cpp_exception.hpp" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\gen\cpp\map_list_record.hpp" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\gen\cpp\map_record.hpp" />
@@ -28,8 +31,13 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\gen\cpp\record_with_derivings.hpp" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\gen\cpp\record_with_nested_derivings.hpp" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\gen\cpp\set_record.hpp" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\gen\cpp\token.hpp" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\gen\cx\AssortedPrimitives.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\gen\cx\ClientInterface.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\gen\cx\ClientInterfaceProxy.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\gen\cx\ClientReturnedRecord.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\gen\cx\Color.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\gen\cx\Constants.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\gen\cx\CppException.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\gen\cx\MapListRecord.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\gen\cx\MapRecord.h" />
@@ -38,13 +46,19 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\gen\cx\RecordWithDerivings.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\gen\cx\RecordWithNestedDerivings.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\gen\cx\SetRecord.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\gen\cx\Token.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\gen\cx\TokenProxy.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\gen\cx\Translation.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\gen\cpp\assorted_primitives.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\gen\cpp\constants.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\gen\cpp\record_with_derivings.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\gen\cpp\record_with_nested_derivings.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\gen\cx\AssortedPrimitives.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\gen\cx\ClientInterface.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\gen\cx\ClientReturnedRecord.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\gen\cx\Constants.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\gen\cx\CppException.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\gen\cx\MapListRecord.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\gen\cx\MapRecord.cpp" />
@@ -53,6 +67,7 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\gen\cx\RecordWithDerivings.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\gen\cx\RecordWithNestedDerivings.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\gen\cx\SetRecord.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\gen\cx\Token.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\gen\cx\Translation.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)cpp_exception.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Source.cpp" />

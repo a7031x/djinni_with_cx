@@ -8,7 +8,13 @@
 namespace System { namespace Cxns {
 
 public ref class MapListRecord sealed : public Platform::Object {
+public:
     property Windows::Foundation::Collections::IVector<Windows::Foundation::Collections::IMap<Platform::String^, int64_t>^>^ MapList;
+
+    MapListRecord(Windows::Foundation::Collections::IVector<Windows::Foundation::Collections::IMap<Platform::String^, int64_t>^>^ MapList) {
+        this->MapList = MapList;
+    }
+    MapListRecord() {}
 internal:
     ::cppns::MapListRecord toCpp();
     static MapListRecord^ fromCpp(const ::cppns::MapListRecord& value);

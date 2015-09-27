@@ -10,14 +10,14 @@ namespace System { namespace Cxns {
 ::cppns::AssortedPrimitives AssortedPrimitives::toCpp() {
     return ::cppns::AssortedPrimitives(
         transform<bool, bool>()(B),
-        transform<int8_t, int8_t>()(Eight),
+        transform<uint8, uint8>()(Eight),
         transform<int16_t, int16_t>()(Sixteen),
         transform<int32_t, int32_t>()(Thirtytwo),
         transform<int64_t, int64_t>()(Sixtyfour),
         transform<float, float>()(Fthirtytwo),
         transform<double, double>()(Fsixtyfour),
         transform<std::experimental::optional<bool>, BoolRef^>()(OB),
-        transform<std::experimental::optional<int8_t>, ByteRef^>()(OEight),
+        transform<std::experimental::optional<uint8>, ByteRef^>()(OEight),
         transform<std::experimental::optional<int16_t>, ShortRef^>()(OSixteen),
         transform<std::experimental::optional<int32_t>, IntRef^>()(OThirtytwo),
         transform<std::experimental::optional<int64_t>, LongRef^>()(OSixtyfour),
@@ -28,14 +28,14 @@ namespace System { namespace Cxns {
 AssortedPrimitives^ AssortedPrimitives::fromCpp(const ::cppns::AssortedPrimitives& value) {
     AssortedPrimitives^ ret = ref new AssortedPrimitives();
     ret->B = transform<bool, bool>()(value.b);
-    ret->Eight = transform<int8_t, int8_t>()(value.eight);
+    ret->Eight = transform<uint8, uint8>()(value.eight);
     ret->Sixteen = transform<int16_t, int16_t>()(value.sixteen);
     ret->Thirtytwo = transform<int32_t, int32_t>()(value.thirtytwo);
     ret->Sixtyfour = transform<int64_t, int64_t>()(value.sixtyfour);
     ret->Fthirtytwo = transform<float, float>()(value.fthirtytwo);
     ret->Fsixtyfour = transform<double, double>()(value.fsixtyfour);
     ret->OB = transform<std::experimental::optional<bool>, BoolRef^>()(value.o_b);
-    ret->OEight = transform<std::experimental::optional<int8_t>, ByteRef^>()(value.o_eight);
+    ret->OEight = transform<std::experimental::optional<uint8>, ByteRef^>()(value.o_eight);
     ret->OSixteen = transform<std::experimental::optional<int16_t>, ShortRef^>()(value.o_sixteen);
     ret->OThirtytwo = transform<std::experimental::optional<int32_t>, IntRef^>()(value.o_thirtytwo);
     ret->OSixtyfour = transform<std::experimental::optional<int64_t>, LongRef^>()(value.o_sixtyfour);

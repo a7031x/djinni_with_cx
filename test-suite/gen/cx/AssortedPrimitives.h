@@ -8,8 +8,9 @@
 namespace System { namespace Cxns {
 
 public ref class AssortedPrimitives sealed : public Platform::Object {
+public:
     property bool B;
-    property int8_t Eight;
+    property uint8 Eight;
     property int16_t Sixteen;
     property int32_t Thirtytwo;
     property int64_t Sixtyfour;
@@ -22,6 +23,37 @@ public ref class AssortedPrimitives sealed : public Platform::Object {
     property LongRef^ OSixtyfour;
     property FloatRef^ OFthirtytwo;
     property DoubleRef^ OFsixtyfour;
+
+    AssortedPrimitives(bool B,
+                       uint8 Eight,
+                       int16_t Sixteen,
+                       int32_t Thirtytwo,
+                       int64_t Sixtyfour,
+                       float Fthirtytwo,
+                       double Fsixtyfour,
+                       BoolRef^ OB,
+                       ByteRef^ OEight,
+                       ShortRef^ OSixteen,
+                       IntRef^ OThirtytwo,
+                       LongRef^ OSixtyfour,
+                       FloatRef^ OFthirtytwo,
+                       DoubleRef^ OFsixtyfour) {
+        this->B = B;
+        this->Eight = Eight;
+        this->Sixteen = Sixteen;
+        this->Thirtytwo = Thirtytwo;
+        this->Sixtyfour = Sixtyfour;
+        this->Fthirtytwo = Fthirtytwo;
+        this->Fsixtyfour = Fsixtyfour;
+        this->OB = OB;
+        this->OEight = OEight;
+        this->OSixteen = OSixteen;
+        this->OThirtytwo = OThirtytwo;
+        this->OSixtyfour = OSixtyfour;
+        this->OFthirtytwo = OFthirtytwo;
+        this->OFsixtyfour = OFsixtyfour;
+    }
+    AssortedPrimitives() {}
 internal:
     ::cppns::AssortedPrimitives toCpp();
     static AssortedPrimitives^ fromCpp(const ::cppns::AssortedPrimitives& value);

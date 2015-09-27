@@ -13,7 +13,7 @@ int32_t CppException::ThrowAnException ()
         return transform<int32_t, int32_t>()(cppRet);
     }
     catch(const std::exception& e) {
-        throw ref new Platform::Exception(0, transform<std::string, Platform::String^>()((std::string)e.what()));
+        throw ref new Platform::Exception(-1, transform<std::string, Platform::String^>()((std::string)e.what()));
     }
 }
 CppException^ CppException::Get ()

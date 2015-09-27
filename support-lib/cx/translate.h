@@ -97,7 +97,7 @@ namespace System {
 	struct translate_optional
 	{
 		void operator()(const djinni_optional<bool>& cpp, BoolRef^& cx) { cx = cpp ? ref new BoolRef(cpp.get()) : nullptr; }
-		void operator()(const djinni_optional<int8_t>& cpp, ByteRef^& cx) { cx = cpp ? ref new ByteRef(cpp.get()) : nullptr; }
+		void operator()(const djinni_optional<uint8_t>& cpp, ByteRef^& cx) { cx = cpp ? ref new ByteRef(cpp.get()) : nullptr; }
 		void operator()(const djinni_optional<int16_t>& cpp, ShortRef^& cx) { cx = cpp ? ref new ShortRef(cpp.get()) : nullptr; }
 		void operator()(const djinni_optional<int32_t>& cpp, IntRef^& cx) { cx = cpp ? ref new IntRef(cpp.get()) : nullptr; }
 		void operator()(const djinni_optional<int64_t>& cpp, LongRef^& cx) { cx = cpp ? ref new LongRef(cpp.get()) : nullptr; }
@@ -117,7 +117,7 @@ namespace System {
 		}
 
 		void operator()(BoolRef^ cx, djinni_optional<bool>& cpp) { cpp = cx ? cx->Value : std::remove_reference<decltype(cpp)>::type(); }
-		void operator()(ByteRef^ cx, djinni_optional<int8_t>& cpp) { cpp = cx ? cx->Value : std::remove_reference<decltype(cpp)>::type(); }
+		void operator()(ByteRef^ cx, djinni_optional<uint8_t>& cpp) { cpp = cx ? cx->Value : std::remove_reference<decltype(cpp)>::type(); }
 		void operator()(ShortRef^ cx, djinni_optional<int16_t>& cpp) { cpp = cx ? cx->Value : std::remove_reference<decltype(cpp)>::type(); }
 		void operator()(IntRef^ cx, djinni_optional<int32_t>& cpp) { cpp = cx ? cx->Value : std::remove_reference<decltype(cpp)>::type(); }
 		void operator()(LongRef^ cx, djinni_optional<int64_t>& cpp) { cpp = cx ? cx->Value : std::remove_reference<decltype(cpp)>::type(); }

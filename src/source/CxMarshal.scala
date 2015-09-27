@@ -163,7 +163,10 @@ def references(m: Meta, exclude: String): Seq[SymbolReference] = m match {
       }
     case DInterface =>
       if (d.name != exclude) {
-        List(ImportRef(q(spec.cxIncludePrefix + spec.cxFileIdentStyle(d.name) + "." + spec.cxHeaderExt)))
+        if(cxImplemented(d))
+          List(ImportRef(q(spec.cxIncludePrefix + spec.cxFileIdentStyle(d.name + "_proxy") + "." + spec.cxHeaderExt)))
+        else
+          List(ImportRef(q(spec.cxIncludePrefix + spec.cxFileIdentStyle(d.name) + "." + spec.cxHeaderExt)))
       } else {
         List()
       }
@@ -172,7 +175,14 @@ def references(m: Meta, exclude: String): Seq[SymbolReference] = m match {
   case e: MExtern =>
     List(ImportRef(e.cx.header))
 }
-
+def cxImplemented(ty: MDef): Boolean = {
+  ty match {
+    case MDef(_, _, DInterface, Interface(Ext(_, _, _, true), _, _))=>
+      true
+    case _=>
+      false
+  }
+}
 def convertReferences(m: Meta, exclude: String): Seq[SymbolReference] = m match {
   case p: MPrimitive => p.idlName match {
     case "i8" | "i16" | "i32" | "i64" => List()

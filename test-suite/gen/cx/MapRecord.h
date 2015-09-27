@@ -8,8 +8,16 @@
 namespace System { namespace Cxns {
 
 public ref class MapRecord sealed : public Platform::Object {
+public:
     property Windows::Foundation::Collections::IMap<Platform::String^, int64_t>^ Map;
     property Windows::Foundation::Collections::IMap<int32_t, int32_t>^ Imap;
+
+    MapRecord(Windows::Foundation::Collections::IMap<Platform::String^, int64_t>^ Map,
+              Windows::Foundation::Collections::IMap<int32_t, int32_t>^ Imap) {
+        this->Map = Map;
+        this->Imap = Imap;
+    }
+    MapRecord() {}
 internal:
     ::cppns::MapRecord toCpp();
     static MapRecord^ fromCpp(const ::cppns::MapRecord& value);

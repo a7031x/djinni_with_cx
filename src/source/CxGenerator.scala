@@ -30,8 +30,8 @@ class CxGenerator(spec: Spec) extends Generator(spec) {
   val cppMarshal = new CppMarshal(spec)
 
   val writeCxFile = writeCppFileGeneric(spec.cxOutFolder.get, spec.cxNamespace, spec.cxFileIdentStyle, spec.cxIncludePrefix, spec.cxExt, spec.cxHeaderExt) _
-  def writeHxFile(name: String, origin: String, includes: Iterable[String], fwds: Iterable[String], f: IndentWriter => Unit, f2: IndentWriter => Unit = (w => {})) =
-    writeHppFileGeneric(spec.cxHeaderOutFolder.get, spec.cxNamespace, spec.cxFileIdentStyle, spec.cxHeaderExt)(name, origin, includes, fwds, f, f2)
+  def writeHxFile(name: String, origin: String, includes: Iterable[String], fwds: Iterable[String], f: IndentWriter => Unit, f2: IndentWriter => Unit = (w => {}), namespace: Option[String] = None) =
+    writeHppFileGeneric(spec.cxHeaderOutFolder.get, namespace.fold(spec.cxNamespace)(ns=>ns), spec.cxFileIdentStyle, spec.cxHeaderExt)(name, origin, includes, fwds, f, f2)
 
   class CxRefs(name: String) {
     var hx = mutable.TreeSet[String]()
@@ -80,11 +80,53 @@ class CxGenerator(spec: Spec) extends Generator(spec) {
     })
   }
 
-  def generateHxConstants(w: IndentWriter, consts: Seq[Const]) = {
+  def generateHxConstants(w: IndentWriter, consts: Seq[Const], self: String) = {
+    def writeHxConst(w: IndentWriter, ty: TypeRef, v: Any): Unit = {
+      def writeUnboxed = {
+        v match {
+          case l: Long => w.w(l.toString)
+          case d: Double if cxMarshal.fieldType(ty) == "float" => w.w(d.toString + "f")
+          case d: Double => w.w(d.toString)
+          case b: Boolean => w.w(if (b) "true" else "false")
+          case s: String => w.w(s)
+          case e: EnumValue => w.w(cxMarshal.typename(ty) + "::" + idCx.enum(e.ty.name + "_" + e.name))
+          case v: ConstRef => w.w(self + "::" + idCx.const(v))
+          case z: Map[_, _] => { // Value is record
+          val recordMdef = ty.resolved.base.asInstanceOf[MDef]
+            val record = recordMdef.body.asInstanceOf[Record]
+            val vMap = z.asInstanceOf[Map[String, Any]]
+            w.wl("ref new " + cxMarshal.toCxType(ty)._1 + "(")
+            w.increase()
+            // Use exact sequence
+            val skipFirst = SkipFirst()
+            for (f <- record.fields) {
+              skipFirst {w.wl(",")}
+              writeHxConst(w, f.ty, vMap.apply(f.ident.name))
+              w.w(" /* " + idCx.field(f.ident) + " */ ")
+            }
+            w.w(")")
+            w.decrease()
+          }
+        }
+      }
+      ty.resolved.base match {
+        case MOptional =>
+          w.w("ref new " + cxMarshal.toCxType(ty)._1 + "(")
+          writeUnboxed
+          w.w(")")
+        case _=>
+          writeUnboxed
+      }
+
+    }
+
+    val skipFirst = SkipFirst()
     for (c <- consts) {
-      w.wl
-      writeDoc(w, c.doc)
-      w.wl(s"static const ${cxMarshal.fieldType(c.ty)} ${idCx.const(c.ident)};")
+      skipFirst{ w.wl }
+      val fieldType = cxMarshal.fieldType(c.ty)
+      w.w(s"property static $fieldType $self::${idCx.const(c.ident)} {$fieldType get() {return ")
+      writeHxConst(w, c.ty, c.value)
+      w.wl(";} } ")
     }
   }
 
@@ -101,7 +143,7 @@ class CxGenerator(spec: Spec) extends Generator(spec) {
       val recordMdef = ty.resolved.base.asInstanceOf[MDef]
         val record = recordMdef.body.asInstanceOf[Record]
         val vMap = z.asInstanceOf[Map[String, Any]]
-        w.wl(cxMarshal.typename(ty) + "(")
+        w.wl("ref new " + cxMarshal.toCxType(ty) + "(")
         w.increase()
         // Use exact sequence
         val skipFirst = SkipFirst()
@@ -139,12 +181,21 @@ class CxGenerator(spec: Spec) extends Generator(spec) {
       writeDoc(w, doc)
       writeCxTypeParams(w, params)
       w.w("public ref class " + self + cxFinal).bracedSemi {
-        generateHxConstants(w, r.consts)
+        w.wlOutdent("public:")
+        generateHxConstants(w, r.consts, self)
         // Field definitions.
         for (f <- r.fields) {
           writeDoc(w, f.doc)
           w.wl("property " + cxMarshal.fieldType(f.ty) + " " + idCx.field(f.ident) + ";")
         }
+        // Constructor.
+        if(r.fields.nonEmpty) {
+          w.wl
+          writeAlignedCall(w, self + "(", r.fields, ")", f => cxMarshal.fieldType(f.ty) + " " + idCx.local(f.ident)).braced {
+            r.fields.map(f => w.wl("this->" + idCx.field(f.ident) + " = " + idCx.local(f.ident) + ";"))
+          }
+        }
+        w.wl(self + "() {}")
 
         w.wlOutdent("internal:")
         w.wl(s"$cppType toCpp();")
@@ -168,7 +219,7 @@ class CxGenerator(spec: Spec) extends Generator(spec) {
 
     writeCxFile(cxName, origin, refs.cx, w => {
    //   w.wl("using namespace System;")
-      generateCxConstants(w, r.consts, self)
+    //  generateCxConstants(w, r.consts, self)
       w.wl
       w.w(s"$cppType $self::toCpp()").braced {
         w.wl(s"return $cppType(")
@@ -252,7 +303,8 @@ class CxGenerator(spec: Spec) extends Generator(spec) {
     })
  //   refs.cx.add("#include \"Marshal.h\"")
 
-    val self = cxMarshal.typename(ident, i)
+ //   val self = cxMarshal.typename(ident, i)
+    val self = idCx.ty(ident.name)
     val cppSelf = cppMarshal.fqTypename(ident, i)
     if(i.ext.cpp) {
       refs.hx += "#include <memory>"
@@ -305,7 +357,7 @@ class CxGenerator(spec: Spec) extends Generator(spec) {
       if(false == isInterface)
         throw new AssertionError("interface to cx doesn't support non-virtual method")
 
-      writeCxFile(ident.name, origin, refs.cx, w=>{
+      writeHxFile(ident.name, origin, refs.hx, refs.hxFwds, w=>{
         w.wl(s"public interface class $self").bracedSemi {
           w.wlOutdent("public:")
           for (m <- i.methods) {
@@ -315,11 +367,14 @@ class CxGenerator(spec: Spec) extends Generator(spec) {
           }
         }
       })
+
+      writeCxFile(ident.name, origin, refs.cx, w=>{})
+
       refs.hx += "#include " + q(spec.cxIncludeCppPrefix + spec.cppFileIdentStyle(ident.name) + "." + spec.cppHeaderExt)
       refs.hx += translationHeader()
       refs.hx += cppHeader(ident.name)
       refs.hx += "#include <functional>"
-
+      refs.hx += "#include " + q(cxMarshal.headerName(ident.name))
       writeHxFile(ident.name + "_proxy", origin, refs.hx, refs.hxFwds, w=>{
         val nativeDecls = mutable.TreeSet[String]()
         w.wl(s"template<> class CxInterfaceProxy<$cppSelf> : public $cppSelf").bracedSemi {
@@ -328,7 +383,7 @@ class CxGenerator(spec: Spec) extends Generator(spec) {
             w.wl(s"native_call_nativeRef = [nativeRef]{ return nativeRef; };")
           }
           for(m <- i.methods) {
-            val ret = m.ret.fold("void")(cppMarshal.toCpp(_, spec.cppNamespace))
+            val ret = cppMarshal.returnType(m.ret)
             val params = m.params.map(p => cppMarshal.paramType(p.ty))
             val methodName = idCpp.method(m.ident)
             val call = "nativeRef()->" + idCx.method(m.ident)  + m.params.map(p=>translate(p.ty.resolved, idCpp.local(p.ident), Some(spec.cxNamespace))).mkString("(", ", ", ")")
@@ -349,7 +404,7 @@ class CxGenerator(spec: Spec) extends Generator(spec) {
             w.wl(n)
           w.wl(s"std::function<$nativeType^()> native_call_nativeRef;")
         }
-      })
+      }, w=>Unit, Some("System"))
     }
   }
 

@@ -81,6 +81,10 @@
   </PropertyGroup>
   <ItemGroup>
     <!-- A reference to the entire .Net Framework and Windows SDK are automatically included -->
+    <ProjectReference Include="..\..\..\..\SupportComponent\SupportComponent.WindowsPhone\SupportComponent.WindowsPhone.vcxproj">
+      <Project>{290463cf-2daa-4d3a-a549-de693bbad245}</Project>
+      <Name>SupportComponent.WindowsPhone</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\TestCxComponent\TestCxComponent.WindowsPhone\TestCxComponent.WindowsPhone.vcxproj">
       <Project>{654f6e7f-1541-4112-bb54-0ad8b35f6b3c}</Project>
       <Name>TestCxComponent.WindowsPhone</Name>

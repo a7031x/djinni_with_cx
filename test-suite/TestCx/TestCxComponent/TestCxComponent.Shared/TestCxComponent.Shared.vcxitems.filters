@@ -75,6 +75,36 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\gen\cpp\cpp_exception.hpp">
       <Filter>cpp</Filter>
     </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\gen\cx\ClientReturnedRecord.h">
+      <Filter>cx</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\gen\cpp\client_returned_record.hpp">
+      <Filter>cpp</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\gen\cpp\client_interface.hpp">
+      <Filter>cpp</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\gen\cx\ClientInterfaceProxy.h">
+      <Filter>cx</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\gen\cx\ClientInterface.h">
+      <Filter>cx</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\gen\cpp\token.hpp">
+      <Filter>cpp</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\gen\cx\Token.h">
+      <Filter>cx</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\gen\cx\TokenProxy.h">
+      <Filter>cx</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\gen\cx\Constants.h">
+      <Filter>cx</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\gen\cpp\constants.hpp">
+      <Filter>cpp</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\gen\cpp\record_with_derivings.cpp">
@@ -121,6 +151,21 @@
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\gen\cx\CppException.cpp">
       <Filter>cx</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\gen\cx\ClientReturnedRecord.cpp">
+      <Filter>cx</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\gen\cx\ClientInterface.cpp">
+      <Filter>cx</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\gen\cx\Token.cpp">
+      <Filter>cx</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\gen\cx\Constants.cpp">
+      <Filter>cx</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\gen\cpp\constants.cpp">
+      <Filter>cpp</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
