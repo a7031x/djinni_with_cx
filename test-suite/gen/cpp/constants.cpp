@@ -3,8 +3,6 @@
 
 #include "constants.hpp"  // my header
 
-namespace cppns {
-
 bool const Constants::BOOL_CONSTANT = true;
 
 uint8 const Constants::I8_CONSTANT = 1;
@@ -26,5 +24,3 @@ std::experimental::optional<int32_t> const Constants::OPTIONAL_INTEGER_CONSTANT 
 Constants const Constants::OBJECT_CONSTANT = Constants(
     Constants::I32_CONSTANT /* some_integer */ ,
     Constants::STRING_CONSTANT /* some_string */ );
-
-}  // namespace cppns

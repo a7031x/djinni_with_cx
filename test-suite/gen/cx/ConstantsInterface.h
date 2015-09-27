@@ -8,15 +8,15 @@
 
 namespace System { namespace Cxns {
 
-public ref class ConstantsInterface sealed
+public ref class ConstantsInterface sealed : public Platform::Object
 {
 public:
     void Dummy ();
 internal:
-    ConstantsInterface(std::shared_ptr<::cppns::ConstantsInterface> cppRef) : _cppRef(cppRef) {}
-    std::shared_ptr<::cppns::ConstantsInterface> cppRef() {return _cppRef;}
+    ConstantsInterface(std::shared_ptr<::ConstantsInterface> cppRef) : _cppRef(cppRef) {}
+    std::shared_ptr<::ConstantsInterface> cppRef() {return _cppRef;}
 private:
-    std::shared_ptr<::cppns::ConstantsInterface> _cppRef;
+    std::shared_ptr<::ConstantsInterface> _cppRef;
 };
 
 } }  // namespace System::Cxns

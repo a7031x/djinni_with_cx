@@ -7,7 +7,7 @@
 
 namespace jnins {
 
-ClientInterface::ClientInterface() : ::djinni::JniInterface<::cppns::ClientInterface, ClientInterface>() {}
+ClientInterface::ClientInterface() : ::djinni::JniInterface<::ClientInterface, ClientInterface>() {}
 
 ClientInterface::~ClientInterface() = default;
 
@@ -15,7 +15,7 @@ ClientInterface::JavaProxy::JavaProxy(JniType j) : JavaProxyCacheEntry(j) { }
 
 ClientInterface::JavaProxy::~JavaProxy() = default;
 
-::cppns::ClientReturnedRecord ClientInterface::JavaProxy::get_record(int64_t c_record_id, const std::string & c_utf8string, const std::experimental::optional<std::string> & c_misc) {
+::ClientReturnedRecord ClientInterface::JavaProxy::get_record(int64_t c_record_id, const std::string & c_utf8string, const std::experimental::optional<std::string> & c_misc) {
     auto jniEnv = ::djinni::jniGetThreadEnv();
     ::djinni::JniLocalScope jscope(jniEnv, 10);
     const auto& data = ::djinni::JniClass<::jnins::ClientInterface>::get();

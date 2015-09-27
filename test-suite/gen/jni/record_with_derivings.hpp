@@ -10,7 +10,7 @@ namespace jnins {
 
 class RecordWithDerivings final {
 public:
-    using CppType = ::cppns::RecordWithDerivings;
+    using CppType = ::RecordWithDerivings;
     using JniType = jobject;
 
     using Boxed = RecordWithDerivings;

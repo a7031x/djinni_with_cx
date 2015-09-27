@@ -19,8 +19,8 @@ public:
     }
     SetRecord() {}
 internal:
-    ::cppns::SetRecord toCpp();
-    static SetRecord^ fromCpp(const ::cppns::SetRecord& value);
+    ::SetRecord toCpp();
+    static SetRecord^ fromCpp(const ::SetRecord& value);
 };
 
 } }  // namespace System::Cxns

@@ -8,9 +8,9 @@
 
 namespace jnins {
 
-class Token final : ::djinni::JniInterface<::cppns::Token, Token> {
+class Token final : ::djinni::JniInterface<::Token, Token> {
 public:
-    using CppType = std::shared_ptr<::cppns::Token>;
+    using CppType = std::shared_ptr<::Token>;
     using JniType = jobject;
 
     using Boxed = Token;
@@ -23,9 +23,9 @@ public:
 private:
     Token();
     friend ::djinni::JniClass<Token>;
-    friend ::djinni::JniInterface<::cppns::Token, Token>;
+    friend ::djinni::JniInterface<::Token, Token>;
 
-    class JavaProxy final : ::djinni::JavaProxyCacheEntry, public ::cppns::Token
+    class JavaProxy final : ::djinni::JavaProxyCacheEntry, public ::Token
     {
     public:
         JavaProxy(JniType j);
@@ -35,7 +35,7 @@ private:
 
     private:
         using ::djinni::JavaProxyCacheEntry::getGlobalRef;
-        friend ::djinni::JniInterface<::cppns::Token, ::jnins::Token>;
+        friend ::djinni::JniInterface<::Token, ::jnins::Token>;
         friend ::djinni::JavaProxyCache<JavaProxy>;
     };
 

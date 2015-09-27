@@ -67,7 +67,7 @@ object MExtern {
   )
   case class Cx(
     typename: String,
-    header: String,
+    header: Option[String],
     boxed: String,
     reference: Boolean
   )
@@ -95,13 +95,13 @@ case object MSet extends MOpaque { val numParams = 1; val idlName = "set" }
 case object MMap extends MOpaque { val numParams = 2; val idlName = "map" }
 
 val defaults: Map[String,MOpaque] = immutable.HashMap(
-  ("i8",   MPrimitive("i8",   "byte",    "jbyte",    "uint8",  "Byte",    "B", "int8_t",  "NSNumber", "uint8", "ByteRef")),
-  ("i16",  MPrimitive("i16",  "short",   "jshort",   "int16_t", "Short",   "S", "int16_t", "NSNumber", "int16_t", "ShortRef")),
-  ("i32",  MPrimitive("i32",  "int",     "jint",     "int32_t", "Integer", "I", "int32_t", "NSNumber", "int32_t", "IntRef")),
-  ("i64",  MPrimitive("i64",  "long",    "jlong",    "int64_t", "Long",    "J", "int64_t", "NSNumber", "int64_t", "LongRef")),
-  ("f32",  MPrimitive("f32",  "float",   "jfloat",   "float",   "Float",   "F", "float",   "NSNumber", "float", "FloatRef")),
-  ("f64",  MPrimitive("f64",  "double",  "jdouble",  "double",  "Double",  "D", "double",  "NSNumber", "double", "DoubleRef")),
-  ("bool", MPrimitive("bool", "boolean", "jboolean", "bool",    "Boolean", "Z", "BOOL",    "NSNumber", "bool", "BoolRef")),
+  ("i8",   MPrimitive("i8",   "byte",    "jbyte",    "uint8",  "Byte",    "B", "int8_t",  "NSNumber", "uint8", "Platform::IBox<uint8>")),
+  ("i16",  MPrimitive("i16",  "short",   "jshort",   "int16_t", "Short",   "S", "int16_t", "NSNumber", "int16_t", "Platform::IBox<short>")),
+  ("i32",  MPrimitive("i32",  "int",     "jint",     "int32_t", "Integer", "I", "int32_t", "NSNumber", "int32_t", "Platform::IBox<int>")),
+  ("i64",  MPrimitive("i64",  "long",    "jlong",    "int64_t", "Long",    "J", "int64_t", "NSNumber", "int64_t", "Platform::IBox<int64_t>")),
+  ("f32",  MPrimitive("f32",  "float",   "jfloat",   "float",   "Float",   "F", "float",   "NSNumber", "float", "Platform::IBox<float>")),
+  ("f64",  MPrimitive("f64",  "double",  "jdouble",  "double",  "Double",  "D", "double",  "NSNumber", "double", "Platform::IBox<double>")),
+  ("bool", MPrimitive("bool", "boolean", "jboolean", "bool",    "Boolean", "Z", "BOOL",    "NSNumber", "bool", "Platform::IBox<bool>")),
   ("string", MString),
   ("binary", MBinary),
   ("optional", MOptional),

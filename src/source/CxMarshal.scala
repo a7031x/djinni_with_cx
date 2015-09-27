@@ -9,12 +9,12 @@ class CxMarshal(spec: Spec) extends Marshal(spec) {
   private val cppMarshal = new CppMarshal(spec)
 
 //  override def typename(tm: MExpr): String = toCxType(tm, None)._1
-  override def typename(tm: MExpr): String = {
-    val (name, needRef) = toCxType(tm, None)
+  override def typename(tm: MExpr): String = typename(tm, None)
+  def typename (tm: MExpr, namespace: Option[String]): String = {
+    val (name, needRef) = toCxType(tm, namespace)
     val result = if(needRef) (s"${name}^") else (s"${name}")
     result
   }
-
   def typename(name: String, ty: TypeDef): String = ty match {
     case e: Enum => idCx.enumType(name)
     case i: Interface => if(i.ext.cx) s"I${idCx.ty(name)}" else idCx.ty(name)
@@ -31,10 +31,11 @@ class CxMarshal(spec: Spec) extends Marshal(spec) {
   override def paramType(tm: MExpr): String = toCxParamType(tm)
   override def fqParamType(tm: MExpr): String = toCxParamType(tm, Some(spec.cxNamespace))
 
-  override def returnType(ret: Option[TypeRef]): String = ret.fold("void")((t: TypeRef) => toCxParamType(t.resolved))
+  override def returnType(ret: Option[TypeRef]): String = ret.fold("void")((t: TypeRef) => toCxRefType(t.resolved))
   override def fqReturnType(ret: Option[TypeRef]): String = ret.fold("void")((t: TypeRef) => toCxParamType(t.resolved, Some(spec.cxNamespace)))
 
   override def fieldType(tm: MExpr): String = typename(tm)
+  def fieldType(tm: MExpr, namespace: Option[String]): String = typename(tm, namespace)
   override def fqFieldType(tm: MExpr): String = fqTypename(tm)
 
 
@@ -173,7 +174,7 @@ def references(m: Meta, exclude: String): Seq[SymbolReference] = m match {
   }
   case p: MParam => List()
   case e: MExtern =>
-    List(ImportRef(e.cx.header))
+    e.cx.header.fold(List[SymbolReference]())(p=>List(ImportRef(p)))
 }
 def cxImplemented(ty: MDef): Boolean = {
   ty match {
@@ -207,7 +208,8 @@ def convertReferences(m: Meta, exclude: String): Seq[SymbolReference] = m match 
       List()
   }
   case p: MParam => List()
-  case e: MExtern => List(ImportRef(e.cx.header))
+  case e: MExtern =>
+    e.cx.header.fold(List[SymbolReference]())(p=>List(ImportRef(p)))
 }
 
 def headerName(ident: String) = idCx.ty(ident) + "." + spec.cxHeaderExt
@@ -296,7 +298,9 @@ def boxedTypename(td: TypeDecl) = td.body match {
       arg.base match {
         case MOptional => throw new AssertionError("nested optional?")
         case p: MPrimitive => (p.cxBoxed, true)
-        case MString => ("StringRef", true)
+     //   case MString => ("Platform::IBox<Platform::String^>", true)
+        case e: MExtern if false == e.cx.reference =>
+          (s"Platform::IBox<${expr(arg, namespace, false)._1}>", true)
         case m => expr(arg, namespace, true)
       }
     case MList => ("Windows::Foundation::Collections::IVector", true)
@@ -311,11 +315,11 @@ def boxedTypename(td: TypeDecl) = td.body match {
           if (ext.cpp && !ext.cx)
             (idCx.ty(d.name), true)
           else
-            (s"I${withNs(namespace, idCx.ty(d.name))}", true)
+            (withNs(namespace, idCx.ty(d.name)), true)
       }
     case e: MExtern => e.body match {
-      case i: Interface => if (i.ext.cx) (s"I${e.cx.typename}", true) else (e.cx.typename, true)
-      case _ => (e.cpp.typename, needRef)
+      case i: Interface => (e.cx.typename, true)
+      case _ => (e.cx.typename, needRef)
     }
     case p: MParam => (idCx.typeParam(p.name), needRef)
   }
@@ -338,18 +342,25 @@ def boxedTypename(td: TypeDecl) = td.body match {
         assert(tm.args.size == 1)
         "<" + exprWithReference(tm.args.head, namespace, needRef) + ">"
       case MMap => tm.args.map(arg => exprWithReference(arg, namespace, needRef)).mkString("<", ", ", ">")
+      case e: MExtern if "false" == e.cx.boxed =>
+        ""
       case d => if (tm.args.isEmpty) "" else tm.args.map(arg => exprWithReference(arg, namespace, needRef)).mkString("<", ", ", ">")
+
     }
     val (ret, ref) = base(tm, namespace, needRef)
-    (ret+ args, ref)
+    (ret + args, ref)
   }
   expr(tm, namespace, needRef)
 }
 
 // this can be used in c++ generation to know whether a const& should be applied to the parameter or not
+  private def toCxRefType(tm: MExpr, namespace: Option[String] = None): String = {
+    val (name, needRef) = toCxType(tm, namespace)
+    name + (if(needRef) "^" else "")
+  }
+
 private def toCxParamType(tm: MExpr, namespace: Option[String] = None): String = {
-  val (name, needRef) = toCxType(tm, namespace)
-  val r = name + (if(needRef) "^" else "")
+  val r = toCxRefType(tm, namespace)
   if(r != "Platform::Array<uint8_t>^")
     r
   else

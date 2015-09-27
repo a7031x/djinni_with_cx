@@ -20,8 +20,8 @@ public:
     }
     RecordWithNestedDerivings() {}
 internal:
-    ::cppns::RecordWithNestedDerivings toCpp();
-    static RecordWithNestedDerivings^ fromCpp(const ::cppns::RecordWithNestedDerivings& value);
+    ::RecordWithNestedDerivings toCpp();
+    static RecordWithNestedDerivings^ fromCpp(const ::RecordWithNestedDerivings& value);
 
     bool Equals(RecordWithNestedDerivings^ rhs);
 

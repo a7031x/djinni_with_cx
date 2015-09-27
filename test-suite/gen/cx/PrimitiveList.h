@@ -16,8 +16,8 @@ public:
     }
     PrimitiveList() {}
 internal:
-    ::cppns::PrimitiveList toCpp();
-    static PrimitiveList^ fromCpp(const ::cppns::PrimitiveList& value);
+    ::PrimitiveList toCpp();
+    static PrimitiveList^ fromCpp(const ::PrimitiveList& value);
 };
 
 } }  // namespace System::Cxns

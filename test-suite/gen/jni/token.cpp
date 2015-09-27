@@ -6,7 +6,7 @@
 
 namespace jnins {
 
-Token::Token() : ::djinni::JniInterface<::cppns::Token, Token>() {}
+Token::Token() : ::djinni::JniInterface<::Token, Token>() {}
 
 Token::~Token() = default;
 

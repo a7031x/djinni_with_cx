@@ -7,12 +7,12 @@
 namespace System { namespace Cxns {
 
 
-::cppns::PrimitiveList PrimitiveList::toCpp() {
-    return ::cppns::PrimitiveList(
+::PrimitiveList PrimitiveList::toCpp() {
+    return ::PrimitiveList(
         transform<std::vector<int64_t>, Windows::Foundation::Collections::IVector<int64_t>^>()(List));
 }
 
-PrimitiveList^ PrimitiveList::fromCpp(const ::cppns::PrimitiveList& value) {
+PrimitiveList^ PrimitiveList::fromCpp(const ::PrimitiveList& value) {
     PrimitiveList^ ret = ref new PrimitiveList();
     ret->List = transform<std::vector<int64_t>, Windows::Foundation::Collections::IVector<int64_t>^>()(value.list);
     return ret;

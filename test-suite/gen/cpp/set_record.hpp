@@ -8,8 +8,6 @@
 #include <unordered_set>
 #include <utility>
 
-namespace cppns {
-
 struct SetRecord final {
     std::unordered_set<std::string> set;
     std::unordered_set<int32_t> iset;
@@ -21,5 +19,3 @@ struct SetRecord final {
     {}
     SetRecord() {}
 };
-
-}  // namespace cppns

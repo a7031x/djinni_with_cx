@@ -7,8 +7,6 @@
 #include <cstdint>
 #include <utility>
 
-namespace cppns {
-
 struct RecordWithNestedDerivings final {
     int32_t key;
     RecordWithDerivings rec;
@@ -29,5 +27,3 @@ struct RecordWithNestedDerivings final {
     {}
     RecordWithNestedDerivings() {}
 };
-
-}  // namespace cppns

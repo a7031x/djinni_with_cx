@@ -10,7 +10,7 @@ namespace jnins {
 
 class PrimitiveList final {
 public:
-    using CppType = ::cppns::PrimitiveList;
+    using CppType = ::PrimitiveList;
     using JniType = jobject;
 
     using Boxed = PrimitiveList;

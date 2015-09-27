@@ -25,7 +25,7 @@ public:
 
     property static Platform::String^ Constants::StringConstant {Platform::String^ get() {return "string-constant";} } 
 
-    property static IntRef^ Constants::OptionalIntegerConstant {IntRef^ get() {return ref new IntRef(1);} } 
+    property static Platform::IBox<int>^ Constants::OptionalIntegerConstant {Platform::IBox<int>^ get() {return 1;} } 
 
     property static Constants^ Constants::ObjectConstant {Constants^ get() {return ref new Constants(
         Constants::I32Constant /* SomeInteger */ ,
@@ -40,8 +40,8 @@ public:
     }
     Constants() {}
 internal:
-    ::cppns::Constants toCpp();
-    static Constants^ fromCpp(const ::cppns::Constants& value);
+    ::Constants toCpp();
+    static Constants^ fromCpp(const ::Constants& value);
 };
 
 } }  // namespace System::Cxns

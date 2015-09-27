@@ -5,9 +5,7 @@
 
 #include <functional>
 
-namespace cppns {
-
-enum class Color : int {
+enum class color : int {
     RED,
     ORANGE,
     YELLOW,
@@ -22,13 +20,11 @@ enum class Color : int {
     VIOLET
 };
 
-}  // namespace cppns
-
 namespace std {
 
 template <>
-struct hash<::cppns::Color> {
-    size_t operator()(::cppns::Color type) const {
+struct hash<::color> {
+    size_t operator()(::color type) const {
         return std::hash<int>()(static_cast<int>(type));
     }
 };

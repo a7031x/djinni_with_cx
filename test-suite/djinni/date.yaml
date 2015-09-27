@@ -29,10 +29,9 @@ jni:
   typename: jobject
   typeSignature: 'Ljava/util/Date;'
 cx:
-  typename: DateTime
+  typename: Windows::Foundation::DateTime
   reference: true
   boxed: false
-  header: CxDateTime.h
 cxcpp:
   typename: '::djinni::DateTime'
   header: 'datetime.hpp'

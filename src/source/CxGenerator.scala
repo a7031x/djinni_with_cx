@@ -111,9 +111,9 @@ class CxGenerator(spec: Spec) extends Generator(spec) {
       }
       ty.resolved.base match {
         case MOptional =>
-          w.w("ref new " + cxMarshal.toCxType(ty)._1 + "(")
+        //  w.w("ref new " + cxMarshal.toCxType(ty)._1 + "(")
           writeUnboxed
-          w.w(")")
+       //   w.w(")")
         case _=>
           writeUnboxed
       }
@@ -258,29 +258,34 @@ class CxGenerator(spec: Spec) extends Generator(spec) {
           w.wl(s"if (rhs == nullptr) return 1;")
           w.wl("int32 tempResult = 0;")
           for (f <- r.fields) {
+            def compareOrd = {
+              w.wl(s"if (this->${idCx.field(f.ident)} < rhs->${idCx.field(f.ident)}) {").nested {
+                w.wl(s"return -1;")
+              }
+              w.wl(s"} else if (rhs->${idCx.field(f.ident)} < this->${idCx.field(f.ident)}) {").nested {
+                w.wl(s"tempResult = 1;")
+              }
+              w.wl(s"} else {").nested {
+                w.wl(s"tempResult = 0;")
+              }
+              w.wl("}")
+            }
             f.ty.resolved.base match {
               case MString => w.wl(s"tempResult = Platform::String::CompareOrdinal(this->${idCx.field(f.ident)}, rhs->${idCx.field(f.ident)});")
               case t: MPrimitive =>
-                w.wl(s"if (this->${idCx.field(f.ident)} < rhs->${idCx.field(f.ident)}) {").nested {
-                  w.wl(s"return -1;")
-                }
-                w.wl(s"} else if (this->${idCx.field(f.ident)} > rhs->${idCx.field(f.ident)}) {").nested {
-                  w.wl(s"tempResult = 1;")
-                }
-                w.wl(s"} else {").nested {
-                  w.wl(s"tempResult = 0;")
-                }
-                w.wl("}")
+                compareOrd
               case df: MDef => df.defType match {
                 case DRecord => w.wl(s"tempResult = this->${idCx.field(f.ident)}->CompareTo(rhs->${idCx.field(f.ident)});")
                 case DEnum => w.w(s"tempResult = this->${idCx.field(f.ident)}->CompareTo(rhs->${idCx.field(f.ident)});")
                 case _ => throw new AssertionError("Unreachable")
               }
+              case e: MExtern =>
+                compareOrd
               case _ => throw new AssertionError("Unreachable")
             }
             w.wl("if(tempResult) return tempResult;")
           }
-          w.wl("return tempResult;")
+          w.wl("return 0;")
         }
       }
     })
@@ -310,7 +315,7 @@ class CxGenerator(spec: Spec) extends Generator(spec) {
       refs.hx += "#include <memory>"
       refs.hx += cppHeader(ident.name)
       writeHxFile(ident.name, origin, refs.hx, refs.hxFwds, w=> {
-        w.wl(s"public ref class $self sealed").bracedSemi {
+        w.wl(s"public ref class $self sealed : public Platform::Object").bracedSemi {
           w.wlOutdent("public:")
           for (m <- i.methods) {
             val ret = cxMarshal.returnType(m.ret)
@@ -383,8 +388,8 @@ class CxGenerator(spec: Spec) extends Generator(spec) {
             w.wl(s"native_call_nativeRef = [nativeRef]{ return nativeRef; };")
           }
           for(m <- i.methods) {
-            val ret = cppMarshal.returnType(m.ret)
-            val params = m.params.map(p => cppMarshal.paramType(p.ty))
+            val ret = m.ret.fold("void")(ty=>cppMarshal.toCppType(ty.resolved, Some(spec.cppNamespace)))
+            val params = m.params.map(p => cppMarshal.paramType(p.ty) + " " + idCpp.local(p.ident))
             val methodName = idCpp.method(m.ident)
             val call = "nativeRef()->" + idCx.method(m.ident)  + m.params.map(p=>translate(p.ty.resolved, idCpp.local(p.ident), Some(spec.cxNamespace))).mkString("(", ", ", ")")
 
@@ -412,13 +417,14 @@ class CxGenerator(spec: Spec) extends Generator(spec) {
     if (params.isEmpty) return
     w.wl("template " + params.map(p => "typename " + idCx.typeParam(p.ident)).mkString("<", ", ", ">"))
   }
-  def translate(ty: MExpr, name: String, csNamespace: Option[String]=None): String = {
-    val Cpp = toCppType(ty, Some(spec.cppNamespace))
-  //  val Cx = toCxType(ty, csNamespace)
-    val Cx = cxMarshal.fieldType(ty)
+  def translate(ty: MExpr, name: String, cxNamespace: Option[String]=None): String = {
+//    val Cpp = toCppType(ty, Some(spec.cppNamespace))
+    val Cpp = cppMarshal.toCppType(ty, Some(spec.cppNamespace))
+ //   val Cx = toCxType(ty, csNamespace)
+    val Cx = cxMarshal.fieldType(ty, cxNamespace)
     s"transform<$Cpp, $Cx>()($name)"
   }
-  def toCppType(ty: TypeRef, namespace: Option[String] = None): String = toCppType(ty.resolved, namespace)
+/*  def toCppType(ty: TypeRef, namespace: Option[String] = None): String = toCppType(ty.resolved, namespace)
   def toCppType(tm: MExpr, namespace: Option[String]): String = {
     def base(m: Meta): String = m match {
       case p: MPrimitive => p.cName
@@ -450,7 +456,7 @@ class CxGenerator(spec: Spec) extends Generator(spec) {
       base(tm.base) + args
     }
     expr(tm)
-  }
+  }*/
   def cppHeader(ident: String): String = {
     //   val ext = p.ty.asInstanceOf[Interface].ext
     //   if(ext.cpp)

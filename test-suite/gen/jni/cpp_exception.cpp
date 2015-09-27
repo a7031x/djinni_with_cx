@@ -7,7 +7,7 @@
 
 namespace jnins {
 
-CppException::CppException() : ::djinni::JniInterface<::cppns::CppException, CppException>("CppException$CppProxy") {}
+CppException::CppException() : ::djinni::JniInterface<::CppException, CppException>("CppException$CppProxy") {}
 
 CppException::~CppException() = default;
 
@@ -16,7 +16,7 @@ CJNIEXPORT void JNICALL Java_CppException_00024CppProxy_nativeDestroy(JNIEnv* jn
 {
     try {
         DJINNI_FUNCTION_PROLOGUE1(jniEnv, nativeRef);
-        delete reinterpret_cast<djinni::CppProxyHandle<::cppns::CppException>*>(nativeRef);
+        delete reinterpret_cast<djinni::CppProxyHandle<::CppException>*>(nativeRef);
     } JNI_TRANSLATE_EXCEPTIONS_RETURN(jniEnv, )
 }
 
@@ -24,7 +24,7 @@ CJNIEXPORT jint JNICALL Java_CppException_00024CppProxy_native_1throwAnException
 {
     try {
         DJINNI_FUNCTION_PROLOGUE1(jniEnv, nativeRef);
-        const auto& ref = ::djinni::CppProxyHandle<::cppns::CppException>::get(nativeRef);
+        const auto& ref = ::djinni::CppProxyHandle<::CppException>::get(nativeRef);
         auto r = ref->throw_an_exception();
         return ::djinni::release(::djinni::I32::fromCpp(jniEnv, r));
     } JNI_TRANSLATE_EXCEPTIONS_RETURN(jniEnv, 0 /* value doesn't matter */)
@@ -34,7 +34,7 @@ CJNIEXPORT jobject JNICALL Java_CppException_get(JNIEnv* jniEnv, jobject /*this*
 {
     try {
         DJINNI_FUNCTION_PROLOGUE0(jniEnv);
-        auto r = ::cppns::CppException::get();
+        auto r = ::CppException::get();
         return ::djinni::release(::jnins::CppException::fromCpp(jniEnv, r));
     } JNI_TRANSLATE_EXCEPTIONS_RETURN(jniEnv, 0 /* value doesn't matter */)
 }

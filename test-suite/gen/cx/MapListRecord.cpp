@@ -7,12 +7,12 @@
 namespace System { namespace Cxns {
 
 
-::cppns::MapListRecord MapListRecord::toCpp() {
-    return ::cppns::MapListRecord(
+::MapListRecord MapListRecord::toCpp() {
+    return ::MapListRecord(
         transform<std::vector<std::unordered_map<std::string, int64_t>>, Windows::Foundation::Collections::IVector<Windows::Foundation::Collections::IMap<Platform::String^, int64_t>^>^>()(MapList));
 }
 
-MapListRecord^ MapListRecord::fromCpp(const ::cppns::MapListRecord& value) {
+MapListRecord^ MapListRecord::fromCpp(const ::MapListRecord& value) {
     MapListRecord^ ret = ref new MapListRecord();
     ret->MapList = transform<std::vector<std::unordered_map<std::string, int64_t>>, Windows::Foundation::Collections::IVector<Windows::Foundation::Collections::IMap<Platform::String^, int64_t>^>^>()(value.map_list);
     return ret;

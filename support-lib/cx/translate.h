@@ -4,6 +4,7 @@
 #include <unordered_set>
 #include <unordered_map>
 #include <collection.h>
+#include <chrono>
 
 namespace wfc = Windows::Foundation::Collections;
 
@@ -96,17 +97,12 @@ namespace System {
 
 	struct translate_optional
 	{
-		void operator()(const djinni_optional<bool>& cpp, BoolRef^& cx) { cx = cpp ? ref new BoolRef(cpp.get()) : nullptr; }
-		void operator()(const djinni_optional<uint8_t>& cpp, ByteRef^& cx) { cx = cpp ? ref new ByteRef(cpp.get()) : nullptr; }
-		void operator()(const djinni_optional<int16_t>& cpp, ShortRef^& cx) { cx = cpp ? ref new ShortRef(cpp.get()) : nullptr; }
-		void operator()(const djinni_optional<int32_t>& cpp, IntRef^& cx) { cx = cpp ? ref new IntRef(cpp.get()) : nullptr; }
-		void operator()(const djinni_optional<int64_t>& cpp, LongRef^& cx) { cx = cpp ? ref new LongRef(cpp.get()) : nullptr; }
-		void operator()(const djinni_optional<float>& cpp, FloatRef^& cx) { cx = cpp ? ref new FloatRef(cpp.get()) : nullptr; }
-		void operator()(const djinni_optional<double>& cpp, DoubleRef^& cx) { cx = cpp ? ref new DoubleRef(cpp.get()) : nullptr; }
-		void operator()(const djinni_optional<std::string>& cpp, StringRef^& cx)
+		template<typename Cpp, class Cx>
+		void operator()(const djinni_optional<Cpp>& cpp, Platform::IBox<Cx>^& cx)
 		{
-			cx = cpp ? ref new StringRef(transform<std::string, Platform::String^>()(cpp.get())) : nullptr;
+			cx = cpp ? (Platform::IBox<Cx>^)transform<Cpp, Cx>()(cpp.get()) : nullptr;
 		}
+
 		template<typename Cpp, class Cx>
 		void operator()(const djinni_optional<Cpp>& cpp, Cx^& cx)
 		{
@@ -115,18 +111,8 @@ namespace System {
 			else
 				cx = nullptr;
 		}
-
-		void operator()(BoolRef^ cx, djinni_optional<bool>& cpp) { cpp = cx ? cx->Value : std::remove_reference<decltype(cpp)>::type(); }
-		void operator()(ByteRef^ cx, djinni_optional<uint8_t>& cpp) { cpp = cx ? cx->Value : std::remove_reference<decltype(cpp)>::type(); }
-		void operator()(ShortRef^ cx, djinni_optional<int16_t>& cpp) { cpp = cx ? cx->Value : std::remove_reference<decltype(cpp)>::type(); }
-		void operator()(IntRef^ cx, djinni_optional<int32_t>& cpp) { cpp = cx ? cx->Value : std::remove_reference<decltype(cpp)>::type(); }
-		void operator()(LongRef^ cx, djinni_optional<int64_t>& cpp) { cpp = cx ? cx->Value : std::remove_reference<decltype(cpp)>::type(); }
-		void operator()(FloatRef^ cx, djinni_optional<float>& cpp) { cpp = cx ? cx->Value : std::remove_reference<decltype(cpp)>::type(); }
-		void operator()(DoubleRef^ cx, djinni_optional<double>& cpp) { cpp = cx ? cx->Value : std::remove_reference<decltype(cpp)>::type(); }
-		void operator()(StringRef^ cx, djinni_optional<std::string>& cpp)
-		{
-			cpp = cx ? transform<std::string, Platform::String^>()(cx->Value) : std::remove_reference<decltype(cpp)>::type();
-		}
+		template<typename Cpp, class Cx>
+		void operator()(Platform::IBox<Cx>^ cx, djinni_optional<Cpp>& cpp) { cpp = cx ? (djinni_optional<Cpp>)transform<Cpp, Cx>()(cx->Value) : djinni_optional<Cpp>(); }
 		template<typename Cpp, class Cx>
 		void operator()(Cx^ cx, djinni_optional<Cpp>& cpp)
 		{
@@ -295,4 +281,43 @@ namespace System {
 			return cx;
 		}
 	};
+	typedef std::chrono::duration<long long, std::ratio_multiply<std::ratio<100, 1>, std::nano>> duration100ns;
+	template<>
+	struct transform<std::chrono::system_clock::time_point, Windows::Foundation::DateTime>
+	{
+		std::chrono::system_clock::time_point operator()(Windows::Foundation::DateTime cx)
+		{
+			using namespace std::chrono;
+			auto offset = cx.UniversalTime - 10000000LL * 11644473600LL;
+			return system_clock::from_time_t(0) + duration100ns(offset);
+
+		}
+		Windows::Foundation::DateTime operator()(const std::chrono::system_clock::time_point& cpp)
+		{
+			using namespace std::chrono;
+			auto offset = cpp - system_clock::from_time_t(0);
+			Windows::Foundation::DateTime r;
+			r.UniversalTime = duration_cast<duration100ns>(offset).count() + 10000000LL * 11644473600LL;
+			return r;
+		}
+	};
+	template<typename T1, typename T2>
+	struct transform<std::chrono::duration<T1, T2>, Windows::Foundation::TimeSpan>
+	{
+		std::chrono::duration<T1, T2> operator()(Windows::Foundation::TimeSpan cx)
+		{
+			using namespace std::chrono;
+			return duration_cast<duration<T1, T2>>(duration100ns(cx.Duration));
+		}
+		Windows::Foundation::TimeSpan operator()(const std::chrono::duration<T1, T2> cpp)
+		{
+			using namespace std::chrono;
+			auto offset = duration_cast<duration100ns>(cpp);
+			Windows::Foundation::TimeSpan cx;
+			cx.Duration = offset.count();
+			return cx;
+		}
+	};
+	inline bool operator == (Windows::Foundation::DateTime d1, Windows::Foundation::DateTime d2) { return d1.UniversalTime == d2.UniversalTime; }
+	inline bool operator < (Windows::Foundation::DateTime d1, Windows::Foundation::DateTime d2) { return d1.UniversalTime < d2.UniversalTime; }
 }

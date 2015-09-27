@@ -7,13 +7,13 @@
 namespace System { namespace Cxns {
 
 
-::cppns::SetRecord SetRecord::toCpp() {
-    return ::cppns::SetRecord(
+::SetRecord SetRecord::toCpp() {
+    return ::SetRecord(
         transform<std::unordered_set<std::string>, Windows::Foundation::Collections::IIterable<Platform::String^>^>()(Set),
         transform<std::unordered_set<int32_t>, Windows::Foundation::Collections::IIterable<int32_t>^>()(Iset));
 }
 
-SetRecord^ SetRecord::fromCpp(const ::cppns::SetRecord& value) {
+SetRecord^ SetRecord::fromCpp(const ::SetRecord& value) {
     SetRecord^ ret = ref new SetRecord();
     ret->Set = transform<std::unordered_set<std::string>, Windows::Foundation::Collections::IIterable<Platform::String^>^>()(value.set);
     ret->Iset = transform<std::unordered_set<int32_t>, Windows::Foundation::Collections::IIterable<int32_t>^>()(value.iset);

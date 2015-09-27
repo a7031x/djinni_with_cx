@@ -10,7 +10,7 @@ namespace jnins {
 
 class NestedCollection final {
 public:
-    using CppType = ::cppns::NestedCollection;
+    using CppType = ::NestedCollection;
     using JniType = jobject;
 
     using Boxed = NestedCollection;

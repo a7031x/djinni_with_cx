@@ -3,8 +3,6 @@
 
 #include "constants_interface.hpp"  // my header
 
-namespace cppns {
-
 bool const ConstantsInterface::BOOL_CONSTANT = true;
 
 uint8 const ConstantsInterface::I8_CONSTANT = 1;
@@ -18,5 +16,3 @@ int64_t const ConstantsInterface::I64_CONSTANT = 4;
 float const ConstantsInterface::F32_CONSTANT = 5.0f;
 
 double const ConstantsInterface::F64_CONSTANT = 5.0;
-
-}  // namespace cppns

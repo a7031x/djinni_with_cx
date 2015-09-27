@@ -32,10 +32,9 @@ jni:
   typename: jobject
   typeSignature: 'Ljava/time/Duration;'
 cx:
-  typename: TimeSpan
-  reference: true
+  typename: Windows::Foundation::TimeSpan
+  reference: false
   boxed: false
-  header: CxDateTime.h
 cxcpp:
   typename: '::djinni::TimeSpan'
   header: 'datetime.hpp'
@@ -70,10 +69,9 @@ jni:
   typename: jobject
   typeSignature: 'Ljava/time/Duration;'
 cx:
-  typename: TimeSpan
-  reference: true
+  typename: Windows::Foundation::TimeSpan
+  reference: false
   boxed: false
-  header: CxDateTime.h
 cxcpp:
   typename: '::djinni::TimeSpan'
   header: 'datetime.hpp'
@@ -108,10 +106,9 @@ jni:
   typename: jobject
   typeSignature: 'Ljava/time/Duration;'
 cx:
-  typename: TimeSpan
-  reference: true
+  typename: Windows::Foundation::TimeSpan
+  reference: false
   boxed: false
-  header: CxDateTime.h
 cxcpp:
   typename: '::djinni::TimeSpan'
   header: 'datetime.hpp'
@@ -146,10 +143,9 @@ jni:
   typename: jobject
   typeSignature: 'Ljava/time/Duration;'
 cx:
-  typename: TimeSpan
-  reference: true
+  typename: Windows::Foundation::TimeSpan
+  reference: false
   boxed: false
-  header: CxDateTime.h
 cxcpp:
   typename: '::djinni::TimeSpan'
   header: 'datetime.hpp'
@@ -184,10 +180,9 @@ jni:
   typename: jobject
   typeSignature: 'Ljava/time/Duration;'
 cx:
-  typename: TimeSpan
-  reference: true
+  typename: Windows::Foundation::TimeSpan
+  reference: false
   boxed: false
-  header: CxDateTime.h
 cxcpp:
   typename: '::djinni::TimeSpan'
   header: 'datetime.hpp'
@@ -222,10 +217,9 @@ jni:
   typename: jobject
   typeSignature: 'Ljava/time/Duration;'
 cx:
-  typename: TimeSpan
-  reference: true
+  typename: Windows::Foundation::TimeSpan
+  reference: false
   boxed: false
-  header: CxDateTime.h
 cxcpp:
   typename: '::djinni::TimeSpan'
   header: 'datetime.hpp'
@@ -260,10 +254,9 @@ jni:
   typename: jobject
   typeSignature: 'Ljava/time/Duration;'
 cx:
-  typename: TimeSpan
-  reference: true
+  typename: Windows::Foundation::TimeSpan
+  reference: false
   boxed: false
-  header: CxDateTime.h
 cxcpp:
   typename: '::djinni::TimeSpan'
   header: 'datetime.hpp'

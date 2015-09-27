@@ -8,9 +8,9 @@
 
 namespace jnins {
 
-class CppException final : ::djinni::JniInterface<::cppns::CppException, CppException> {
+class CppException final : ::djinni::JniInterface<::CppException, CppException> {
 public:
-    using CppType = std::shared_ptr<::cppns::CppException>;
+    using CppType = std::shared_ptr<::CppException>;
     using JniType = jobject;
 
     using Boxed = CppException;
@@ -23,7 +23,7 @@ public:
 private:
     CppException();
     friend ::djinni::JniClass<CppException>;
-    friend ::djinni::JniInterface<::cppns::CppException, CppException>;
+    friend ::djinni::JniInterface<::CppException, CppException>;
 
 };
 

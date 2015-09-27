@@ -3,8 +3,6 @@
 
 #include "assorted_primitives.hpp"  // my header
 
-namespace cppns {
-
 
 bool operator==(const AssortedPrimitives& lhs, const AssortedPrimitives& rhs) {
     return lhs.b == rhs.b &&
@@ -26,5 +24,3 @@ bool operator==(const AssortedPrimitives& lhs, const AssortedPrimitives& rhs) {
 bool operator!=(const AssortedPrimitives& lhs, const AssortedPrimitives& rhs) {
     return !(lhs == rhs);
 }
-
-}  // namespace cppns

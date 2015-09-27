@@ -11,19 +11,19 @@
 
 namespace System {
 
-template<> class CxInterfaceProxy<::cppns::ClientInterface> : public ::cppns::ClientInterface
+template<> class CxInterfaceProxy<::ClientInterface> : public ::ClientInterface
 {
 public:
     CxInterfaceProxy(::System::Cxns::ClientInterface^ nativeRef)
     {
         native_call_nativeRef = [nativeRef]{ return nativeRef; };
     }
-    ClientReturnedRecord get_record(int64_t, const std::string &, const std::experimental::optional<std::string> &) override
+    ::ClientReturnedRecord get_record(int64_t record_id, const std::string & utf8string, const std::experimental::optional<std::string> & misc) override
     {
-        auto nativeRet = nativeRef()->GetRecord(transform<int64_t, int64_t>()(record_id), transform<std::string, Platform::String^>()(utf8string), transform<std::experimental::optional<std::string>, StringRef^>()(misc));
-        return transform<::cppns::ClientReturnedRecord, ClientReturnedRecord^>()(nativeRet);
+        auto nativeRet = nativeRef()->GetRecord(transform<int64_t, int64_t>()(record_id), transform<std::string, Platform::String^>()(utf8string), transform<std::experimental::optional<std::string>, Platform::String^>()(misc));
+        return transform<::ClientReturnedRecord, ::System::Cxns::ClientReturnedRecord^>()(nativeRet);
     }
-    double identifier_check(const std::vector<uint8_t> &, int32_t, int64_t) override
+    double identifier_check(const std::vector<uint8_t> & data, int32_t r, int64_t jret) override
     {
         auto nativeRet = nativeRef()->IdentifierCheck(transform<std::vector<uint8_t>, Platform::Array<uint8_t>^>()(data), transform<int32_t, int32_t>()(r), transform<int64_t, int64_t>()(jret));
         return transform<double, double>()(nativeRet);

@@ -19,8 +19,8 @@ int32_t CppException::ThrowAnException ()
 CppException^ CppException::Get ()
 {
     try {
-        auto cppRet = ::cppns::CppException::get();
-        return transform<std::shared_ptr<::cppns::CppException>, CppException^>()(cppRet);
+        auto cppRet = ::CppException::get();
+        return transform<std::shared_ptr<::CppException>, CppException^>()(cppRet);
     }
     catch(const std::exception& e) {
         throw ref new Platform::Exception(-1, transform<std::string, Platform::String^>()((std::string)e.what()));

@@ -10,7 +10,7 @@
 
 namespace System {
 
-template<> class CxInterfaceProxy<::cppns::Token> : public ::cppns::Token
+template<> class CxInterfaceProxy<::Token> : public ::Token
 {
 public:
     CxInterfaceProxy(::System::Cxns::Token^ nativeRef)

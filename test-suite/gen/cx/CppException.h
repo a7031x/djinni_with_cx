@@ -8,16 +8,16 @@
 
 namespace System { namespace Cxns {
 
-public ref class CppException sealed
+public ref class CppException sealed : public Platform::Object
 {
 public:
     int32_t ThrowAnException ();
     static CppException^ Get ();
 internal:
-    CppException(std::shared_ptr<::cppns::CppException> cppRef) : _cppRef(cppRef) {}
-    std::shared_ptr<::cppns::CppException> cppRef() {return _cppRef;}
+    CppException(std::shared_ptr<::CppException> cppRef) : _cppRef(cppRef) {}
+    std::shared_ptr<::CppException> cppRef() {return _cppRef;}
 private:
-    std::shared_ptr<::cppns::CppException> _cppRef;
+    std::shared_ptr<::CppException> _cppRef;
 };
 
 } }  // namespace System::Cxns

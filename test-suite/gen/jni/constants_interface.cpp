@@ -6,7 +6,7 @@
 
 namespace jnins {
 
-ConstantsInterface::ConstantsInterface() : ::djinni::JniInterface<::cppns::ConstantsInterface, ConstantsInterface>("ConstantsInterface$CppProxy") {}
+ConstantsInterface::ConstantsInterface() : ::djinni::JniInterface<::ConstantsInterface, ConstantsInterface>("ConstantsInterface$CppProxy") {}
 
 ConstantsInterface::~ConstantsInterface() = default;
 
@@ -15,7 +15,7 @@ CJNIEXPORT void JNICALL Java_ConstantsInterface_00024CppProxy_nativeDestroy(JNIE
 {
     try {
         DJINNI_FUNCTION_PROLOGUE1(jniEnv, nativeRef);
-        delete reinterpret_cast<djinni::CppProxyHandle<::cppns::ConstantsInterface>*>(nativeRef);
+        delete reinterpret_cast<djinni::CppProxyHandle<::ConstantsInterface>*>(nativeRef);
     } JNI_TRANSLATE_EXCEPTIONS_RETURN(jniEnv, )
 }
 
@@ -23,7 +23,7 @@ CJNIEXPORT void JNICALL Java_ConstantsInterface_00024CppProxy_native_1dummy(JNIE
 {
     try {
         DJINNI_FUNCTION_PROLOGUE1(jniEnv, nativeRef);
-        const auto& ref = ::djinni::CppProxyHandle<::cppns::ConstantsInterface>::get(nativeRef);
+        const auto& ref = ::djinni::CppProxyHandle<::ConstantsInterface>::get(nativeRef);
         ref->dummy();
     } JNI_TRANSLATE_EXCEPTIONS_RETURN(jniEnv, )
 }

@@ -1,4 +1,3 @@
-@import "primtypes.djinni"
 @import "set.djinni"
 @import "derivings.djinni"
 @import "nested_collection.djinni"
@@ -8,4 +7,8 @@
 @import "client_interface.djinni"
 @import "enum.djinni"
 @import "token.djinni"
+@import "test.djinni"
+@import "primtypes.djinni"
 @import "constants.djinni"
+@import "date.djinni"
+@import "duration.djinni"

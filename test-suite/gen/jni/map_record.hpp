@@ -10,7 +10,7 @@ namespace jnins {
 
 class MapRecord final {
 public:
-    using CppType = ::cppns::MapRecord;
+    using CppType = ::MapRecord;
     using JniType = jobject;
 
     using Boxed = MapRecord;

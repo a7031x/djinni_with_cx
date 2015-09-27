@@ -8,9 +8,9 @@
 
 namespace jnins {
 
-class ClientInterface final : ::djinni::JniInterface<::cppns::ClientInterface, ClientInterface> {
+class ClientInterface final : ::djinni::JniInterface<::ClientInterface, ClientInterface> {
 public:
-    using CppType = std::shared_ptr<::cppns::ClientInterface>;
+    using CppType = std::shared_ptr<::ClientInterface>;
     using JniType = jobject;
 
     using Boxed = ClientInterface;
@@ -23,21 +23,21 @@ public:
 private:
     ClientInterface();
     friend ::djinni::JniClass<ClientInterface>;
-    friend ::djinni::JniInterface<::cppns::ClientInterface, ClientInterface>;
+    friend ::djinni::JniInterface<::ClientInterface, ClientInterface>;
 
-    class JavaProxy final : ::djinni::JavaProxyCacheEntry, public ::cppns::ClientInterface
+    class JavaProxy final : ::djinni::JavaProxyCacheEntry, public ::ClientInterface
     {
     public:
         JavaProxy(JniType j);
         ~JavaProxy();
 
-        ::cppns::ClientReturnedRecord get_record(int64_t record_id, const std::string & utf8string, const std::experimental::optional<std::string> & misc) override;
+        ::ClientReturnedRecord get_record(int64_t record_id, const std::string & utf8string, const std::experimental::optional<std::string> & misc) override;
         double identifier_check(const std::vector<uint8_t> & data, int32_t r, int64_t jret) override;
         std::string return_str() override;
 
     private:
         using ::djinni::JavaProxyCacheEntry::getGlobalRef;
-        friend ::djinni::JniInterface<::cppns::ClientInterface, ::jnins::ClientInterface>;
+        friend ::djinni::JniInterface<::ClientInterface, ::jnins::ClientInterface>;
         friend ::djinni::JavaProxyCache<JavaProxy>;
     };
 

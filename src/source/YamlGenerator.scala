@@ -220,7 +220,7 @@ object YamlGenerator {
       nested(td, "jni")("typeSignature").toString),
     MExtern.Cx(
       nested(td, "cx")("typename").toString,
-      nested(td, "cx")("header").toString,
+      if(nested(td, "cx").contains("header")) Some(nested(td, "cx")("header").toString) else None,
       nested(td, "cx")("boxed").toString,
       nested(td, "cx")("reference").asInstanceOf[Boolean]),
     MExtern.CxCpp(

@@ -7,16 +7,16 @@
 namespace System { namespace Cxns {
 
 
-::cppns::RecordWithNestedDerivings RecordWithNestedDerivings::toCpp() {
-    return ::cppns::RecordWithNestedDerivings(
+::RecordWithNestedDerivings RecordWithNestedDerivings::toCpp() {
+    return ::RecordWithNestedDerivings(
         transform<int32_t, int32_t>()(Key),
-        transform<::cppns::RecordWithDerivings, RecordWithDerivings^>()(Rec));
+        transform<::RecordWithDerivings, RecordWithDerivings^>()(Rec));
 }
 
-RecordWithNestedDerivings^ RecordWithNestedDerivings::fromCpp(const ::cppns::RecordWithNestedDerivings& value) {
+RecordWithNestedDerivings^ RecordWithNestedDerivings::fromCpp(const ::RecordWithNestedDerivings& value) {
     RecordWithNestedDerivings^ ret = ref new RecordWithNestedDerivings();
     ret->Key = transform<int32_t, int32_t>()(value.key);
-    ret->Rec = transform<::cppns::RecordWithDerivings, RecordWithDerivings^>()(value.rec);
+    ret->Rec = transform<::RecordWithDerivings, RecordWithDerivings^>()(value.rec);
     return ret;
 }
 
@@ -30,7 +30,7 @@ int32 RecordWithNestedDerivings::CompareTo(RecordWithNestedDerivings^ rhs) {
     int32 tempResult = 0;
     if (this->Key < rhs->Key) {
         return -1;
-    } else if (this->Key > rhs->Key) {
+    } else if (rhs->Key < this->Key) {
         tempResult = 1;
     } else {
         tempResult = 0;
@@ -38,7 +38,7 @@ int32 RecordWithNestedDerivings::CompareTo(RecordWithNestedDerivings^ rhs) {
     if(tempResult) return tempResult;
     tempResult = this->Rec->CompareTo(rhs->Rec);
     if(tempResult) return tempResult;
-    return tempResult;
+    return 0;
 }
 
 } }  // namespace System::Cxns

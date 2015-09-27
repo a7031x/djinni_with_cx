@@ -7,8 +7,6 @@
 #include <utility>
 #include <vector>
 
-namespace cppns {
-
 struct PrimitiveList final {
     std::vector<int64_t> list;
 
@@ -17,5 +15,3 @@ struct PrimitiveList final {
     {}
     PrimitiveList() {}
 };
-
-}  // namespace cppns

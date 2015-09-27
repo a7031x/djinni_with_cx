@@ -6,8 +6,6 @@
 #include <cstdint>
 #include <memory>
 
-namespace cppns {
-
 class CppException {
 public:
     virtual ~CppException() {}
@@ -16,5 +14,3 @@ public:
 
     static std::shared_ptr<CppException> get();
 };
-
-}  // namespace cppns

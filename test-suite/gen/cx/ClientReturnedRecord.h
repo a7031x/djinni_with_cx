@@ -11,19 +11,19 @@ public ref class ClientReturnedRecord sealed : public Platform::Object {
 public:
     property int64_t RecordId;
     property Platform::String^ Content;
-    property StringRef^ Misc;
+    property Platform::String^ Misc;
 
     ClientReturnedRecord(int64_t RecordId,
                          Platform::String^ Content,
-                         StringRef^ Misc) {
+                         Platform::String^ Misc) {
         this->RecordId = RecordId;
         this->Content = Content;
         this->Misc = Misc;
     }
     ClientReturnedRecord() {}
 internal:
-    ::cppns::ClientReturnedRecord toCpp();
-    static ClientReturnedRecord^ fromCpp(const ::cppns::ClientReturnedRecord& value);
+    ::ClientReturnedRecord toCpp();
+    static ClientReturnedRecord^ fromCpp(const ::ClientReturnedRecord& value);
 };
 
 } }  // namespace System::Cxns

@@ -16,13 +16,13 @@ public:
     property int64_t Sixtyfour;
     property float Fthirtytwo;
     property double Fsixtyfour;
-    property BoolRef^ OB;
-    property ByteRef^ OEight;
-    property ShortRef^ OSixteen;
-    property IntRef^ OThirtytwo;
-    property LongRef^ OSixtyfour;
-    property FloatRef^ OFthirtytwo;
-    property DoubleRef^ OFsixtyfour;
+    property Platform::IBox<bool>^ OB;
+    property Platform::IBox<uint8>^ OEight;
+    property Platform::IBox<short>^ OSixteen;
+    property Platform::IBox<int>^ OThirtytwo;
+    property Platform::IBox<int64_t>^ OSixtyfour;
+    property Platform::IBox<float>^ OFthirtytwo;
+    property Platform::IBox<double>^ OFsixtyfour;
 
     AssortedPrimitives(bool B,
                        uint8 Eight,
@@ -31,13 +31,13 @@ public:
                        int64_t Sixtyfour,
                        float Fthirtytwo,
                        double Fsixtyfour,
-                       BoolRef^ OB,
-                       ByteRef^ OEight,
-                       ShortRef^ OSixteen,
-                       IntRef^ OThirtytwo,
-                       LongRef^ OSixtyfour,
-                       FloatRef^ OFthirtytwo,
-                       DoubleRef^ OFsixtyfour) {
+                       Platform::IBox<bool>^ OB,
+                       Platform::IBox<uint8>^ OEight,
+                       Platform::IBox<short>^ OSixteen,
+                       Platform::IBox<int>^ OThirtytwo,
+                       Platform::IBox<int64_t>^ OSixtyfour,
+                       Platform::IBox<float>^ OFthirtytwo,
+                       Platform::IBox<double>^ OFsixtyfour) {
         this->B = B;
         this->Eight = Eight;
         this->Sixteen = Sixteen;
@@ -55,8 +55,8 @@ public:
     }
     AssortedPrimitives() {}
 internal:
-    ::cppns::AssortedPrimitives toCpp();
-    static AssortedPrimitives^ fromCpp(const ::cppns::AssortedPrimitives& value);
+    ::AssortedPrimitives toCpp();
+    static AssortedPrimitives^ fromCpp(const ::AssortedPrimitives& value);
 
     bool Equals(AssortedPrimitives^ rhs);
 };

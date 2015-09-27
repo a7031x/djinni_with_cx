@@ -16,8 +16,8 @@ public:
     }
     MapListRecord() {}
 internal:
-    ::cppns::MapListRecord toCpp();
-    static MapListRecord^ fromCpp(const ::cppns::MapListRecord& value);
+    ::MapListRecord toCpp();
+    static MapListRecord^ fromCpp(const ::MapListRecord& value);
 };
 
 } }  // namespace System::Cxns

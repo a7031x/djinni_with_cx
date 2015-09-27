@@ -9,8 +9,6 @@
 #include <string>
 #include <vector>
 
-namespace cppns {
-
 class ClientInterface {
 public:
     virtual ~ClientInterface() {}
@@ -22,5 +20,3 @@ public:
 
     virtual std::string return_str() = 0;
 };
-
-}  // namespace cppns

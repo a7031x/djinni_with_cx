@@ -7,8 +7,6 @@
 #include <string>
 #include <utility>
 
-namespace cppns {
-
 struct RecordWithDerivings final {
     int32_t key1;
     std::string key2;
@@ -29,5 +27,3 @@ struct RecordWithDerivings final {
     {}
     RecordWithDerivings() {}
 };
-
-}  // namespace cppns

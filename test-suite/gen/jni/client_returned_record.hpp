@@ -10,7 +10,7 @@ namespace jnins {
 
 class ClientReturnedRecord final {
 public:
-    using CppType = ::cppns::ClientReturnedRecord;
+    using CppType = ::ClientReturnedRecord;
     using JniType = jobject;
 
     using Boxed = ClientReturnedRecord;

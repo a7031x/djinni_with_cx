@@ -104,10 +104,6 @@
   </PropertyGroup>
   <ItemGroup>
     <!-- A reference to the entire .Net Framework and Windows SDK are automatically included -->
-    <ProjectReference Include="..\..\..\..\SupportComponent\SupportComponent.Windows\SupportComponent.Windows.vcxproj">
-      <Project>{37438ad5-0f85-4ffb-836a-ca0a46f859d2}</Project>
-      <Name>SupportComponent.Windows</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\TestCxComponent\TestCxComponent.Windows\TestCxComponent.Windows.vcxproj">
       <Project>{bde8fd67-3738-4632-84e9-af8df0a294bc}</Project>
       <Name>TestCxComponent.Windows</Name>

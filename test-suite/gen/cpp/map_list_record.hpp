@@ -9,8 +9,6 @@
 #include <utility>
 #include <vector>
 
-namespace cppns {
-
 struct MapListRecord final {
     std::vector<std::unordered_map<std::string, int64_t>> map_list;
 
@@ -19,5 +17,3 @@ struct MapListRecord final {
     {}
     MapListRecord() {}
 };
-
-}  // namespace cppns

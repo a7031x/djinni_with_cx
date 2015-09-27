@@ -10,7 +10,7 @@ namespace jnins {
 
 class AssortedPrimitives final {
 public:
-    using CppType = ::cppns::AssortedPrimitives;
+    using CppType = ::AssortedPrimitives;
     using JniType = jobject;
 
     using Boxed = AssortedPrimitives;

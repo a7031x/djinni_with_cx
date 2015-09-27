@@ -10,7 +10,7 @@ namespace jnins {
 
 class Constants final {
 public:
-    using CppType = ::cppns::Constants;
+    using CppType = ::Constants;
     using JniType = jobject;
 
     using Boxed = Constants;

@@ -10,7 +10,7 @@ namespace jnins {
 
 class Color final : ::djinni::JniEnum {
 public:
-    using CppType = ::cppns::Color;
+    using CppType = ::color;
     using JniType = jobject;
 
     using Boxed = Color;

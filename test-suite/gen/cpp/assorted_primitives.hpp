@@ -7,8 +7,6 @@
 #include <cstdint>
 #include <utility>
 
-namespace cppns {
-
 struct AssortedPrimitives final {
     bool b;
     uint8 eight;
@@ -59,5 +57,3 @@ struct AssortedPrimitives final {
     {}
     AssortedPrimitives() {}
 };
-
-}  // namespace cppns

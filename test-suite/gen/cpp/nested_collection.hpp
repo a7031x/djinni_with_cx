@@ -8,8 +8,6 @@
 #include <utility>
 #include <vector>
 
-namespace cppns {
-
 struct NestedCollection final {
     std::vector<std::unordered_set<std::string>> set_list;
 
@@ -18,5 +16,3 @@ struct NestedCollection final {
     {}
     NestedCollection() {}
 };
-
-}  // namespace cppns

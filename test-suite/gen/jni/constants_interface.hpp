@@ -8,9 +8,9 @@
 
 namespace jnins {
 
-class ConstantsInterface final : ::djinni::JniInterface<::cppns::ConstantsInterface, ConstantsInterface> {
+class ConstantsInterface final : ::djinni::JniInterface<::ConstantsInterface, ConstantsInterface> {
 public:
-    using CppType = std::shared_ptr<::cppns::ConstantsInterface>;
+    using CppType = std::shared_ptr<::ConstantsInterface>;
     using JniType = jobject;
 
     using Boxed = ConstantsInterface;
@@ -23,7 +23,7 @@ public:
 private:
     ConstantsInterface();
     friend ::djinni::JniClass<ConstantsInterface>;
-    friend ::djinni::JniInterface<::cppns::ConstantsInterface, ConstantsInterface>;
+    friend ::djinni::JniInterface<::ConstantsInterface, ConstantsInterface>;
 
 };
 

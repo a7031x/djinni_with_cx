@@ -7,13 +7,13 @@
 namespace System { namespace Cxns {
 
 
-::cppns::Constants Constants::toCpp() {
-    return ::cppns::Constants(
+::Constants Constants::toCpp() {
+    return ::Constants(
         transform<int32_t, int32_t>()(SomeInteger),
         transform<std::string, Platform::String^>()(SomeString));
 }
 
-Constants^ Constants::fromCpp(const ::cppns::Constants& value) {
+Constants^ Constants::fromCpp(const ::Constants& value) {
     Constants^ ret = ref new Constants();
     ret->SomeInteger = transform<int32_t, int32_t>()(value.some_integer);
     ret->SomeString = transform<std::string, Platform::String^>()(value.some_string);

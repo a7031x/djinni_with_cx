@@ -16,8 +16,8 @@ public:
     }
     NestedCollection() {}
 internal:
-    ::cppns::NestedCollection toCpp();
-    static NestedCollection^ fromCpp(const ::cppns::NestedCollection& value);
+    ::NestedCollection toCpp();
+    static NestedCollection^ fromCpp(const ::NestedCollection& value);
 };
 
 } }  // namespace System::Cxns

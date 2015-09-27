@@ -5,8 +5,6 @@
 
 #include <cstdint>
 
-namespace cppns {
-
 class ConstantsInterface {
 public:
     virtual ~ConstantsInterface() {}
@@ -27,5 +25,3 @@ public:
 
     virtual void dummy() = 0;
 };
-
-}  // namespace cppns

@@ -7,13 +7,13 @@
 namespace System { namespace Cxns {
 
 
-::cppns::RecordWithDerivings RecordWithDerivings::toCpp() {
-    return ::cppns::RecordWithDerivings(
+::RecordWithDerivings RecordWithDerivings::toCpp() {
+    return ::RecordWithDerivings(
         transform<int32_t, int32_t>()(Key1),
         transform<std::string, Platform::String^>()(Key2));
 }
 
-RecordWithDerivings^ RecordWithDerivings::fromCpp(const ::cppns::RecordWithDerivings& value) {
+RecordWithDerivings^ RecordWithDerivings::fromCpp(const ::RecordWithDerivings& value) {
     RecordWithDerivings^ ret = ref new RecordWithDerivings();
     ret->Key1 = transform<int32_t, int32_t>()(value.key1);
     ret->Key2 = transform<std::string, Platform::String^>()(value.key2);
@@ -30,7 +30,7 @@ int32 RecordWithDerivings::CompareTo(RecordWithDerivings^ rhs) {
     int32 tempResult = 0;
     if (this->Key1 < rhs->Key1) {
         return -1;
-    } else if (this->Key1 > rhs->Key1) {
+    } else if (rhs->Key1 < this->Key1) {
         tempResult = 1;
     } else {
         tempResult = 0;
@@ -38,7 +38,7 @@ int32 RecordWithDerivings::CompareTo(RecordWithDerivings^ rhs) {
     if(tempResult) return tempResult;
     tempResult = Platform::String::CompareOrdinal(this->Key2, rhs->Key2);
     if(tempResult) return tempResult;
-    return tempResult;
+    return 0;
 }
 
 } }  // namespace System::Cxns

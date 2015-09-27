@@ -26,15 +26,21 @@ bool TestHelpers::check_primitive_list(const PrimitiveList & pl) {
     return pl.list == cPrimitiveList.list;
 }
 
-static const NestedCollection cNestedCollection { { {u8"String1", u8"String2"},
-                                                    {u8"StringA", u8"StringB"} } };
+inline NestedCollection cNestedCollection() {
+	NestedCollection c;
+	std::unordered_set<std::string> s1 = { "String1", "String2" };
+	c.set_list.push_back(s1);
+	std::unordered_set<std::string> s2 = { "StringA", "StringB" };
+	c.set_list.push_back(s2);
+	return c;
+}
 
 NestedCollection TestHelpers::get_nested_collection() {
-    return cNestedCollection;
+    return cNestedCollection();
 }
 
 bool TestHelpers::check_nested_collection(const NestedCollection & nc) {
-    return nc.set_list == cNestedCollection.set_list;
+    return nc.set_list == cNestedCollection().set_list;
 }
 
 static const std::unordered_map<std::string, int64_t> cMap = {

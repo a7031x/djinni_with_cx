@@ -19,8 +19,8 @@ public:
     }
     MapRecord() {}
 internal:
-    ::cppns::MapRecord toCpp();
-    static MapRecord^ fromCpp(const ::cppns::MapRecord& value);
+    ::MapRecord toCpp();
+    static MapRecord^ fromCpp(const ::MapRecord& value);
 };
 
 } }  // namespace System::Cxns

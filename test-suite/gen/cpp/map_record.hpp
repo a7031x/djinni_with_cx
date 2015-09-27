@@ -8,8 +8,6 @@
 #include <unordered_map>
 #include <utility>
 
-namespace cppns {
-
 struct MapRecord final {
     std::unordered_map<std::string, int64_t> map;
     std::unordered_map<int32_t, int32_t> imap;
@@ -21,5 +19,3 @@ struct MapRecord final {
     {}
     MapRecord() {}
 };
-
-}  // namespace cppns

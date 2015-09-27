@@ -8,8 +8,6 @@
 #include <string>
 #include <utility>
 
-namespace cppns {
-
 struct Constants final {
 
     static bool const BOOL_CONSTANT;
@@ -41,5 +39,3 @@ struct Constants final {
     {}
     Constants() {}
 };
-
-}  // namespace cppns

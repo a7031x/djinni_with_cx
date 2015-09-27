@@ -10,7 +10,7 @@ namespace jnins {
 
 class SetRecord final {
 public:
-    using CppType = ::cppns::SetRecord;
+    using CppType = ::SetRecord;
     using JniType = jobject;
 
     using Boxed = SetRecord;

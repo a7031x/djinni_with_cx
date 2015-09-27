@@ -7,12 +7,12 @@
 namespace System { namespace Cxns {
 
 
-::cppns::NestedCollection NestedCollection::toCpp() {
-    return ::cppns::NestedCollection(
+::NestedCollection NestedCollection::toCpp() {
+    return ::NestedCollection(
         transform<std::vector<std::unordered_set<std::string>>, Windows::Foundation::Collections::IVector<Windows::Foundation::Collections::IIterable<Platform::String^>^>^>()(SetList));
 }
 
-NestedCollection^ NestedCollection::fromCpp(const ::cppns::NestedCollection& value) {
+NestedCollection^ NestedCollection::fromCpp(const ::NestedCollection& value) {
     NestedCollection^ ret = ref new NestedCollection();
     ret->SetList = transform<std::vector<std::unordered_set<std::string>>, Windows::Foundation::Collections::IVector<Windows::Foundation::Collections::IIterable<Platform::String^>^>^>()(value.set_list);
     return ret;

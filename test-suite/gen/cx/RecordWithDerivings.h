@@ -19,8 +19,8 @@ public:
     }
     RecordWithDerivings() {}
 internal:
-    ::cppns::RecordWithDerivings toCpp();
-    static RecordWithDerivings^ fromCpp(const ::cppns::RecordWithDerivings& value);
+    ::RecordWithDerivings toCpp();
+    static RecordWithDerivings^ fromCpp(const ::RecordWithDerivings& value);
 
     bool Equals(RecordWithDerivings^ rhs);
 

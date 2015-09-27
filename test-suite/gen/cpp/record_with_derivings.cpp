@@ -3,8 +3,6 @@
 
 #include "record_with_derivings.hpp"  // my header
 
-namespace cppns {
-
 
 bool operator==(const RecordWithDerivings& lhs, const RecordWithDerivings& rhs) {
     return lhs.key1 == rhs.key1 &&
@@ -42,5 +40,3 @@ bool operator<=(const RecordWithDerivings& lhs, const RecordWithDerivings& rhs) 
 bool operator>=(const RecordWithDerivings& lhs, const RecordWithDerivings& rhs) {
     return !(lhs < rhs);
 }
-
-}  // namespace cppns

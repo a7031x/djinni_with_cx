@@ -8,8 +8,6 @@
 #include <string>
 #include <utility>
 
-namespace cppns {
-
 struct ClientReturnedRecord final {
     int64_t record_id;
     std::string content;
@@ -24,5 +22,3 @@ struct ClientReturnedRecord final {
     {}
     ClientReturnedRecord() {}
 };
-
-}  // namespace cppns
