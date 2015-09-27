@@ -4,7 +4,7 @@
 #include "AssortedPrimitives.h"  // my header
 #include "../../../../support-lib/cx/translate.h"
 
-namespace Cxns {
+namespace System { namespace Cxns {
 
 using namespace System;
 
@@ -62,4 +62,4 @@ bool AssortedPrimitives::Equals(AssortedPrimitives^ rhs) {
            this->OFsixtyfour == rhs->OFsixtyfour;
 }
 
-}  // namespace Cxns
+} }  // namespace System::Cxns

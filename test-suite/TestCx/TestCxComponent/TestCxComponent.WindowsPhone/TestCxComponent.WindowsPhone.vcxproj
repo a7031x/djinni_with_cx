@@ -26,8 +26,7 @@
   <PropertyGroup Label="Globals">
     <ProjectGuid>{654f6e7f-1541-4112-bb54-0ad8b35f6b3c}</ProjectGuid>
     <Keyword>WindowsRuntimeComponent</Keyword>
-    <RootNamespace>
-    </RootNamespace>
+    <RootNamespace>System.Cxns</RootNamespace>
     <DefaultLanguage>en-US</DefaultLanguage>
     <MinimumVisualStudioVersion>12.0</MinimumVisualStudioVersion>
     <AppContainerApplication>true</AppContainerApplication>
