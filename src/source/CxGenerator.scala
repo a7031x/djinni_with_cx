@@ -27,7 +27,6 @@ import scala.collection.mutable
 class CxGenerator(spec: Spec) extends Generator(spec) {
 
   val cxMarshal = new CxMarshal(spec)
-  val cxcppMarshal = new CxCppMarshal(spec)
   val cppMarshal = new CppMarshal(spec)
 
   val writeCxFile = writeCppFileGeneric(spec.cxOutFolder.get, spec.cxNamespace, spec.cxFileIdentStyle, spec.cxIncludePrefix, spec.cxExt, spec.cxHeaderExt) _
@@ -131,20 +130,15 @@ class CxGenerator(spec: Spec) extends Generator(spec) {
     r.consts.foreach(c => refs.find(c.ty))
 
     val self = cxMarshal.typename(ident, r)
-    val (cxName, cxFinal) = if (r.ext.cx) (ident.name + "_base", "") else (ident.name, " sealed")
-    val actualSelf = cxMarshal.typename(cxName, r)
-
-    // Requiring the extended class
-    if (r.ext.cx) {
-      refs.hx.add(s"publc ref struct $self;")
-      refs.cx.add("#include " + q("../" + spec.cxFileIdentStyle(ident) + "." + spec.cxHeaderExt))
-    }
+    val (cxName, cxFinal) = (ident.name, " sealed : public Platform::Object")
+    val cppType = withNs(Some(spec.cppNamespace), self)
 
     // C++ Header
     def writeCxPrototype(w: IndentWriter) {
+      w.wl("using namespace System;")
       writeDoc(w, doc)
       writeCxTypeParams(w, params)
-      w.w("public ref struct " + actualSelf + cxFinal).bracedSemi {
+      w.w("public ref class " + self + cxFinal).bracedSemi {
         generateHxConstants(w, r.consts)
         // Field definitions.
         for (f <- r.fields) {
@@ -152,37 +146,54 @@ class CxGenerator(spec: Spec) extends Generator(spec) {
           w.wl("property " + cxMarshal.fieldType(f.ty) + " " + idCx.field(f.ident) + ";")
         }
 
-        // Constructor.
-        if (r.fields.nonEmpty) {
-          w.wl
-          writeAlignedCall(w, actualSelf + "(", r.fields, ")", f => cxMarshal.fieldType(f.ty) + " " + idCx.local("new_"+f.ident.name))
-          w.wl
-          w.braced {
-            r.fields.map(f => w.wl(s"${idCx.local(f.ident)} = ${idCx.local("new_"+f.ident.name)};") )
-          }
-        }
+        w.wlOutdent("internal:")
+        w.wl(s"$cppType toCpp();")
+        w.wl(s"static $self^ fromCpp(const $cppType& value);")
 
         if (r.derivingTypes.contains(DerivingType.Eq)) {
           w.wl
-          w.wl(s"bool Equals($actualSelf^ rhs);")
+          w.wl(s"bool Equals($self^ rhs);")
         }
         if (r.derivingTypes.contains(DerivingType.Ord)) {
           w.wl
-          w.wl(s"int32 CompareTo($actualSelf^ rhs);")
+          w.wl(s"int32 CompareTo($self^ rhs);")
         }
 
       }
     }
+    refs.hx += cppHeader(ident.name)
+    refs.cx.add("#include " + q(spec.cxBaseLibIncludePrefix + "translate.h"))
 
     writeHxFile(cxName, origin, refs.hx, refs.hxFwds, writeCxPrototype)
 
     if (r.consts.nonEmpty || r.derivingTypes.nonEmpty) {
       writeCxFile(cxName, origin, refs.cx, w => {
-        generateCxConstants(w, r.consts, actualSelf)
+        w.wl("using namespace System;")
+        generateCxConstants(w, r.consts, self)
+        w.wl
+        w.w(s"$cppType $self::toCpp()").braced {
+          w.wl(s"return $cppType(")
+          w.increase()
+          val skipFirst = SkipFirst()
+            for(f <- r.fields) {
+              skipFirst{w.wl(",")}
+              w.w(s"${translate(f.ty.resolved, idCx.field(f.ident))}")
+            }
+          w.decrease()
+          w.wl(");")
 
+        }
+        w.wl
+        w.w(s"$self^ $self::fromCpp(const $cppType& value)").braced {
+          w.wl(s"$self^ ret = ref new $self();")
+          for(f <- r.fields) {
+            w.wl(s"ret->${idCx.field(f.ident)} = ${translate(f.ty.resolved, "value." + idCpp.field(f.ident))};")
+          }
+          w.wl("return ret;")
+        }
         if (r.derivingTypes.contains(DerivingType.Eq)) {
           w.wl
-          w.w(s"bool $actualSelf::Equals($actualSelf^ rhs)").braced {
+          w.w(s"bool $self::Equals($self^ rhs)").braced {
             if (!r.fields.isEmpty) {
               writeAlignedCall(w, "return ", r.fields, " &&", "", f => s"this->${idCx.field(f.ident)} == rhs->${idCx.field(f.ident)}")
               w.wl(";")
@@ -193,7 +204,7 @@ class CxGenerator(spec: Spec) extends Generator(spec) {
         }
         if (r.derivingTypes.contains(DerivingType.Ord)) {
           w.wl
-          w.w(s"int32 $actualSelf::CompareTo($actualSelf^ rhs)").braced {
+          w.w(s"int32 $self::CompareTo($self^ rhs)").braced {
             w.wl(s"if (rhs == nullptr) return 1;")
             w.wl("int32 tempResult;")
             for (f <- r.fields) {
@@ -243,7 +254,6 @@ class CxGenerator(spec: Spec) extends Generator(spec) {
       m.ret.foreach(refs.findConvert)
     })
     refs.cx.add("#include \"Marshal.h\"")
-    refs.cx.add("#include \""+ spec.cxcppIncludePrefix + cxcppMarshal.headerName(ident.name) + "." + spec.cxcppHeaderExt + "\"")
 
     val self = cxMarshal.typename(ident, i)
     val cppSelf = cppMarshal.fqTypename(ident, i)
@@ -327,5 +337,87 @@ class CxGenerator(spec: Spec) extends Generator(spec) {
     if (params.isEmpty) return
     w.wl("template " + params.map(p => "typename " + idCx.typeParam(p.ident)).mkString("<", ", ", ">"))
   }
+  def translate(ty: MExpr, name: String, csNamespace: Option[String]=None): String = {
+    val Cpp = toCppType(ty, Some(spec.cppNamespace))
+  //  val Cx = toCxType(ty, csNamespace)
+    val Cx = cxMarshal.fieldType(ty)
+    s"transform<$Cpp, $Cx>()($name)"
+  }
+  def toCxType(ty: TypeRef, namespace: Option[String] = None): String = toCxType(ty.resolved, namespace)
+  def toCxType(tm: MExpr, namespace: Option[String]): String = {
+    def f(tm: MExpr, needRef: Boolean): String = {
+      tm.base match {
+        case MOptional =>
+          assert(tm.args.size == 1)
+          val arg = tm.args.head
+          arg.base match {
+            case p: MPrimitive =>
+              p.cxBoxed
+            case MString=>
+              "StringRef^"
+            case MOptional => throw new AssertionError("nested optional?")
+            case m => f(arg, true)
+          }
+        case o =>
+          val args = if (tm.args.isEmpty) "" else tm.args.map(f(_, false)).mkString("<", ", ", ">^")
+          val base = o match {
+            case p: MPrimitive => if (needRef) p.cxBoxed else p.cxName
+            case MString => "Platform::String^"
+            case MBinary => "Platform::Array<uint8_t>^"
+            case MOptional => throw new AssertionError("optional should have been special cased")
+            case MList => "Windows::Foundation::Collections::IVector"
+            case MSet => "Windows::Foundation::Collections::IIterable"
+            case MMap => "Windows::Foundation::Collections::IMap"
+            case d: MDef =>
+              val r = withNs(namespace, idCx.ty(d.name))
+              d.defType match {
+                case DInterface=>r + "^"
+                case DRecord=>r + "^"
+                case _=> r
+              }
+            case p: MParam => idCx.typeParam(p.name)
+          }
+          base + args
+      }
+    }
+    f(tm, false)
+  }
+  def toCppType(ty: TypeRef, namespace: Option[String] = None): String = toCppType(ty.resolved, namespace)
+  def toCppType(tm: MExpr, namespace: Option[String]): String = {
+    def base(m: Meta): String = m match {
+      case p: MPrimitive => p.cName
+      case MString => "std::string"
+      case MBinary => "std::vector<uint8_t>"
+      case MOptional => spec.cppOptionalTemplate
+      // case MAsync => "rc::rest::FutureHandle"
+      case MList => "std::vector"
+      case MSet => "std::unordered_set"
+      case MMap => "std::unordered_map"
+      case d: MDef =>
+        d.defType match {
+          case DEnum => withNs(namespace, idCpp.enumType(d.name))
+          case DRecord => withNs(namespace, idCpp.ty(d.name))
+          case DInterface => s"std::shared_ptr<${withNs(namespace, idCpp.ty(d.name))}>"
+        }
+      case p: MParam => idCpp.typeParam(p.name)
+      case _ => ""
+    }
+    def expr(tm: MExpr): String = {
+      val args = if (tm.args.isEmpty) ""
+      else {
+        tm.base match {
+          case _ =>
+            tm.args.map(expr).mkString("<", ", ", ">")
+        }
 
+      }
+      base(tm.base) + args
+    }
+    expr(tm)
+  }
+  def cppHeader(ident: String): String = {
+    //   val ext = p.ty.asInstanceOf[Interface].ext
+    //   if(ext.cpp)
+    "#include " + q(spec.cxIncludeCppPrefix + spec.cppFileIdentStyle(ident) + "." + spec.cppHeaderExt)
+  }
 }

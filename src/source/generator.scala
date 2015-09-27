@@ -67,21 +67,14 @@ package object generatorTools {
                    objcppNamespace: String,
                    objcBaseLibIncludePrefix: String,
                    cxOutFolder: Option[File],
-                   cxcppOutFolder: Option[File],
                    cxHeaderOutFolder: Option[File],
-                   cxcppHeaderOutFolder: Option[File],
                    cxIncludePrefix: String,
-                   cxcppIncludePrefix: String,
-                   cxcppIncludeCppPrefix: String,
-                   cxcppIncludeCxPrefix: String,
+                   cxIncludeCppPrefix: String,
                    cxIdentStyle: CxIdentStyle,
                    cxFileIdentStyle: IdentConverter,
                    cxExt: String,
                    cxHeaderExt: String,
-                   cxcppExt: String,
-                   cxcppHeaderExt: String,
                    cxNamespace: String,
-                   cxcppNamespace: String,
                    cxBaseLibIncludePrefix: String,
                    outFileListWriter: Option[Writer],
                    skipGeneration: Boolean,
@@ -219,13 +212,6 @@ package object generatorTools {
           createFolder("Cx header", spec.cxHeaderOutFolder.get)
         }
         new CxGenerator(spec).generate(idl)
-      }
-      if (spec.cxcppOutFolder.isDefined) {
-        if (!spec.skipGeneration) {
-          createFolder("CxCpp", spec.cxcppOutFolder.get)
-          createFolder("CxCpp header", spec.cxcppHeaderOutFolder.get)
-        }
-        new CxCppGenerator(spec).generate(idl)
       }
 
       if (spec.yamlOutFolder.isDefined) {

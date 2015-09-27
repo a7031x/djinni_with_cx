@@ -1,0 +1,55 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup Label="Globals">
+    <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+    <HasSharedItems>true</HasSharedItems>
+    <ItemsProjectGuid>{5d07379a-ae00-424d-b466-45896361de9a}</ItemsProjectGuid>
+    <ItemsRootNamespace>
+    </ItemsRootNamespace>
+    <ItemsProjectName>TestCxComponent.Shared</ItemsProjectName>
+    <CodeSharingProject>248F659F-DAC5-46E8-AC09-60EC9FC95053</CodeSharingProject>
+  </PropertyGroup>
+  <ItemDefinitionGroup>
+    <ClCompile>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories);$(MSBuildThisFileDirectory)</AdditionalIncludeDirectories>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ProjectCapability Include="SourceItemsFromImports" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\handwritten\cpp\assorted_primitives.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\handwritten\cpp\constants.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\handwritten\cpp\constants_interface.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\handwritten\cpp\date_record.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\handwritten\cpp\record_with_derivings.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\handwritten\cpp\record_with_duration_and_derivings.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\handwritten\cpp\record_with_nested_derivings.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\handwritten\cx\AssortedPrimitives.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\handwritten\cpp\assorted_primitives.hpp" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\handwritten\cpp\client_interface.hpp" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\handwritten\cpp\client_returned_record.hpp" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\handwritten\cpp\color.hpp" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\handwritten\cpp\constants.hpp" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\handwritten\cpp\constants_interface.hpp" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\handwritten\cpp\cpp_exception.hpp" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\handwritten\cpp\date_record.hpp" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\handwritten\cpp\empty_record.hpp" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\handwritten\cpp\map_date_record.hpp" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\handwritten\cpp\map_list_record.hpp" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\handwritten\cpp\map_record.hpp" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\handwritten\cpp\nested_collection.hpp" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\handwritten\cpp\primitive_list.hpp" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\handwritten\cpp\record_with_derivings.hpp" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\handwritten\cpp\record_with_duration_and_derivings.hpp" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\handwritten\cpp\record_with_nested_derivings.hpp" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\handwritten\cpp\set_record.hpp" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\handwritten\cpp\test_duration.hpp" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\handwritten\cpp\test_helpers.hpp" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\handwritten\cpp\token.hpp" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\handwritten\cx\AssortedPrimitives.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\handwritten\cx\ClientReturnedRecord.h" />
+  </ItemGroup>
+</Project>

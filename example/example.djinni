@@ -16,3 +16,10 @@ sort_items = interface +c {
 textbox_listener = interface +j +o {
     update(items: item_list);
 }
+
+test_interface = interface +j +o {
+    get_set(): set<string>;
+    get_list(): list<string>;
+    get_int_ref(): optional<i32>;
+    get_string_ref(): optional<string>;
+}

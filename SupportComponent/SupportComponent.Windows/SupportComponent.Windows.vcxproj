@@ -29,7 +29,8 @@
   <PropertyGroup Label="Globals">
     <ProjectGuid>{37438ad5-0f85-4ffb-836a-ca0a46f859d2}</ProjectGuid>
     <Keyword>WindowsRuntimeComponent</Keyword>
-    <RootNamespace>Ringcentral</RootNamespace>
+    <RootNamespace>
+    </RootNamespace>
     <DefaultLanguage>en-US</DefaultLanguage>
     <MinimumVisualStudioVersion>12.0</MinimumVisualStudioVersion>
     <AppContainerApplication>true</AppContainerApplication>

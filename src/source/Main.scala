@@ -66,21 +66,14 @@ object Main {
     var objcppNamespace: String = "djinni_generated"
     var objcBaseLibIncludePrefix: String = ""
     var cxOutFolder: Option[File] = None
-    var cxcppOutFolder: Option[File] = None
     var cxHeaderOutFolderOptional: Option[File] = None
-    var cxcppHeaderOutFolderOptional: Option[File] = None
     var cxIncludePrefix: String = ""
-    var cxcppIncludePrefix: String = ""
-    var cxcppIncludeCppPrefix: String = ""
-    var cxcppIncludeCxPrefix: String = ""
+    var cxIncludeCppPrefix: String = ""
     var cxIdentStyle: CxIdentStyle = IdentStyle.cxDefault
     var cxFileIdentStyle: IdentConverter = IdentStyle.camelUpper
     var cxExt: String = "cpp"
     var cxHeaderExt: String = "h"
-    var cxcppExt: String = "cpp"
-    var cxcppHeaderExt: String = "h"
     var cxNamespace: String = "djinni"
-    var cxcppNamespace: String = "djinni_generated"
     var cxBaseLibIncludePrefix: String = ""
     var inFileListPath: Option[File] = None
     var outFileListPath: Option[File] = None
@@ -175,31 +168,17 @@ object Main {
         .text("The Objective-C++ base library's include path, relative to the Objective-C++ classes.")
       opt[File]("cx-out").valueName("<out-folder>").foreach(x => cxOutFolder = Some(x))
         .text("HAHAHAHAHAHAHAHAHAHA")
-      opt[File]("cxcpp-out").valueName("<out-folder>").foreach(x => cxcppOutFolder = Some(x))
-        .text("HAHAHAHAHAHAHAHAHAHA")
       opt[File]("cx-header-out").valueName("<out-folder>").foreach(x => cxHeaderOutFolderOptional = Some(x))
-        .text("HAHAHAHAHAHAHAHAHAHA")
-      opt[File]("cxcpp-header-out").valueName("<out-folder>").foreach(x => cxcppHeaderOutFolderOptional = Some(x))
         .text("HAHAHAHAHAHAHAHAHAHA")
       opt[String]("cx-include-prefix").valueName("<prefix>").foreach(cxIncludePrefix = _)
         .text("HAHAHAHAHAHAHAHAHAHA")
-      opt[String]("cxcpp-include-prefix").valueName("<prefix>").foreach(cxcppIncludePrefix = _)
-        .text("HAHAHAHAHAHAHAHAHAHA")
-      opt[String]("cxcpp-include-cpp-prefix").valueName("<prefix>").foreach(cxcppIncludeCppPrefix = _)
-        .text("HAHAHAHAHAHAHAHAHAHA")
-      opt[String]("cxcpp-include-cx-prefix").valueName("<prefix>").foreach(cxcppIncludeCxPrefix = _)
+      opt[String]("cx-include-cpp-prefix").valueName("<prefix>").foreach(cxIncludeCppPrefix = _)
         .text("HAHAHAHAHAHAHAHAHAHA")
       opt[String]("cx-ext").valueName("<ext>").foreach(cxExt = _)
         .text("HAHAHAHAHAHAHAHAHAHA")
       opt[String]("cx-h-ext").valueName("<ext>").foreach(cxHeaderExt = _)
         .text("HAHAHAHAHAHAHAHAHAHA")
-      opt[String]("cxcpp-ext").valueName("<ext>").foreach(cxcppExt = _)
-        .text("HAHAHAHAHAHAHAHAHAHA")
-      opt[String]("cxcpp-h-ext").valueName("<ext>").foreach(cxcppHeaderExt = _)
-        .text("HAHAHAHAHAHAHAHAHAHA")
       opt[String]("cx-namespace").valueName("<prefix>").foreach(cxNamespace = _)
-        .text("HAHAHAHAHAHAHAHAHAHA")
-      opt[String]("cxcpp-namespace").valueName("<prefix>").foreach(cxcppNamespace = _)
         .text("HAHAHAHAHAHAHAHAHAHA")
       opt[String]("cx-base-lib-include-prefix").valueName("...").foreach(x => cxBaseLibIncludePrefix = x)
         .text("The C++/Cx base library's include path, relative to the C++/Cx classes.")
@@ -261,7 +240,6 @@ object Main {
     var objcFileIdentStyle = objcFileIdentStyleOptional.getOrElse(objcIdentStyle.ty)
     val objcppIncludeObjcPrefix = objcppIncludeObjcPrefixOptional.getOrElse(objcppIncludePrefix)
     val cxHeaderOutFolder = if (cxHeaderOutFolderOptional.isDefined) cxHeaderOutFolderOptional else cxOutFolder
-    val cxcppHeaderOutFolder = if (cxcppHeaderOutFolderOptional.isDefined) cxcppHeaderOutFolderOptional else cxcppOutFolder
 
     // Add ObjC prefix to identstyle
     objcIdentStyle = objcIdentStyle.copy(ty = IdentStyle.prefix(objcTypePrefix,objcIdentStyle.ty))
@@ -354,21 +332,14 @@ object Main {
       objcppNamespace,
       objcBaseLibIncludePrefix,
       cxOutFolder,
-      cxcppOutFolder,
       cxHeaderOutFolder,
-      cxcppHeaderOutFolder,
       cxIncludePrefix,
-      cxcppIncludePrefix,
-      cxcppIncludeCppPrefix,
-      cxcppIncludeCxPrefix,
+      cxIncludeCppPrefix,
       cxIdentStyle,
       cxFileIdentStyle,
       cxExt,
       cxHeaderExt,
-      cxcppExt,
-      cxcppHeaderExt,
       cxNamespace,
-      cxcppNamespace,
       cxBaseLibIncludePrefix,
       outFileListWriter,
       skipGeneration,

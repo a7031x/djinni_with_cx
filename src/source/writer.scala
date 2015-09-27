@@ -34,7 +34,7 @@ class IndentWriter(out: Writer, indent: String = "    ", startIndent: String = "
   }
 
   def wl: IndentWriter = {
-    out.write('\n')
+    out.write("\r\n")
     startOfLine = true
     this
   }

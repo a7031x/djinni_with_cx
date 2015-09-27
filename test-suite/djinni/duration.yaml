@@ -31,6 +31,15 @@ jni:
   header: '"Duration-jni.hpp"'
   typename: jobject
   typeSignature: 'Ljava/time/Duration;'
+cx:
+  typename: TimeSpan
+  reference: true
+  boxed: false
+  header: CxDateTime.h
+cxcpp:
+  typename: '::djinni::TimeSpan'
+  header: 'datetime.hpp'
+  byValue: true
 ---
 name: h
 typedef: 'record'
@@ -60,6 +69,15 @@ jni:
   header: '"Duration-jni.hpp"'
   typename: jobject
   typeSignature: 'Ljava/time/Duration;'
+cx:
+  typename: TimeSpan
+  reference: true
+  boxed: false
+  header: CxDateTime.h
+cxcpp:
+  typename: '::djinni::TimeSpan'
+  header: 'datetime.hpp'
+  byValue: true
 ---
 name: min
 typedef: 'record'
@@ -89,6 +107,15 @@ jni:
   header: '"Duration-jni.hpp"'
   typename: jobject
   typeSignature: 'Ljava/time/Duration;'
+cx:
+  typename: TimeSpan
+  reference: true
+  boxed: false
+  header: CxDateTime.h
+cxcpp:
+  typename: '::djinni::TimeSpan'
+  header: 'datetime.hpp'
+  byValue: true
 ---
 name: s
 typedef: 'record'
@@ -118,6 +145,15 @@ jni:
   header: '"Duration-jni.hpp"'
   typename: jobject
   typeSignature: 'Ljava/time/Duration;'
+cx:
+  typename: TimeSpan
+  reference: true
+  boxed: false
+  header: CxDateTime.h
+cxcpp:
+  typename: '::djinni::TimeSpan'
+  header: 'datetime.hpp'
+  byValue: true
 ---
 name: ms
 typedef: 'record'
@@ -147,6 +183,15 @@ jni:
   header: '"Duration-jni.hpp"'
   typename: jobject
   typeSignature: 'Ljava/time/Duration;'
+cx:
+  typename: TimeSpan
+  reference: true
+  boxed: false
+  header: CxDateTime.h
+cxcpp:
+  typename: '::djinni::TimeSpan'
+  header: 'datetime.hpp'
+  byValue: true
 ---
 name: us
 typedef: 'record'
@@ -176,6 +221,15 @@ jni:
   header: '"Duration-jni.hpp"'
   typename: jobject
   typeSignature: 'Ljava/time/Duration;'
+cx:
+  typename: TimeSpan
+  reference: true
+  boxed: false
+  header: CxDateTime.h
+cxcpp:
+  typename: '::djinni::TimeSpan'
+  header: 'datetime.hpp'
+  byValue: true
 ---
 name: ns
 typedef: 'record'
@@ -205,3 +259,12 @@ jni:
   header: '"Duration-jni.hpp"'
   typename: jobject
   typeSignature: 'Ljava/time/Duration;'
+cx:
+  typename: TimeSpan
+  reference: true
+  boxed: false
+  header: CxDateTime.h
+cxcpp:
+  typename: '::djinni::TimeSpan'
+  header: 'datetime.hpp'
+  byValue: true

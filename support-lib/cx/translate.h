@@ -4,11 +4,10 @@
 #include <unordered_set>
 #include <unordered_map>
 #include <collection.h>
-#include "../../../../external/optional/optional.hpp"
 
 namespace wfc = Windows::Foundation::Collections;
 
-namespace RootNamespace {
+namespace System {
 	template<typename Cpp>
 	struct determine_transformation_type;
 
@@ -97,12 +96,13 @@ namespace RootNamespace {
 
 	struct translate_optional
 	{
-		void operator()(const std::experimental::optional<bool>& cpp, Bool^& cx) { cx = cpp ? ref new Bool(cpp.get()) : nullptr; }
-		void operator()(const std::experimental::optional<int8_t>& cpp, Uinteger8^& cx) { cx = cpp ? ref new Uinteger8(cpp.get()) : nullptr; }
-		void operator()(const std::experimental::optional<int16_t>& cpp, Integer16^& cx) { cx = cpp ? ref new Integer16(cpp.get()) : nullptr; }
-		void operator()(const std::experimental::optional<int32_t>& cpp, Integer32^& cx) { cx = cpp ? ref new Integer32(cpp.get()) : nullptr; }
-		void operator()(const std::experimental::optional<int64_t>& cpp, Integer64^& cx) { cx = cpp ? ref new Integer64(cpp.get()) : nullptr; }
-		void operator()(const std::experimental::optional<double>& cpp, Double^& cx) { cx = cpp ? ref new Double(cpp.get()) : nullptr; }
+		void operator()(const std::experimental::optional<bool>& cpp, BoolRef^& cx) { cx = cpp ? ref new BoolRef(cpp.get()) : nullptr; }
+		void operator()(const std::experimental::optional<int8_t>& cpp, ByteRef^& cx) { cx = cpp ? ref new ByteRef(cpp.get()) : nullptr; }
+		void operator()(const std::experimental::optional<int16_t>& cpp, ShortRef^& cx) { cx = cpp ? ref new ShortRef(cpp.get()) : nullptr; }
+		void operator()(const std::experimental::optional<int32_t>& cpp, IntRef^& cx) { cx = cpp ? ref new IntRef(cpp.get()) : nullptr; }
+		void operator()(const std::experimental::optional<int64_t>& cpp, LongRef^& cx) { cx = cpp ? ref new LongRef(cpp.get()) : nullptr; }
+		void operator()(const std::experimental::optional<float>& cpp, FloatRef^& cx) { cx = cpp ? ref new FloatRef(cpp.get()) : nullptr; }
+		void operator()(const std::experimental::optional<double>& cpp, DoubleRef^& cx) { cx = cpp ? ref new DoubleRef(cpp.get()) : nullptr; }
 		void operator()(const std::experimental::optional<std::string>& cpp, StringRef^& cx)
 		{
 			cx = cpp ? ref new StringRef(transform<std::string, Platform::String^>()(cpp.get())) : nullptr;
@@ -116,12 +116,13 @@ namespace RootNamespace {
 				cx = nullptr;
 		}
 
-		void operator()(Bool^ cx, std::experimental::optional<bool>& cpp) { cpp = cx ? cx->Value : std::remove_reference<decltype(cpp)>::type(); }
-		void operator()(Uinteger8^ cx, std::experimental::optional<int8_t>& cpp) { cpp = cx ? cx->Value : std::remove_reference<decltype(cpp)>::type(); }
-		void operator()(Integer16^ cx, std::experimental::optional<int16_t>& cpp) { cpp = cx ? cx->Value : std::remove_reference<decltype(cpp)>::type(); }
-		void operator()(Integer32^ cx, std::experimental::optional<int32_t>& cpp) { cpp = cx ? cx->Value : std::remove_reference<decltype(cpp)>::type(); }
-		void operator()(Integer64^ cx, std::experimental::optional<int64_t>& cpp) { cpp = cx ? cx->Value : std::remove_reference<decltype(cpp)>::type(); }
-		void operator()(Double^ cx, std::experimental::optional<double>& cpp) { cpp = cx ? cx->Value : std::remove_reference<decltype(cpp)>::type(); }
+		void operator()(BoolRef^ cx, std::experimental::optional<bool>& cpp) { cpp = cx ? cx->Value : std::remove_reference<decltype(cpp)>::type(); }
+		void operator()(ByteRef^ cx, std::experimental::optional<int8_t>& cpp) { cpp = cx ? cx->Value : std::remove_reference<decltype(cpp)>::type(); }
+		void operator()(ShortRef^ cx, std::experimental::optional<int16_t>& cpp) { cpp = cx ? cx->Value : std::remove_reference<decltype(cpp)>::type(); }
+		void operator()(IntRef^ cx, std::experimental::optional<int32_t>& cpp) { cpp = cx ? cx->Value : std::remove_reference<decltype(cpp)>::type(); }
+		void operator()(LongRef^ cx, std::experimental::optional<int64_t>& cpp) { cpp = cx ? cx->Value : std::remove_reference<decltype(cpp)>::type(); }
+		void operator()(FloatRef^ cx, std::experimental::optional<float>& cpp) { cpp = cx ? cx->Value : std::remove_reference<decltype(cpp)>::type(); }
+		void operator()(DoubleRef^ cx, std::experimental::optional<double>& cpp) { cpp = cx ? cx->Value : std::remove_reference<decltype(cpp)>::type(); }
 		void operator()(StringRef^ cx, std::experimental::optional<std::string>& cpp)
 		{
 			cpp = cx ? transform<std::string, Platform::String^>()(cx->Value) : std::remove_reference<decltype(cpp)>::type();

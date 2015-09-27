@@ -28,3 +28,12 @@ jni:
   header: '"Marshal.hpp"'
   typename: jobject
   typeSignature: 'Ljava/util/Date;'
+cx:
+  typename: DateTime
+  reference: true
+  boxed: false
+  header: CxDateTime.h
+cxcpp:
+  typename: '::djinni::DateTime'
+  header: 'datetime.hpp'
+  byValue: true
