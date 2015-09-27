@@ -279,17 +279,18 @@ def boxedTypename(td: TypeDecl) = td.body match {
     case p: MPrimitive => (p.cxName, false)
     case MString => ("Platform::String", true)
     case MDate => ("Windows::Foundation::DateTime", true)
-    case MBinary => ("Platform::Array<uint16_t>", true)
+    case MBinary => ("Platform::Array<uint8_t>", true)
     case MOptional => // We use "nullptr" for the empty optional.
       assert(tm.args.size == 1)
       val arg = tm.args.head
       arg.base match {
         case MOptional => throw new AssertionError("nested optional?")
         case p: MPrimitive => (p.cxBoxed, true)
+        case MString => ("StringRef", true)
         case m => expr(arg, namespace, true)
       }
     case MList => ("Windows::Foundation::Collections::IVector", true)
-    case MSet => ("Windows::Foundation::Collections::IMap", true)
+    case MSet => ("Windows::Foundation::Collections::IIterable", true)
     case MMap => ("Windows::Foundation::Collections::IMap", true)
     case d: MDef =>
       d.defType match {
@@ -323,7 +324,9 @@ def boxedTypename(td: TypeDecl) = td.body match {
 //            case p: MPrimitive => ""
           case m => "" //if (tm.args.isEmpty) "" else tm.args.map(arg => exprWithReference(arg, namespace, needRef)).mkString("<", ", ", ">") //(tm.args[0].typename, true)
         }
-      case MSet => if (tm.args.size == 1) (tm.args :+ tm.args(0)).map(arg => exprWithReference(arg, namespace, needRef)).mkString("<", ", ", ">") else tm.args.map(arg => exprWithReference(arg, namespace, needRef)).mkString("<", ", ", ">")
+      case MSet =>
+        assert(tm.args.size == 1)
+        "<" + exprWithReference(tm.args.head, namespace, needRef) + ">"
       case MMap => tm.args.map(arg => exprWithReference(arg, namespace, needRef)).mkString("<", ", ", ">")
       case d => if (tm.args.isEmpty) "" else tm.args.map(arg => exprWithReference(arg, namespace, needRef)).mkString("<", ", ", ">")
     }
@@ -336,7 +339,11 @@ def boxedTypename(td: TypeDecl) = td.body match {
 // this can be used in c++ generation to know whether a const& should be applied to the parameter or not
 private def toCxParamType(tm: MExpr, namespace: Option[String] = None): String = {
   val (name, needRef) = toCxType(tm, namespace)
-  name + (if(needRef) "^" else "")
+  val r = name + (if(needRef) "^" else "")
+  if(r != "Platform::Array<uint8_t>^")
+    r
+  else
+    "const " + r
 }
 
 }

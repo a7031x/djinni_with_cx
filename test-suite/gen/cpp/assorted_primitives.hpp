@@ -3,9 +3,9 @@
 
 #pragma once
 
+#include "optional\optional.hpp"
 #include <cstdint>
 #include <utility>
-#include optional\optional.hpp
 
 namespace cppns {
 
@@ -57,6 +57,7 @@ struct AssortedPrimitives final {
     , o_fthirtytwo(std::move(o_fthirtytwo))
     , o_fsixtyfour(std::move(o_fsixtyfour))
     {}
+    AssortedPrimitives() {}
 };
 
 }  // namespace cppns

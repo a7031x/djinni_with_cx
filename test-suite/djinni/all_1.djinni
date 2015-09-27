@@ -1,1 +1,8 @@
 @import "primtypes.djinni"
+@import "enum.djinni"
+@import "set.djinni"
+@import "derivings.djinni"
+@import "nested_collection.djinni"
+@import "map.djinni"
+@import "primitive_list.djinni"
+@import "exception.djinni"

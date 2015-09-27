@@ -47,7 +47,7 @@ namespace System {
 	template<> struct is_primitive<std::vector<uint8_t>> { static const bool value = true; };
 
 	template<typename Cpp> struct is_optional { static const bool value = false; };
-	template<typename Type> struct is_optional<std::experimental::optional<Type>> { static const bool value = true; };
+	template<typename Type> struct is_optional<djinni_optional<Type>> { static const bool value = true; };
 
 	template<typename Cpp> struct is_vector { static const bool value = false; };
 	template<typename Type> struct is_vector<std::vector<Type>> { static const bool value = true; };
@@ -96,19 +96,19 @@ namespace System {
 
 	struct translate_optional
 	{
-		void operator()(const std::experimental::optional<bool>& cpp, BoolRef^& cx) { cx = cpp ? ref new BoolRef(cpp.get()) : nullptr; }
-		void operator()(const std::experimental::optional<int8_t>& cpp, ByteRef^& cx) { cx = cpp ? ref new ByteRef(cpp.get()) : nullptr; }
-		void operator()(const std::experimental::optional<int16_t>& cpp, ShortRef^& cx) { cx = cpp ? ref new ShortRef(cpp.get()) : nullptr; }
-		void operator()(const std::experimental::optional<int32_t>& cpp, IntRef^& cx) { cx = cpp ? ref new IntRef(cpp.get()) : nullptr; }
-		void operator()(const std::experimental::optional<int64_t>& cpp, LongRef^& cx) { cx = cpp ? ref new LongRef(cpp.get()) : nullptr; }
-		void operator()(const std::experimental::optional<float>& cpp, FloatRef^& cx) { cx = cpp ? ref new FloatRef(cpp.get()) : nullptr; }
-		void operator()(const std::experimental::optional<double>& cpp, DoubleRef^& cx) { cx = cpp ? ref new DoubleRef(cpp.get()) : nullptr; }
-		void operator()(const std::experimental::optional<std::string>& cpp, StringRef^& cx)
+		void operator()(const djinni_optional<bool>& cpp, BoolRef^& cx) { cx = cpp ? ref new BoolRef(cpp.get()) : nullptr; }
+		void operator()(const djinni_optional<int8_t>& cpp, ByteRef^& cx) { cx = cpp ? ref new ByteRef(cpp.get()) : nullptr; }
+		void operator()(const djinni_optional<int16_t>& cpp, ShortRef^& cx) { cx = cpp ? ref new ShortRef(cpp.get()) : nullptr; }
+		void operator()(const djinni_optional<int32_t>& cpp, IntRef^& cx) { cx = cpp ? ref new IntRef(cpp.get()) : nullptr; }
+		void operator()(const djinni_optional<int64_t>& cpp, LongRef^& cx) { cx = cpp ? ref new LongRef(cpp.get()) : nullptr; }
+		void operator()(const djinni_optional<float>& cpp, FloatRef^& cx) { cx = cpp ? ref new FloatRef(cpp.get()) : nullptr; }
+		void operator()(const djinni_optional<double>& cpp, DoubleRef^& cx) { cx = cpp ? ref new DoubleRef(cpp.get()) : nullptr; }
+		void operator()(const djinni_optional<std::string>& cpp, StringRef^& cx)
 		{
 			cx = cpp ? ref new StringRef(transform<std::string, Platform::String^>()(cpp.get())) : nullptr;
 		}
 		template<typename Cpp, class Cx>
-		void operator()(const std::experimental::optional<Cpp>& cpp, Cx^& cx)
+		void operator()(const djinni_optional<Cpp>& cpp, Cx^& cx)
 		{
 			if (cpp)
 				determine_transformation_type<Cpp>::type()(cpp.get(), cx);
@@ -116,19 +116,19 @@ namespace System {
 				cx = nullptr;
 		}
 
-		void operator()(BoolRef^ cx, std::experimental::optional<bool>& cpp) { cpp = cx ? cx->Value : std::remove_reference<decltype(cpp)>::type(); }
-		void operator()(ByteRef^ cx, std::experimental::optional<int8_t>& cpp) { cpp = cx ? cx->Value : std::remove_reference<decltype(cpp)>::type(); }
-		void operator()(ShortRef^ cx, std::experimental::optional<int16_t>& cpp) { cpp = cx ? cx->Value : std::remove_reference<decltype(cpp)>::type(); }
-		void operator()(IntRef^ cx, std::experimental::optional<int32_t>& cpp) { cpp = cx ? cx->Value : std::remove_reference<decltype(cpp)>::type(); }
-		void operator()(LongRef^ cx, std::experimental::optional<int64_t>& cpp) { cpp = cx ? cx->Value : std::remove_reference<decltype(cpp)>::type(); }
-		void operator()(FloatRef^ cx, std::experimental::optional<float>& cpp) { cpp = cx ? cx->Value : std::remove_reference<decltype(cpp)>::type(); }
-		void operator()(DoubleRef^ cx, std::experimental::optional<double>& cpp) { cpp = cx ? cx->Value : std::remove_reference<decltype(cpp)>::type(); }
-		void operator()(StringRef^ cx, std::experimental::optional<std::string>& cpp)
+		void operator()(BoolRef^ cx, djinni_optional<bool>& cpp) { cpp = cx ? cx->Value : std::remove_reference<decltype(cpp)>::type(); }
+		void operator()(ByteRef^ cx, djinni_optional<int8_t>& cpp) { cpp = cx ? cx->Value : std::remove_reference<decltype(cpp)>::type(); }
+		void operator()(ShortRef^ cx, djinni_optional<int16_t>& cpp) { cpp = cx ? cx->Value : std::remove_reference<decltype(cpp)>::type(); }
+		void operator()(IntRef^ cx, djinni_optional<int32_t>& cpp) { cpp = cx ? cx->Value : std::remove_reference<decltype(cpp)>::type(); }
+		void operator()(LongRef^ cx, djinni_optional<int64_t>& cpp) { cpp = cx ? cx->Value : std::remove_reference<decltype(cpp)>::type(); }
+		void operator()(FloatRef^ cx, djinni_optional<float>& cpp) { cpp = cx ? cx->Value : std::remove_reference<decltype(cpp)>::type(); }
+		void operator()(DoubleRef^ cx, djinni_optional<double>& cpp) { cpp = cx ? cx->Value : std::remove_reference<decltype(cpp)>::type(); }
+		void operator()(StringRef^ cx, djinni_optional<std::string>& cpp)
 		{
 			cpp = cx ? transform<std::string, Platform::String^>()(cx->Value) : std::remove_reference<decltype(cpp)>::type();
 		}
 		template<typename Cpp, class Cx>
-		void operator()(Cx^ cx, std::experimental::optional<Cpp>& cpp)
+		void operator()(Cx^ cx, djinni_optional<Cpp>& cpp)
 		{
 			if (cx)
 				cpp = transform<Cpp, Cx^>()(cx);

@@ -1,9 +1,7 @@
 
-#include "translate.h"
-
 #include <codecvt>
 
-namespace RootNamespace {
+namespace System {
 
 	std::wstring utf8_to_unicode(const std::string& text) {
 		try {

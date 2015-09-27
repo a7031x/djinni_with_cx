@@ -135,7 +135,7 @@ class CxGenerator(spec: Spec) extends Generator(spec) {
 
     // C++ Header
     def writeCxPrototype(w: IndentWriter) {
-      w.wl("using namespace System;")
+   //   w.wl("using namespace System;")
       writeDoc(w, doc)
       writeCxTypeParams(w, params)
       w.w("public ref class " + self + cxFinal).bracedSemi {
@@ -162,84 +162,81 @@ class CxGenerator(spec: Spec) extends Generator(spec) {
       }
     }
     refs.hx += cppHeader(ident.name)
-    refs.cx.add("#include " + q(spec.cxBaseLibIncludePrefix + "translate.h"))
+    refs.cx += translationHeader()
 
     writeHxFile(cxName, origin, refs.hx, refs.hxFwds, writeCxPrototype)
 
-    if (r.consts.nonEmpty || r.derivingTypes.nonEmpty) {
-      writeCxFile(cxName, origin, refs.cx, w => {
-        w.wl("using namespace System;")
-        generateCxConstants(w, r.consts, self)
-        w.wl
-        w.w(s"$cppType $self::toCpp()").braced {
-          w.wl(s"return $cppType(")
-          w.increase()
-          val skipFirst = SkipFirst()
-            for(f <- r.fields) {
-              skipFirst{w.wl(",")}
-              w.w(s"${translate(f.ty.resolved, idCx.field(f.ident))}")
-            }
-          w.decrease()
-          w.wl(");")
-
-        }
-        w.wl
-        w.w(s"$self^ $self::fromCpp(const $cppType& value)").braced {
-          w.wl(s"$self^ ret = ref new $self();")
+    writeCxFile(cxName, origin, refs.cx, w => {
+   //   w.wl("using namespace System;")
+      generateCxConstants(w, r.consts, self)
+      w.wl
+      w.w(s"$cppType $self::toCpp()").braced {
+        w.wl(s"return $cppType(")
+        w.increase()
+        val skipFirst = SkipFirst()
           for(f <- r.fields) {
-            w.wl(s"ret->${idCx.field(f.ident)} = ${translate(f.ty.resolved, "value." + idCpp.field(f.ident))};")
+            skipFirst{w.wl(",")}
+            w.w(s"${translate(f.ty.resolved, idCx.field(f.ident))}")
           }
-          w.wl("return ret;")
+        w.decrease()
+        w.wl(");")
+
+      }
+      w.wl
+      w.w(s"$self^ $self::fromCpp(const $cppType& value)").braced {
+        w.wl(s"$self^ ret = ref new $self();")
+        for(f <- r.fields) {
+          w.wl(s"ret->${idCx.field(f.ident)} = ${translate(f.ty.resolved, "value." + idCpp.field(f.ident))};")
         }
-        if (r.derivingTypes.contains(DerivingType.Eq)) {
-          w.wl
-          w.w(s"bool $self::Equals($self^ rhs)").braced {
-            if (!r.fields.isEmpty) {
-              writeAlignedCall(w, "return ", r.fields, " &&", "", f => s"this->${idCx.field(f.ident)} == rhs->${idCx.field(f.ident)}")
-              w.wl(";")
-            } else {
-              w.wl("return true;")
-            }
+        w.wl("return ret;")
+      }
+      if (r.derivingTypes.contains(DerivingType.Eq)) {
+        w.wl
+        w.w(s"bool $self::Equals($self^ rhs)").braced {
+          if (!r.fields.isEmpty) {
+            writeAlignedCall(w, "return ", r.fields, " &&", "", f => s"this->${idCx.field(f.ident)} == rhs->${idCx.field(f.ident)}")
+            w.wl(";")
+          } else {
+            w.wl("return true;")
           }
         }
-        if (r.derivingTypes.contains(DerivingType.Ord)) {
-          w.wl
-          w.w(s"int32 $self::CompareTo($self^ rhs)").braced {
-            w.wl(s"if (rhs == nullptr) return 1;")
-            w.wl("int32 tempResult;")
-            for (f <- r.fields) {
-              f.ty.resolved.base match {
-                case MString => w.wl(s"tempResult = Platform::String::CompareOrdinal(this->${idCx.field(f.ident)}, rhs->${idCx.field(f.ident)});")
-                case t: MPrimitive =>
-                  w.wl(s"if (this->${idCx.field(f.ident)} < rhs->${idCx.field(f.ident)}) {").nested {
-                    w.wl(s"tempResult = -1;")
-                  }
-                  w.wl(s"} else if (this->${idCx.field(f.ident)} > rhs->${idCx.field(f.ident)}) {").nested {
-                    w.wl(s"tempResult = 1;")
-                  }
-                  w.wl(s"} else {").nested {
-                    w.wl(s"tempResult = 0;")
-                  }
-                  w.wl("}")
-                case df: MDef => df.defType match {
-                  case DRecord => w.wl(s"tempResult = this->${idCx.field(f.ident)}->CompareTo(rhs->${idCx.field(f.ident)});")
-                  case DEnum => w.w(s"tempResult = this->${idCx.field(f.ident)}->CompareTo(rhs->${idCx.field(f.ident)});")
-                  case _ => throw new AssertionError("Unreachable")
+      }
+      if (r.derivingTypes.contains(DerivingType.Ord)) {
+        w.wl
+        w.w(s"int32 $self::CompareTo($self^ rhs)").braced {
+          w.wl(s"if (rhs == nullptr) return 1;")
+          w.wl("int32 tempResult = 0;")
+          for (f <- r.fields) {
+            f.ty.resolved.base match {
+              case MString => w.wl(s"tempResult = Platform::String::CompareOrdinal(this->${idCx.field(f.ident)}, rhs->${idCx.field(f.ident)});")
+              case t: MPrimitive =>
+                w.wl(s"if (this->${idCx.field(f.ident)} < rhs->${idCx.field(f.ident)}) {").nested {
+                  w.wl(s"return -1;")
                 }
+                w.wl(s"} else if (this->${idCx.field(f.ident)} > rhs->${idCx.field(f.ident)}) {").nested {
+                  w.wl(s"tempResult = 1;")
+                }
+                w.wl(s"} else {").nested {
+                  w.wl(s"tempResult = 0;")
+                }
+                w.wl("}")
+              case df: MDef => df.defType match {
+                case DRecord => w.wl(s"tempResult = this->${idCx.field(f.ident)}->CompareTo(rhs->${idCx.field(f.ident)});")
+                case DEnum => w.w(s"tempResult = this->${idCx.field(f.ident)}->CompareTo(rhs->${idCx.field(f.ident)});")
                 case _ => throw new AssertionError("Unreachable")
               }
+              case _ => throw new AssertionError("Unreachable")
             }
+            w.wl("if(tempResult) return tempResult;")
           }
+          w.wl("return tempResult;")
         }
-      })
-    }
+      }
+    })
   }
 
   override def generateInterface(origin: String, ident: Ident, doc: Doc, typeParams: Seq[TypeParam], i: Interface) {
     val refs = new CxRefs(ident.name)
-    refs.hx.add("#include <memory>")
-    refs.hx.add("#include \"CppWrapperCache.h\"")
-    refs.hx.add("#include \""+spec.cppIncludePrefix + spec.cppFileIdentStyle(ident.name) + "." + spec.cppHeaderExt+"\"")
     i.methods.map(m => {
       m.params.map(p => refs.find(p.ty))
       m.ret.foreach(refs.find)
@@ -253,84 +250,107 @@ class CxGenerator(spec: Spec) extends Generator(spec) {
       m.params.map(p => refs.findConvert(p.ty))
       m.ret.foreach(refs.findConvert)
     })
-    refs.cx.add("#include \"Marshal.h\"")
+ //   refs.cx.add("#include \"Marshal.h\"")
 
     val self = cxMarshal.typename(ident, i)
     val cppSelf = cppMarshal.fqTypename(ident, i)
+    if(i.ext.cpp) {
+      refs.hx += "#include <memory>"
+      refs.hx += cppHeader(ident.name)
+      writeHxFile(ident.name, origin, refs.hx, refs.hxFwds, w=> {
+        w.wl(s"public ref class $self sealed").bracedSemi {
+          w.wlOutdent("public:")
+          for (m <- i.methods) {
+            val ret = cxMarshal.returnType(m.ret)
+            val params = m.params.map(p => cxMarshal.paramType(p.ty) + " " + idCx.local(p.ident))
+            if(m.static) w.w("static ")
+            w.wl(s"$ret ${idCx.method(m.ident)} ${params.mkString("(", ", ", ")")};")
+          }
 
-    writeHxFile(ident, origin, refs.hx, refs.hxFwds, w => {
-      writeDoc(w, doc)
-      writeCxTypeParams(w, typeParams)
-      if (i.ext.cx) w.wl(s"public interface class $self").bracedSemi {
-        // Constants
-//        generateHxConstants(w, i.consts) //TODO no can do! Not gonna happen. Nuuh. We can make this a property with no setter and agetter that reaches into C++ land tho
-        // Methods
+          w.wlOutdent("internal:")
+          w.wl(s"$self(std::shared_ptr<$cppSelf> cppRef) : _cppRef(cppRef) {}")
+          w.wl(s"std::shared_ptr<$cppSelf> cppRef() {return _cppRef;}")
+          w.wlOutdent(s"private:")
+          w.wl(s"std::shared_ptr<$cppSelf> _cppRef;")
+        }
+      })
+      refs.cx += translationHeader()
+      writeCxFile(ident.name, origin, refs.cx, w=> {
         for (m <- i.methods) {
-          w.wl
-          writeDoc(w, m.doc)
           val ret = cxMarshal.returnType(m.ret)
-          val params = m.params.map(p => cxMarshal.paramType(p.ty) + " " + idCpp.local(p.ident))
-          if (m.static) {
-            w.wl(s"static $ret ${idCx.method(m.ident)}${params.mkString("(", ", ", ")")};")
-          } else {
-            val constFlag = if (m.const) " const" else ""
-            w.wl(s"virtual $ret ${idCx.method(m.ident)}${params.mkString("(", ", ", ")")} = 0;")
-          }
-        }
-      }
-      else w.wl(s"public ref class $self sealed : public Platform::Object").bracedSemi {
-        w.wlOutdent("public:")
-        // Constants
-        generateHxConstants(w, i.consts)
-        // Methods
-        for (m <- i.methods) {
-          w.wl
-          writeDoc(w, m.doc)
-          val ret = cxMarshal.returnType(m.ret)
-          val params = m.params.map(p => cxMarshal.paramType(p.ty) + " " + idCpp.local(p.ident))
-          if (m.static) {
-            w.wl(s"static $ret ${idCx.method(m.ident)}${params.mkString("(", ", ", ")")};")
-          } else {
-            val constFlag = if (m.const) " const" else ""
-            w.wl(s"$ret ${idCx.method(m.ident)}${params.mkString("(", ", ", ")")};")
-          }
-        }
-        //private members
-        w.wlOutdent("internal:")
-        //construct from a cpp ref
-        w.wl(s"$self(const std::shared_ptr<$cppSelf>& cppRef);")
-        w.wl(s"::djinni::CppWrapperCache<$cppSelf>::Handle m_cppRef;")
-      }
-    })
+          val params = m.params.map(p => cxMarshal.paramType(p.ty) + " " + idCx.local(p.ident))
 
-    // Cx only generated in need of Constants
-    writeCxFile(ident, origin, refs.cx, w => {
-      if (! i.ext.cx) {
-        if (i.consts.nonEmpty) {
-          generateCxConstants(w, i.consts, self)
-        }
-        //constructor
-        w.wl(s"$self::$self(const std::shared_ptr<$cppSelf>& cppRef)")
-        w.braced {
-          w.wl("m_cppRef.assign(cppRef);")
-        }
-        //methods
-        for (m <- i.methods) {
-          w.wl
-          writeCxFuncDecl(self, m, w)
-          w.braced {
-//           w.w("try").bracedEnd(" DJINNI_TRANSLATE_EXCEPTIONS()") {
-            val ret = m.ret.fold("")(_ => "auto r = ")
-            val call = ret + (if (!m.static) "m_cppRef.get()->" else cppSelf + "::") + idCpp.method(m.ident) + "("
-            writeAlignedCall(w, call, m.params, ")", p => cxMarshal.toCpp(p.ty, idCx.local(p.ident.name)))
-            w.wl(";")
-            m.ret.fold()(r => w.wl(s"return ${cxMarshal.fromCpp(r, "r")};"))
-            //            }
+          w.wl(s"$ret $self::${idCx.method(m.ident)} ${params.mkString("(", ", ", ")")}").braced {
+            val paramsIn = m.params.map(p=>translate(p.ty.resolved, idCx.local(p.ident))).mkString("(", ", ", ")")
+            val obj = if(m.static) cppSelf + "::" else "_cppRef->"
+            val call = obj + s"${idCpp.method(m.ident)}$paramsIn"
+            //write ret
+            w.w("try").braced {
+              if(false == m.ret.isEmpty) {
+                w.wl(s"auto cppRet = $call;")
+                w.wl("return " + translate(m.ret.get.resolved, "cppRet") + ";")
+              }
+              else
+                w.wl(call + ";")
+            }
+            w.w("catch(const std::exception& e)").braced {
+              w.wl("throw ref new Platform::Exception(-1, transform<std::string, Platform::String^>()((std::string)e.what()));")
+            }
           }
         }
-      }
-    })
+      })
+    }
+    else if(i.ext.cx) {
+      val isInterface = i.consts.isEmpty && (for(m <- i.methods if m.static) yield m).isEmpty
+      if(false == isInterface)
+        throw new AssertionError("interface to cx doesn't support non-virtual method")
 
+      writeCxFile(ident.name, origin, refs.cx, w=>{
+        w.wl(s"public interface class $self").bracedSemi {
+          w.wlOutdent("public:")
+          for (m <- i.methods) {
+            val ret = cxMarshal.returnType(m.ret)
+            val params = m.params.map(p => cxMarshal.paramType(p.ty) + " " + idCx.local(p.ident))
+            w.wl(s"virtual $ret ${idCx.method(m.ident)} ${params.mkString("(", ", ", ")")};")
+          }
+        }
+      })
+      refs.hx += "#include " + q(spec.cxIncludeCppPrefix + spec.cppFileIdentStyle(ident.name) + "." + spec.cppHeaderExt)
+      refs.hx += translationHeader()
+      refs.hx += cppHeader(ident.name)
+      refs.hx += "#include <functional>"
+
+      writeHxFile(ident.name + "_proxy", origin, refs.hx, refs.hxFwds, w=>{
+        val nativeDecls = mutable.TreeSet[String]()
+        w.wl(s"template<> class CxInterfaceProxy<$cppSelf> : public $cppSelf").bracedSemi {
+          w.wlOutdent("public:")
+          w.wl(s"CxInterfaceProxy(${withNs(Some(spec.cxNamespace), self)}^ nativeRef)").braced {
+            w.wl(s"native_call_nativeRef = [nativeRef]{ return nativeRef; };")
+          }
+          for(m <- i.methods) {
+            val ret = m.ret.fold("void")(cppMarshal.toCpp(_, spec.cppNamespace))
+            val params = m.params.map(p => cppMarshal.paramType(p.ty))
+            val methodName = idCpp.method(m.ident)
+            val call = "nativeRef()->" + idCx.method(m.ident)  + m.params.map(p=>translate(p.ty.resolved, idCpp.local(p.ident), Some(spec.cxNamespace))).mkString("(", ", ", ")")
+
+            w.wl(s"$ret $methodName(${params.mkString(", ")}) override").braced {
+              if(false == m.ret.isEmpty) {
+                w.wl("auto nativeRet = " + call + ";")
+                w.wl("return " + translate(m.ret.get.resolved, "nativeRet", Some(spec.cxNamespace)) + ";")
+              }
+              else
+                w.wl(call + ";")
+            }
+          }
+          val nativeType = withNs(Some(spec.cxNamespace), idCx.ty(ident.name))
+          w.wl(s"$nativeType^ nativeRef() { return native_call_nativeRef(); }")
+          w.wlOutdent("private:")
+          for(n <- nativeDecls)
+            w.wl(n)
+          w.wl(s"std::function<$nativeType^()> native_call_nativeRef;")
+        }
+      })
+    }
   }
 
   def writeCxTypeParams(w: IndentWriter, params: Seq[TypeParam]) {
@@ -342,45 +362,6 @@ class CxGenerator(spec: Spec) extends Generator(spec) {
   //  val Cx = toCxType(ty, csNamespace)
     val Cx = cxMarshal.fieldType(ty)
     s"transform<$Cpp, $Cx>()($name)"
-  }
-  def toCxType(ty: TypeRef, namespace: Option[String] = None): String = toCxType(ty.resolved, namespace)
-  def toCxType(tm: MExpr, namespace: Option[String]): String = {
-    def f(tm: MExpr, needRef: Boolean): String = {
-      tm.base match {
-        case MOptional =>
-          assert(tm.args.size == 1)
-          val arg = tm.args.head
-          arg.base match {
-            case p: MPrimitive =>
-              p.cxBoxed
-            case MString=>
-              "StringRef^"
-            case MOptional => throw new AssertionError("nested optional?")
-            case m => f(arg, true)
-          }
-        case o =>
-          val args = if (tm.args.isEmpty) "" else tm.args.map(f(_, false)).mkString("<", ", ", ">^")
-          val base = o match {
-            case p: MPrimitive => if (needRef) p.cxBoxed else p.cxName
-            case MString => "Platform::String^"
-            case MBinary => "Platform::Array<uint8_t>^"
-            case MOptional => throw new AssertionError("optional should have been special cased")
-            case MList => "Windows::Foundation::Collections::IVector"
-            case MSet => "Windows::Foundation::Collections::IIterable"
-            case MMap => "Windows::Foundation::Collections::IMap"
-            case d: MDef =>
-              val r = withNs(namespace, idCx.ty(d.name))
-              d.defType match {
-                case DInterface=>r + "^"
-                case DRecord=>r + "^"
-                case _=> r
-              }
-            case p: MParam => idCx.typeParam(p.name)
-          }
-          base + args
-      }
-    }
-    f(tm, false)
   }
   def toCppType(ty: TypeRef, namespace: Option[String] = None): String = toCppType(ty.resolved, namespace)
   def toCppType(tm: MExpr, namespace: Option[String]): String = {
@@ -420,4 +401,24 @@ class CxGenerator(spec: Spec) extends Generator(spec) {
     //   if(ext.cpp)
     "#include " + q(spec.cxIncludeCppPrefix + spec.cppFileIdentStyle(ident) + "." + spec.cppHeaderExt)
   }
+  var translationGenerated = false
+  def translationHeader(): String = {
+    if(false == translationGenerated) {
+      val hx = List[String](
+        "#include " + ImportRef(spec.cppOptionalHeader).arg,
+        "template<typename T> using djinni_optional = " + spec.cppOptionalTemplate + "<T>;",
+        "#include " + q(spec.cxBaseLibIncludePrefix + "translate.h")
+      )
+      writeHxFile("translation", "", hx, List[String](), w=> {})
+
+      val cx = List[String](
+        "#include " + q(spec.cxBaseLibIncludePrefix + "translate.cpp")
+      )
+      writeCxFile("translation", "", cx, w => {})
+      translationGenerated = true
+    }
+
+    "#include " + q("translation." + spec.cxHeaderExt)
+  }
+
 }

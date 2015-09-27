@@ -7,7 +7,6 @@
 
 namespace System { namespace Cxns {
 
-using namespace System;
 public ref class AssortedPrimitives sealed : public Platform::Object {
     property bool B;
     property int8_t Eight;
