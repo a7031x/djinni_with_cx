@@ -63,7 +63,57 @@ namespace TestCx
             testReturnNone();
             testAssortedPrimitives();
             testBinary();
+            testDateTime();
+            testDuration();
             output.Text = testResult;
+        }
+
+        private void testDuration()
+        {
+            var hours = TestDuration.Hours(2);
+            var minutes = TestDuration.Minutes(2);
+            var seconds = TestDuration.Seconds(2);
+            var millis = TestDuration.Millis(2);
+            var micros = TestDuration.Micros(2);
+            var nanos = TestDuration.Nanos(200);        //minimal time-unit is 100 ns
+
+            var hoursf = TestDuration.Hoursf(2.5);
+            var minutesf = TestDuration.Minutesf(2.5);
+            var secondsf = TestDuration.Secondsf(2.5);
+            var milisf = TestDuration.Millisf(2.5);
+            var microsf = TestDuration.Microsf(2.5);
+            var nanosf = TestDuration.Nanosf(200.0);    //minimal time-unit is 100 ns
+
+            var box = TestDuration.Box(5);
+            var unbox = TestDuration.Unbox(box);
+
+            bool r =
+                hours.Hours == 2 &&
+                minutes.Minutes == 2 &&
+                seconds.Seconds == 2 &&
+                millis.Milliseconds == 2 &&
+                micros.TotalMilliseconds == 2E-3 &&
+                nanos.TotalMilliseconds == 2E-4 &&
+                hoursf.TotalHours == 2.5 &&
+                minutesf.TotalMinutes == 2.5 &&
+                secondsf.TotalSeconds == 2.5 &&
+                milisf.TotalMilliseconds == 2.5 &&
+                microsf.TotalMilliseconds == 2.5E-3 &&
+                nanosf.TotalMilliseconds == 2E-4 &&
+                TestDuration.HoursString(hours) == "2" &&
+                TestDuration.MinutesString(minutes) == "2" &&
+                TestDuration.SecondsString(seconds) == "2" &&
+                TestDuration.MillisString(millis) == "2" &&
+                TestDuration.MicrosString(micros) == "2" &&
+                TestDuration.NanosString(nanos) == "200";
+            append("testDuration", r);
+        }
+
+        private void testDateTime()
+        {
+            var d = TestHelpers.GetDateRecord();
+            var r = TestHelpers.CheckDateRecord(d);
+            append("testDateTime", r, d.CreatedAt);
         }
 
         private void testBinary()
