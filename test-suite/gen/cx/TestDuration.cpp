@@ -4,7 +4,7 @@
 #include "TestDuration.h"  // my header
 #include "translation.h"
 
-namespace System { namespace Cxns {
+namespace Cxns {
 
 Platform::String^ TestDuration::HoursString (Windows::Foundation::TimeSpan Dt)
 {
@@ -207,4 +207,4 @@ int64_t TestDuration::Unbox (Platform::IBox<Windows::Foundation::TimeSpan>^ Dt)
     }
 }
 
-} }  // namespace System::Cxns
+}  // namespace Cxns

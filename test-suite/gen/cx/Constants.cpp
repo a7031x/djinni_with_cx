@@ -4,7 +4,7 @@
 #include "Constants.h"  // my header
 #include "translation.h"
 
-namespace System { namespace Cxns {
+namespace Cxns {
 
 
 ::Constants Constants::toCpp() {
@@ -20,4 +20,4 @@ Constants^ Constants::fromCpp(const ::Constants& value) {
     return ret;
 }
 
-} }  // namespace System::Cxns
+}  // namespace Cxns

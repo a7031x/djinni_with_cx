@@ -4,7 +4,7 @@
 #include "DateRecord.h"  // my header
 #include "translation.h"
 
-namespace System { namespace Cxns {
+namespace Cxns {
 
 
 ::DateRecord DateRecord::toCpp() {
@@ -36,4 +36,4 @@ int32 DateRecord::CompareTo(DateRecord^ rhs) {
     return 0;
 }
 
-} }  // namespace System::Cxns
+}  // namespace Cxns

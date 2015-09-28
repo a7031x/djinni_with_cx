@@ -33,6 +33,8 @@ test_helpers = interface +c {
     static assorted_primitives_id(i: assorted_primitives): assorted_primitives;
 
     static id_binary(b: binary): binary;
+    static get_date_record(): date_record;
+    static check_date_record(rec: date_record) : bool;
 }
 
 empty_record = record {

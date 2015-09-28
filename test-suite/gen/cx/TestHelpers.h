@@ -7,14 +7,15 @@
 #include "AssortedPrimitives.h"
 #include "ClientInterfaceProxy.h"
 #include "Color.h"
+#include "DateRecord.h"
 #include "MapListRecord.h"
 #include "NestedCollection.h"
 #include "PrimitiveList.h"
 #include "SetRecord.h"
-#include "TokenProxy.h"
+#include "Token.h"
 #include <memory>
 
-namespace System { namespace Cxns {
+namespace Cxns {
 
 public ref class TestHelpers sealed : public Platform::Object
 {
@@ -43,6 +44,8 @@ public:
     static Platform::IBox<int>^ ReturnNone ();
     static AssortedPrimitives^ AssortedPrimitivesId (AssortedPrimitives^ I);
     static Platform::Array<uint8_t>^ IdBinary (const Platform::Array<uint8_t>^ B);
+    static DateRecord^ GetDateRecord ();
+    static bool CheckDateRecord (DateRecord^ Rec);
 internal:
     TestHelpers(std::shared_ptr<::TestHelpers> cppRef) : _cppRef(cppRef) {}
     std::shared_ptr<::TestHelpers> cppRef() {return _cppRef;}
@@ -50,4 +53,4 @@ private:
     std::shared_ptr<::TestHelpers> _cppRef;
 };
 
-} }  // namespace System::Cxns
+}  // namespace Cxns

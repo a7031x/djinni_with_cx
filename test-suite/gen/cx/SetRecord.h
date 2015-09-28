@@ -5,7 +5,7 @@
 
 #include "../cpp/set_record.hpp"
 
-namespace System { namespace Cxns {
+namespace Cxns {
 
 public ref class SetRecord sealed : public Platform::Object {
 public:
@@ -23,4 +23,4 @@ internal:
     static SetRecord^ fromCpp(const ::SetRecord& value);
 };
 
-} }  // namespace System::Cxns
+}  // namespace Cxns

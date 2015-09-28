@@ -6,7 +6,7 @@
 #include "../cpp/record_with_nested_derivings.hpp"
 #include "RecordWithDerivings.h"
 
-namespace System { namespace Cxns {
+namespace Cxns {
 
 public ref class RecordWithNestedDerivings sealed : public Platform::Object {
 public:
@@ -28,4 +28,4 @@ internal:
     int32 CompareTo(RecordWithNestedDerivings^ rhs);
 };
 
-} }  // namespace System::Cxns
+}  // namespace Cxns

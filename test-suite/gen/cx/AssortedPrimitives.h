@@ -5,7 +5,7 @@
 
 #include "../cpp/assorted_primitives.hpp"
 
-namespace System { namespace Cxns {
+namespace Cxns {
 
 public ref class AssortedPrimitives sealed : public Platform::Object {
 public:
@@ -61,4 +61,4 @@ internal:
     bool Equals(AssortedPrimitives^ rhs);
 };
 
-} }  // namespace System::Cxns
+}  // namespace Cxns

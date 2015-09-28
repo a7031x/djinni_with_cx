@@ -6,7 +6,7 @@
 #include "../cpp/test_duration.hpp"
 #include <memory>
 
-namespace System { namespace Cxns {
+namespace Cxns {
 
 public ref class TestDuration sealed : public Platform::Object
 {
@@ -38,4 +38,4 @@ private:
     std::shared_ptr<::TestDuration> _cppRef;
 };
 
-} }  // namespace System::Cxns
+}  // namespace Cxns

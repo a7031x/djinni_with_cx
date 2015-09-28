@@ -6,7 +6,7 @@
 #include "../cpp/constants_interface.hpp"
 #include <memory>
 
-namespace System { namespace Cxns {
+namespace Cxns {
 
 public ref class ConstantsInterface sealed : public Platform::Object
 {
@@ -19,4 +19,4 @@ private:
     std::shared_ptr<::ConstantsInterface> _cppRef;
 };
 
-} }  // namespace System::Cxns
+}  // namespace Cxns

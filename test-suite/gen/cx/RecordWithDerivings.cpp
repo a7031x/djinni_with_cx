@@ -4,7 +4,7 @@
 #include "RecordWithDerivings.h"  // my header
 #include "translation.h"
 
-namespace System { namespace Cxns {
+namespace Cxns {
 
 
 ::RecordWithDerivings RecordWithDerivings::toCpp() {
@@ -41,4 +41,4 @@ int32 RecordWithDerivings::CompareTo(RecordWithDerivings^ rhs) {
     return 0;
 }
 
-} }  // namespace System::Cxns
+}  // namespace Cxns

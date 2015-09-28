@@ -6,6 +6,7 @@
 #include "assorted_primitives.hpp"
 #include "client_interface.hpp"
 #include "color.hpp"
+#include "date_record.hpp"
 #include "map_list_record.hpp"
 #include "nested_collection.hpp"
 #include "primitive_list.hpp"
@@ -235,6 +236,24 @@ CJNIEXPORT jbyteArray JNICALL Java_TestHelpers_idBinary(JNIEnv* jniEnv, jobject 
         DJINNI_FUNCTION_PROLOGUE0(jniEnv);
         auto r = ::TestHelpers::id_binary(::djinni::Binary::toCpp(jniEnv, j_b));
         return ::djinni::release(::djinni::Binary::fromCpp(jniEnv, r));
+    } JNI_TRANSLATE_EXCEPTIONS_RETURN(jniEnv, 0 /* value doesn't matter */)
+}
+
+CJNIEXPORT jobject JNICALL Java_TestHelpers_getDateRecord(JNIEnv* jniEnv, jobject /*this*/)
+{
+    try {
+        DJINNI_FUNCTION_PROLOGUE0(jniEnv);
+        auto r = ::TestHelpers::get_date_record();
+        return ::djinni::release(::jnins::DateRecord::fromCpp(jniEnv, r));
+    } JNI_TRANSLATE_EXCEPTIONS_RETURN(jniEnv, 0 /* value doesn't matter */)
+}
+
+CJNIEXPORT jboolean JNICALL Java_TestHelpers_checkDateRecord(JNIEnv* jniEnv, jobject /*this*/, jobject j_rec)
+{
+    try {
+        DJINNI_FUNCTION_PROLOGUE0(jniEnv);
+        auto r = ::TestHelpers::check_date_record(::jnins::DateRecord::toCpp(jniEnv, j_rec));
+        return ::djinni::release(::djinni::Bool::fromCpp(jniEnv, r));
     } JNI_TRANSLATE_EXCEPTIONS_RETURN(jniEnv, 0 /* value doesn't matter */)
 }
 

@@ -4,7 +4,7 @@
 #include "CppException.h"  // my header
 #include "translation.h"
 
-namespace System { namespace Cxns {
+namespace Cxns {
 
 int32_t CppException::ThrowAnException ()
 {
@@ -27,4 +27,4 @@ CppException^ CppException::Get ()
     }
 }
 
-} }  // namespace System::Cxns
+}  // namespace Cxns

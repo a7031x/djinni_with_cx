@@ -5,7 +5,7 @@
 
 #include "../cpp/map_record.hpp"
 
-namespace System { namespace Cxns {
+namespace Cxns {
 
 public ref class MapRecord sealed : public Platform::Object {
 public:
@@ -23,4 +23,4 @@ internal:
     static MapRecord^ fromCpp(const ::MapRecord& value);
 };
 
-} }  // namespace System::Cxns
+}  // namespace Cxns

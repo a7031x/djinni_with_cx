@@ -5,6 +5,7 @@
 
 #include "assorted_primitives.hpp"
 #include "color.hpp"
+#include "date_record.hpp"
 #include "map_list_record.hpp"
 #include "nested_collection.hpp"
 #include "optional\optional.hpp"
@@ -71,4 +72,8 @@ public:
     static AssortedPrimitives assorted_primitives_id(const AssortedPrimitives & i);
 
     static std::vector<uint8_t> id_binary(const std::vector<uint8_t> & b);
+
+    static DateRecord get_date_record();
+
+    static bool check_date_record(const DateRecord & rec);
 };

@@ -13,7 +13,7 @@ namespace System {
 template<> class CxInterfaceProxy<::Token> : public ::Token
 {
 public:
-    CxInterfaceProxy(::System::Cxns::Token^ nativeRef)
+    CxInterfaceProxy(::Cxns::Token^ nativeRef)
     {
         native_call_nativeRef = [nativeRef]{ return nativeRef; };
     }
@@ -22,9 +22,9 @@ public:
         auto nativeRet = nativeRef()->Whoami();
         return transform<std::string, Platform::String^>()(nativeRet);
     }
-    ::System::Cxns::Token^ nativeRef() { return native_call_nativeRef(); }
+    ::Cxns::Token^ nativeRef() { return native_call_nativeRef(); }
 private:
-    std::function<::System::Cxns::Token^()> native_call_nativeRef;
+    std::function<::Cxns::Token^()> native_call_nativeRef;
 };
 
 }  // namespace System

@@ -4,7 +4,7 @@
 #include "Translation.h"  // my header
 #include "../../../../support-lib/cx/translate.cpp"
 
-namespace System { namespace Cxns {
+namespace Cxns {
 
 
-} }  // namespace System::Cxns
+}  // namespace Cxns

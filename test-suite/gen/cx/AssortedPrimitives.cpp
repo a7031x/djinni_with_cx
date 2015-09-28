@@ -4,7 +4,7 @@
 #include "AssortedPrimitives.h"  // my header
 #include "translation.h"
 
-namespace System { namespace Cxns {
+namespace Cxns {
 
 
 ::AssortedPrimitives AssortedPrimitives::toCpp() {
@@ -61,4 +61,4 @@ bool AssortedPrimitives::Equals(AssortedPrimitives^ rhs) {
            this->OFsixtyfour == rhs->OFsixtyfour;
 }
 
-} }  // namespace System::Cxns
+}  // namespace Cxns

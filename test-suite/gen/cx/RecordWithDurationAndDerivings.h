@@ -5,7 +5,7 @@
 
 #include "../cpp/record_with_duration_and_derivings.hpp"
 
-namespace System { namespace Cxns {
+namespace Cxns {
 
 public ref class RecordWithDurationAndDerivings sealed : public Platform::Object {
 public:
@@ -24,4 +24,4 @@ internal:
     int32 CompareTo(RecordWithDurationAndDerivings^ rhs);
 };
 
-} }  // namespace System::Cxns
+}  // namespace Cxns

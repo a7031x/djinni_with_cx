@@ -468,7 +468,8 @@ class CxGenerator(spec: Spec) extends Generator(spec) {
       val hx = List[String](
         "#include " + ImportRef(spec.cppOptionalHeader).arg,
         "template<typename T> using djinni_optional = " + spec.cppOptionalTemplate + "<T>;",
-        "#include " + q(spec.cxBaseLibIncludePrefix + "translate.h")
+        "#include " + q(spec.cxBaseLibIncludePrefix + "translate.h"),
+        "using namespace System;"
       )
       writeHxFile("translation", "", hx, List[String](), w=> {})
 

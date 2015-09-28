@@ -5,14 +5,15 @@
 #include "AssortedPrimitives.h"
 #include "ClientInterfaceProxy.h"
 #include "Color.h"
+#include "DateRecord.h"
 #include "MapListRecord.h"
 #include "NestedCollection.h"
 #include "PrimitiveList.h"
 #include "SetRecord.h"
-#include "TokenProxy.h"
+#include "Token.h"
 #include "translation.h"
 
-namespace System { namespace Cxns {
+namespace Cxns {
 
 SetRecord^ TestHelpers::GetSetRecord ()
 {
@@ -248,5 +249,25 @@ Platform::Array<uint8_t>^ TestHelpers::IdBinary (const Platform::Array<uint8_t>^
         throw ref new Platform::Exception(-1, transform<std::string, Platform::String^>()((std::string)e.what()));
     }
 }
+DateRecord^ TestHelpers::GetDateRecord ()
+{
+    try {
+        auto cppRet = ::TestHelpers::get_date_record();
+        return transform<::DateRecord, DateRecord^>()(cppRet);
+    }
+    catch(const std::exception& e) {
+        throw ref new Platform::Exception(-1, transform<std::string, Platform::String^>()((std::string)e.what()));
+    }
+}
+bool TestHelpers::CheckDateRecord (DateRecord^ Rec)
+{
+    try {
+        auto cppRet = ::TestHelpers::check_date_record(transform<::DateRecord, DateRecord^>()(Rec));
+        return transform<bool, bool>()(cppRet);
+    }
+    catch(const std::exception& e) {
+        throw ref new Platform::Exception(-1, transform<std::string, Platform::String^>()((std::string)e.what()));
+    }
+}
 
-} }  // namespace System::Cxns
+}  // namespace Cxns

@@ -3,13 +3,14 @@
 
 #import "AssortedPrimitives.h"
 #import "Color.h"
+#import "DateRecord.h"
 #import "MapListRecord.h"
 #import "NestedCollection.h"
 #import "PrimitiveList.h"
 #import "SetRecord.h"
 #import <Foundation/Foundation.h>
+@class Token;
 @protocol ClientInterface;
-@protocol Token;
 
 
 @interface TestHelpers : NSObject
@@ -46,15 +47,15 @@
 
 + (void)checkEnum:(Color)c;
 
-+ (nullable id<Token>)tokenId:(nullable id<Token>)t;
++ (nullable Token *)tokenId:(nullable Token *)t;
 
-+ (nullable id<Token>)createCppToken;
++ (nullable Token *)createCppToken;
 
-+ (void)checkCppToken:(nullable id<Token>)t;
++ (void)checkCppToken:(nullable Token *)t;
 
-+ (int64_t)cppTokenId:(nullable id<Token>)t;
++ (int64_t)cppTokenId:(nullable Token *)t;
 
-+ (void)checkTokenType:(nullable id<Token>)t
++ (void)checkTokenType:(nullable Token *)t
                   type:(nonnull NSString *)type;
 
 + (nullable NSNumber *)returnNone;
@@ -63,5 +64,9 @@
 + (nonnull AssortedPrimitives *)assortedPrimitivesId:(nonnull AssortedPrimitives *)i;
 
 + (nonnull NSData *)idBinary:(nonnull NSData *)b;
+
++ (nonnull DateRecord *)getDateRecord;
+
++ (BOOL)checkDateRecord:(nonnull DateRecord *)rec;
 
 @end

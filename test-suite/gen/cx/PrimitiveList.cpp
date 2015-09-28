@@ -4,7 +4,7 @@
 #include "PrimitiveList.h"  // my header
 #include "translation.h"
 
-namespace System { namespace Cxns {
+namespace Cxns {
 
 
 ::PrimitiveList PrimitiveList::toCpp() {
@@ -18,4 +18,4 @@ PrimitiveList^ PrimitiveList::fromCpp(const ::PrimitiveList& value) {
     return ret;
 }
 
-} }  // namespace System::Cxns
+}  // namespace Cxns

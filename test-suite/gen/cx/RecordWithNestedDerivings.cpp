@@ -4,7 +4,7 @@
 #include "RecordWithNestedDerivings.h"  // my header
 #include "translation.h"
 
-namespace System { namespace Cxns {
+namespace Cxns {
 
 
 ::RecordWithNestedDerivings RecordWithNestedDerivings::toCpp() {
@@ -41,4 +41,4 @@ int32 RecordWithNestedDerivings::CompareTo(RecordWithNestedDerivings^ rhs) {
     return 0;
 }
 
-} }  // namespace System::Cxns
+}  // namespace Cxns

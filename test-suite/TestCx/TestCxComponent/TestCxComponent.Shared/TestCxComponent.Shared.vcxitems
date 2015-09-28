@@ -73,7 +73,9 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\gen\cx\AssortedPrimitives.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\gen\cx\ClientInterface.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\gen\cx\ClientReturnedRecord.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\gen\cx\Constants.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\gen\cx\Constants.cpp">
+      <ObjectFileName>$(IntDir)cpp\</ObjectFileName>
+    </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\gen\cx\CppException.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\gen\cx\DateRecord.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\gen\cx\MapDateRecord.cpp" />

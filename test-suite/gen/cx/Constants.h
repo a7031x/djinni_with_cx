@@ -5,7 +5,7 @@
 
 #include "../cpp/constants.hpp"
 
-namespace System { namespace Cxns {
+namespace Cxns {
 
 public ref class Constants sealed : public Platform::Object {
 public:
@@ -44,4 +44,4 @@ internal:
     static Constants^ fromCpp(const ::Constants& value);
 };
 
-} }  // namespace System::Cxns
+}  // namespace Cxns

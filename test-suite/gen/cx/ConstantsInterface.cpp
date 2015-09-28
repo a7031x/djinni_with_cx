@@ -4,7 +4,7 @@
 #include "ConstantsInterface.h"  // my header
 #include "translation.h"
 
-namespace System { namespace Cxns {
+namespace Cxns {
 
 void ConstantsInterface::Dummy ()
 {
@@ -16,4 +16,4 @@ void ConstantsInterface::Dummy ()
     }
 }
 
-} }  // namespace System::Cxns
+}  // namespace Cxns

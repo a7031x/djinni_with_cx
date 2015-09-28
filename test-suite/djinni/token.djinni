@@ -1,3 +1,3 @@
-token = interface +j +o +x {
+token = interface +c {
   whoami() : string;
 }

@@ -4,7 +4,7 @@
 #include "MapListRecord.h"  // my header
 #include "translation.h"
 
-namespace System { namespace Cxns {
+namespace Cxns {
 
 
 ::MapListRecord MapListRecord::toCpp() {
@@ -18,4 +18,4 @@ MapListRecord^ MapListRecord::fromCpp(const ::MapListRecord& value) {
     return ret;
 }
 
-} }  // namespace System::Cxns
+}  // namespace Cxns

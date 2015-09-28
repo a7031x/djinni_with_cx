@@ -9,7 +9,7 @@ SetRecord TestHelpers::get_set_record() {
         "StringA",
         "StringB",
         "StringC"
-	}, {} };
+	}, {1, 2, 3} };
 }
 
 bool TestHelpers::check_set_record(const SetRecord & rec) {
@@ -147,4 +147,14 @@ AssortedPrimitives TestHelpers::assorted_primitives_id(const AssortedPrimitives 
 
 std::vector<uint8_t> TestHelpers::id_binary(const std::vector<uint8_t> & v) {
     return v;
+}
+
+std::chrono::system_clock::time_point sys_time = std::chrono::system_clock::now();
+
+DateRecord TestHelpers::get_date_record() {
+	return DateRecord(sys_time);
+}
+
+bool TestHelpers::check_date_record(const DateRecord & rec) {
+	return rec == DateRecord(sys_time);
 }

@@ -5,7 +5,7 @@
 
 #include "../cpp/nested_collection.hpp"
 
-namespace System { namespace Cxns {
+namespace Cxns {
 
 public ref class NestedCollection sealed : public Platform::Object {
 public:
@@ -20,4 +20,4 @@ internal:
     static NestedCollection^ fromCpp(const ::NestedCollection& value);
 };
 
-} }  // namespace System::Cxns
+}  // namespace Cxns

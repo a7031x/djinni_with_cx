@@ -5,7 +5,7 @@
 
 #include "../cpp/client_returned_record.hpp"
 
-namespace System { namespace Cxns {
+namespace Cxns {
 
 public ref class ClientReturnedRecord sealed : public Platform::Object {
 public:
@@ -26,4 +26,4 @@ internal:
     static ClientReturnedRecord^ fromCpp(const ::ClientReturnedRecord& value);
 };
 
-} }  // namespace System::Cxns
+}  // namespace Cxns

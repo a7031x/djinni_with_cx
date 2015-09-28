@@ -54,6 +54,10 @@ public abstract class TestHelpers {
 
     public static native byte[] idBinary(byte[] b);
 
+    public static native DateRecord getDateRecord();
+
+    public static native boolean checkDateRecord(DateRecord rec);
+
     private static final class CppProxy extends TestHelpers
     {
         private final long nativeRef;

@@ -5,7 +5,7 @@
 
 #include "../cpp/map_date_record.hpp"
 
-namespace System { namespace Cxns {
+namespace Cxns {
 
 public ref class MapDateRecord sealed : public Platform::Object {
 public:
@@ -20,4 +20,4 @@ internal:
     static MapDateRecord^ fromCpp(const ::MapDateRecord& value);
 };
 
-} }  // namespace System::Cxns
+}  // namespace Cxns

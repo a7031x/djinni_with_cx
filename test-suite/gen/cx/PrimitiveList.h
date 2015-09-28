@@ -5,7 +5,7 @@
 
 #include "../cpp/primitive_list.hpp"
 
-namespace System { namespace Cxns {
+namespace Cxns {
 
 public ref class PrimitiveList sealed : public Platform::Object {
 public:
@@ -20,4 +20,4 @@ internal:
     static PrimitiveList^ fromCpp(const ::PrimitiveList& value);
 };
 
-} }  // namespace System::Cxns
+}  // namespace Cxns

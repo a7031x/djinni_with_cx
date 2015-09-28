@@ -25,22 +25,6 @@ private:
     friend ::djinni::JniClass<Token>;
     friend ::djinni::JniInterface<::Token, Token>;
 
-    class JavaProxy final : ::djinni::JavaProxyCacheEntry, public ::Token
-    {
-    public:
-        JavaProxy(JniType j);
-        ~JavaProxy();
-
-        std::string whoami() override;
-
-    private:
-        using ::djinni::JavaProxyCacheEntry::getGlobalRef;
-        friend ::djinni::JniInterface<::Token, ::jnins::Token>;
-        friend ::djinni::JavaProxyCache<JavaProxy>;
-    };
-
-    const ::djinni::GlobalRef<jclass> clazz { ::djinni::jniFindClass("Token") };
-    const jmethodID method_whoami { ::djinni::jniGetMethodID(clazz.get(), "whoami", "()Ljava/lang/String;") };
 };
 
 }  // namespace jnins

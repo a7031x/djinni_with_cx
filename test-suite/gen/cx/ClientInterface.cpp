@@ -4,7 +4,7 @@
 #include "ClientInterface.h"  // my header
 #include "ClientReturnedRecord.h"
 
-namespace System { namespace Cxns {
+namespace Cxns {
 
 
-} }  // namespace System::Cxns
+}  // namespace Cxns

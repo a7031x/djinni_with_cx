@@ -4,7 +4,7 @@
 #include "SetRecord.h"  // my header
 #include "translation.h"
 
-namespace System { namespace Cxns {
+namespace Cxns {
 
 
 ::SetRecord SetRecord::toCpp() {
@@ -20,4 +20,4 @@ SetRecord^ SetRecord::fromCpp(const ::SetRecord& value) {
     return ret;
 }
 
-} }  // namespace System::Cxns
+}  // namespace Cxns

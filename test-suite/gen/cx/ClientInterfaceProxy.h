@@ -14,14 +14,14 @@ namespace System {
 template<> class CxInterfaceProxy<::ClientInterface> : public ::ClientInterface
 {
 public:
-    CxInterfaceProxy(::System::Cxns::ClientInterface^ nativeRef)
+    CxInterfaceProxy(::Cxns::ClientInterface^ nativeRef)
     {
         native_call_nativeRef = [nativeRef]{ return nativeRef; };
     }
     ::ClientReturnedRecord get_record(int64_t record_id, const std::string & utf8string, const std::experimental::optional<std::string> & misc) override
     {
         auto nativeRet = nativeRef()->GetRecord(transform<int64_t, int64_t>()(record_id), transform<std::string, Platform::String^>()(utf8string), transform<std::experimental::optional<std::string>, Platform::String^>()(misc));
-        return transform<::ClientReturnedRecord, ::System::Cxns::ClientReturnedRecord^>()(nativeRet);
+        return transform<::ClientReturnedRecord, ::Cxns::ClientReturnedRecord^>()(nativeRet);
     }
     double identifier_check(const std::vector<uint8_t> & data, int32_t r, int64_t jret) override
     {
@@ -33,9 +33,9 @@ public:
         auto nativeRet = nativeRef()->ReturnStr();
         return transform<std::string, Platform::String^>()(nativeRet);
     }
-    ::System::Cxns::ClientInterface^ nativeRef() { return native_call_nativeRef(); }
+    ::Cxns::ClientInterface^ nativeRef() { return native_call_nativeRef(); }
 private:
-    std::function<::System::Cxns::ClientInterface^()> native_call_nativeRef;
+    std::function<::Cxns::ClientInterface^()> native_call_nativeRef;
 };
 
 }  // namespace System

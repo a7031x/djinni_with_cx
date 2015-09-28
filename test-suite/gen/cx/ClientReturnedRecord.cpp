@@ -4,7 +4,7 @@
 #include "ClientReturnedRecord.h"  // my header
 #include "translation.h"
 
-namespace System { namespace Cxns {
+namespace Cxns {
 
 
 ::ClientReturnedRecord ClientReturnedRecord::toCpp() {
@@ -22,4 +22,4 @@ ClientReturnedRecord^ ClientReturnedRecord::fromCpp(const ::ClientReturnedRecord
     return ret;
 }
 
-} }  // namespace System::Cxns
+}  // namespace Cxns

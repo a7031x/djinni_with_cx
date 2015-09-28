@@ -4,7 +4,7 @@
 #import <Foundation/Foundation.h>
 
 
-@protocol Token
+@interface Token : NSObject
 
 - (nonnull NSString *)whoami;
 

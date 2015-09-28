@@ -6,7 +6,7 @@
 #include "../cpp/cpp_exception.hpp"
 #include <memory>
 
-namespace System { namespace Cxns {
+namespace Cxns {
 
 public ref class CppException sealed : public Platform::Object
 {
@@ -20,4 +20,4 @@ private:
     std::shared_ptr<::CppException> _cppRef;
 };
 
-} }  // namespace System::Cxns
+}  // namespace Cxns

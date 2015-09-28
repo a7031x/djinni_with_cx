@@ -5,7 +5,7 @@
 
 #include "../cpp/record_with_derivings.hpp"
 
-namespace System { namespace Cxns {
+namespace Cxns {
 
 public ref class RecordWithDerivings sealed : public Platform::Object {
 public:
@@ -27,4 +27,4 @@ internal:
     int32 CompareTo(RecordWithDerivings^ rhs);
 };
 
-} }  // namespace System::Cxns
+}  // namespace Cxns

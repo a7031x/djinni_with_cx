@@ -5,7 +5,7 @@
 
 #include "ClientReturnedRecord.h"
 
-namespace System { namespace Cxns {
+namespace Cxns {
 
 public interface class ClientInterface
 {
@@ -15,4 +15,4 @@ public:
     virtual Platform::String^ ReturnStr ();
 };
 
-} }  // namespace System::Cxns
+}  // namespace Cxns

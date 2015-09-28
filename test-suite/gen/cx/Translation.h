@@ -6,8 +6,9 @@
 #include "optional\optional.hpp"
 template<typename T> using djinni_optional = std::experimental::optional<T>;
 #include "../../../../support-lib/cx/translate.h"
+using namespace System;
 
-namespace System { namespace Cxns {
+namespace Cxns {
 
 
-} }  // namespace System::Cxns
+}  // namespace Cxns

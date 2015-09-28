@@ -5,7 +5,7 @@
 
 #include "../cpp/empty_record.hpp"
 
-namespace System { namespace Cxns {
+namespace Cxns {
 
 public ref class EmptyRecord sealed : public Platform::Object {
 public:
@@ -15,4 +15,4 @@ internal:
     static EmptyRecord^ fromCpp(const ::EmptyRecord& value);
 };
 
-} }  // namespace System::Cxns
+}  // namespace Cxns

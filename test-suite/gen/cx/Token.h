@@ -3,12 +3,20 @@
 
 #pragma once
 
-namespace System { namespace Cxns {
+#include "../cpp/token.hpp"
+#include <memory>
 
-public interface class Token
+namespace Cxns {
+
+public ref class Token sealed : public Platform::Object
 {
 public:
-    virtual Platform::String^ Whoami ();
+    Platform::String^ Whoami ();
+internal:
+    Token(std::shared_ptr<::Token> cppRef) : _cppRef(cppRef) {}
+    std::shared_ptr<::Token> cppRef() {return _cppRef;}
+private:
+    std::shared_ptr<::Token> _cppRef;
 };
 
-} }  // namespace System::Cxns
+}  // namespace Cxns

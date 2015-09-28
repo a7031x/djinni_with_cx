@@ -5,7 +5,7 @@
 
 #include "../cpp/date_record.hpp"
 
-namespace System { namespace Cxns {
+namespace Cxns {
 
 public ref class DateRecord sealed : public Platform::Object {
 public:
@@ -24,4 +24,4 @@ internal:
     int32 CompareTo(DateRecord^ rhs);
 };
 
-} }  // namespace System::Cxns
+}  // namespace Cxns

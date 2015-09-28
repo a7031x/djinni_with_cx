@@ -4,7 +4,7 @@
 #include "NestedCollection.h"  // my header
 #include "translation.h"
 
-namespace System { namespace Cxns {
+namespace Cxns {
 
 
 ::NestedCollection NestedCollection::toCpp() {
@@ -18,4 +18,4 @@ NestedCollection^ NestedCollection::fromCpp(const ::NestedCollection& value) {
     return ret;
 }
 
-} }  // namespace System::Cxns
+}  // namespace Cxns

@@ -4,7 +4,7 @@
 #include "EmptyRecord.h"  // my header
 #include "translation.h"
 
-namespace System { namespace Cxns {
+namespace Cxns {
 
 
 ::EmptyRecord EmptyRecord::toCpp() {
@@ -17,4 +17,4 @@ EmptyRecord^ EmptyRecord::fromCpp(const ::EmptyRecord& value) {
     return ret;
 }
 
-} }  // namespace System::Cxns
+}  // namespace Cxns

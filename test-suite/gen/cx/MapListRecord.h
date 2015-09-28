@@ -5,7 +5,7 @@
 
 #include "../cpp/map_list_record.hpp"
 
-namespace System { namespace Cxns {
+namespace Cxns {
 
 public ref class MapListRecord sealed : public Platform::Object {
 public:
@@ -20,4 +20,4 @@ internal:
     static MapListRecord^ fromCpp(const ::MapListRecord& value);
 };
 
-} }  // namespace System::Cxns
+}  // namespace Cxns

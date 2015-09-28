@@ -3,7 +3,7 @@
 
 #pragma once
 
-namespace System { namespace Cxns {
+namespace Cxns {
 
 public enum class Color {
     Red,
@@ -20,4 +20,4 @@ public enum class Color {
     Violet
 };
 
-} }  // namespace System::Cxns
+}  // namespace Cxns

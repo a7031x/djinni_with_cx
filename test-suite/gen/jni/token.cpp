@@ -6,21 +6,27 @@
 
 namespace jnins {
 
-Token::Token() : ::djinni::JniInterface<::Token, Token>() {}
+Token::Token() : ::djinni::JniInterface<::Token, Token>("Token$CppProxy") {}
 
 Token::~Token() = default;
 
-Token::JavaProxy::JavaProxy(JniType j) : JavaProxyCacheEntry(j) { }
 
-Token::JavaProxy::~JavaProxy() = default;
+CJNIEXPORT void JNICALL Java_Token_00024CppProxy_nativeDestroy(JNIEnv* jniEnv, jobject /*this*/, jlong nativeRef)
+{
+    try {
+        DJINNI_FUNCTION_PROLOGUE1(jniEnv, nativeRef);
+        delete reinterpret_cast<djinni::CppProxyHandle<::Token>*>(nativeRef);
+    } JNI_TRANSLATE_EXCEPTIONS_RETURN(jniEnv, )
+}
 
-std::string Token::JavaProxy::whoami() {
-    auto jniEnv = ::djinni::jniGetThreadEnv();
-    ::djinni::JniLocalScope jscope(jniEnv, 10);
-    const auto& data = ::djinni::JniClass<::jnins::Token>::get();
-    auto jret = (jstring)jniEnv->CallObjectMethod(getGlobalRef(), data.method_whoami);
-    ::djinni::jniExceptionCheck(jniEnv);
-    return ::djinni::String::toCpp(jniEnv, jret);
+CJNIEXPORT jstring JNICALL Java_Token_00024CppProxy_native_1whoami(JNIEnv* jniEnv, jobject /*this*/, jlong nativeRef)
+{
+    try {
+        DJINNI_FUNCTION_PROLOGUE1(jniEnv, nativeRef);
+        const auto& ref = ::djinni::CppProxyHandle<::Token>::get(nativeRef);
+        auto r = ref->whoami();
+        return ::djinni::release(::djinni::String::fromCpp(jniEnv, r));
+    } JNI_TRANSLATE_EXCEPTIONS_RETURN(jniEnv, 0 /* value doesn't matter */)
 }
 
 }  // namespace jnins
