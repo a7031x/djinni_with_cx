@@ -28,9 +28,9 @@ class CppGenerator(spec: Spec) extends Generator(spec) {
 
   val marshal = new CppMarshal(spec)
 
-  val writeCppFile = writeCppFileGeneric(spec.cppOutFolder.get, spec.cppNamespace, spec.cppFileIdentStyle, spec.cppIncludePrefix) _
+  val writeCppFile = writeCppFileGeneric(spec.cppOutFolder.get, spec.cppNamespace, spec.cppFileIdentStyle, spec.cppIncludePrefix, spec.cppExt, spec.cppHeaderExt) _
   def writeHppFile(name: String, origin: String, includes: Iterable[String], fwds: Iterable[String], f: IndentWriter => Unit, f2: IndentWriter => Unit = (w => {})) =
-    writeHppFileGeneric(spec.cppHeaderOutFolder.get, spec.cppNamespace, spec.cppFileIdentStyle)(name, origin, includes, fwds, f, f2)
+    writeHppFileGeneric(spec.cppHeaderOutFolder.get, spec.cppNamespace, spec.cppFileIdentStyle, spec.cppHeaderExt)(name, origin, includes, fwds, f, f2)
 
   class CppRefs(name: String) {
     var hpp = mutable.TreeSet[String]()
@@ -61,7 +61,7 @@ class CppGenerator(spec: Spec) extends Generator(spec) {
       w.w(s"enum class $self : int").bracedSemi {
         for (o <- e.options) {
           writeDoc(w, o.doc)
-          w.wl(idCpp.enum(o.ident.name) + ",")
+          w.wl(idCpp.enum(o.ident.name) + (if(o == e.options.last) "" else ","))
         }
       }
     },
@@ -182,7 +182,7 @@ class CppGenerator(spec: Spec) extends Generator(spec) {
           r.fields.tail.map(f => ", " + init(f)).foreach(w.wl)
           w.wl("{}")
         }
-
+        w.wl(actualSelf + "() {}")
         if (r.ext.cpp) {
           w.wl
           w.wl(s"virtual ~$actualSelf() = default;")

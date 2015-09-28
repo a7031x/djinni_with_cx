@@ -1,0 +1,231 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="cx">
+      <UniqueIdentifier>{ada42f15-25be-40af-a985-b179cf7b80b1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="cpp">
+      <UniqueIdentifier>{a396c754-fd75-42ca-8de5-d6eb5b490f27}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="imp">
+      <UniqueIdentifier>{5871b2b8-1783-408b-be0e-9bb7dcac4996}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\gen\cx\RecordWithDerivings.h">
+      <Filter>cx</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\gen\cx\RecordWithNestedDerivings.h">
+      <Filter>cx</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\gen\cx\SetRecord.h">
+      <Filter>cx</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\gen\cx\Translation.h">
+      <Filter>cx</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\gen\cx\AssortedPrimitives.h">
+      <Filter>cx</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\gen\cx\Color.h">
+      <Filter>cx</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\gen\cx\NestedCollection.h">
+      <Filter>cx</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\gen\cx\MapListRecord.h">
+      <Filter>cx</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\gen\cx\MapRecord.h">
+      <Filter>cx</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\gen\cx\PrimitiveList.h">
+      <Filter>cx</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\gen\cx\CppException.h">
+      <Filter>cx</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\gen\cx\ClientReturnedRecord.h">
+      <Filter>cx</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\gen\cx\ClientInterfaceProxy.h">
+      <Filter>cx</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\gen\cx\ClientInterface.h">
+      <Filter>cx</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\gen\cx\Token.h">
+      <Filter>cx</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\gen\cx\TokenProxy.h">
+      <Filter>cx</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\gen\cx\Constants.h">
+      <Filter>cx</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\gen\cx\DateRecord.h">
+      <Filter>cx</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\gen\cx\MapDateRecord.h">
+      <Filter>cx</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\gen\cx\TestDuration.h">
+      <Filter>cx</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\gen\cx\TestHelpers.h">
+      <Filter>cx</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\gen\cpp\color.hpp">
+      <Filter>cpp</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\gen\cpp\constants.hpp">
+      <Filter>cpp</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\gen\cpp\constants_interface.hpp">
+      <Filter>cpp</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\gen\cpp\cpp_exception.hpp">
+      <Filter>cpp</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\gen\cpp\date_record.hpp">
+      <Filter>cpp</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\gen\cpp\empty_record.hpp">
+      <Filter>cpp</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\gen\cpp\map_date_record.hpp">
+      <Filter>cpp</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\gen\cpp\map_list_record.hpp">
+      <Filter>cpp</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\gen\cpp\map_record.hpp">
+      <Filter>cpp</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\gen\cpp\nested_collection.hpp">
+      <Filter>cpp</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\gen\cpp\primitive_list.hpp">
+      <Filter>cpp</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\gen\cpp\record_with_derivings.hpp">
+      <Filter>cpp</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\gen\cpp\record_with_duration_and_derivings.hpp">
+      <Filter>cpp</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\gen\cpp\record_with_nested_derivings.hpp">
+      <Filter>cpp</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\gen\cpp\set_record.hpp">
+      <Filter>cpp</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\gen\cpp\test_duration.hpp">
+      <Filter>cpp</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\gen\cpp\test_helpers.hpp">
+      <Filter>cpp</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\gen\cpp\token.hpp">
+      <Filter>cpp</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\gen\cpp\assorted_primitives.hpp">
+      <Filter>cpp</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\gen\cpp\client_interface.hpp">
+      <Filter>cpp</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\gen\cpp\client_returned_record.hpp">
+      <Filter>cpp</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\handwritten-src\cpp\cpp_exception_impl.hpp">
+      <Filter>imp</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\gen\cx\RecordWithDerivings.cpp">
+      <Filter>cx</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\gen\cx\RecordWithNestedDerivings.cpp">
+      <Filter>cx</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\gen\cx\SetRecord.cpp">
+      <Filter>cx</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\gen\cx\Translation.cpp">
+      <Filter>cx</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\gen\cx\AssortedPrimitives.cpp">
+      <Filter>cx</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\gen\cx\NestedCollection.cpp">
+      <Filter>cx</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\gen\cx\MapListRecord.cpp">
+      <Filter>cx</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\gen\cx\MapRecord.cpp">
+      <Filter>cx</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\gen\cx\PrimitiveList.cpp">
+      <Filter>cx</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\gen\cx\CppException.cpp">
+      <Filter>cx</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\gen\cx\ClientReturnedRecord.cpp">
+      <Filter>cx</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\gen\cx\ClientInterface.cpp">
+      <Filter>cx</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\gen\cx\Token.cpp">
+      <Filter>cx</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\gen\cx\Constants.cpp">
+      <Filter>cx</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\gen\cx\DateRecord.cpp">
+      <Filter>cx</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\gen\cx\MapDateRecord.cpp">
+      <Filter>cx</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\gen\cx\TestDuration.cpp">
+      <Filter>cx</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\gen\cx\TestHelpers.cpp">
+      <Filter>cx</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\gen\cpp\constants.cpp">
+      <Filter>cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\gen\cpp\constants_interface.cpp">
+      <Filter>cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\gen\cpp\date_record.cpp">
+      <Filter>cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\gen\cpp\record_with_derivings.cpp">
+      <Filter>cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\gen\cpp\record_with_duration_and_derivings.cpp">
+      <Filter>cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\gen\cpp\record_with_nested_derivings.cpp">
+      <Filter>cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\gen\cpp\assorted_primitives.cpp">
+      <Filter>cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\handwritten-src\cpp\test_helpers.cpp">
+      <Filter>imp</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\handwritten-src\cpp\TranslateDuration.cpp">
+      <Filter>imp</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\handwritten-src\cpp\cpp_exception_impl.cpp">
+      <Filter>imp</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>

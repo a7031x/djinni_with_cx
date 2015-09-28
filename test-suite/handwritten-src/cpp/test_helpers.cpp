@@ -9,7 +9,7 @@ SetRecord TestHelpers::get_set_record() {
         "StringA",
         "StringB",
         "StringC"
-	}, {} };
+	}, {1, 2, 3} };
 }
 
 bool TestHelpers::check_set_record(const SetRecord & rec) {
@@ -26,15 +26,21 @@ bool TestHelpers::check_primitive_list(const PrimitiveList & pl) {
     return pl.list == cPrimitiveList.list;
 }
 
-static const NestedCollection cNestedCollection { { {u8"String1", u8"String2"},
-                                                    {u8"StringA", u8"StringB"} } };
+inline NestedCollection cNestedCollection() {
+	NestedCollection c;
+	std::unordered_set<std::string> s1 = { "String1", "String2" };
+	c.set_list.push_back(s1);
+	std::unordered_set<std::string> s2 = { "StringA", "StringB" };
+	c.set_list.push_back(s2);
+	return c;
+}
 
 NestedCollection TestHelpers::get_nested_collection() {
-    return cNestedCollection;
+    return cNestedCollection();
 }
 
 bool TestHelpers::check_nested_collection(const NestedCollection & nc) {
-    return nc.set_list == cNestedCollection.set_list;
+    return nc.set_list == cNestedCollection().set_list;
 }
 
 static const std::unordered_map<std::string, int64_t> cMap = {
@@ -141,4 +147,14 @@ AssortedPrimitives TestHelpers::assorted_primitives_id(const AssortedPrimitives 
 
 std::vector<uint8_t> TestHelpers::id_binary(const std::vector<uint8_t> & v) {
     return v;
+}
+
+std::chrono::system_clock::time_point sys_time = std::chrono::system_clock::now();
+
+DateRecord TestHelpers::get_date_record() {
+	return DateRecord(sys_time);
+}
+
+bool TestHelpers::check_date_record(const DateRecord & rec) {
+	return rec == DateRecord(sys_time);
 }

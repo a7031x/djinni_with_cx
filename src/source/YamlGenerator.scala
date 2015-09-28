@@ -16,6 +16,7 @@ class YamlGenerator(spec: Spec) extends Generator(spec) {
   val objcppMarshal = new ObjcppMarshal(spec)
   val javaMarshal = new JavaMarshal(spec)
   val jniMarshal = new JNIMarshal(spec)
+  val cxMarshal = new CxMarshal(spec)
 
   case class QuotedString(str: String) // For anything that migt require escaping
   
@@ -144,6 +145,13 @@ class YamlGenerator(spec: Spec) extends Generator(spec) {
     "typeSignature" -> QuotedString(jniMarshal.fqTypename(td.ident, td.body))
   )
 
+  private def cx(td: TypeDecl) = Map[String, Any](
+    "typename" -> QuotedString(cxMarshal.fqTypename(td.ident, td.body)),
+    "header" -> QuotedString(cxMarshal.include(td.ident)),
+    "boxed" -> QuotedString(cxMarshal.boxedTypename(td)),
+    "reference" -> cxMarshal.isReference(td)
+  )
+
   // TODO: there has to be a way to do all this without the MExpr/Meta conversions?
   private def mexpr(td: TypeDecl) = MExpr(meta(td), List())
 
@@ -209,8 +217,17 @@ object YamlGenerator {
       nested(td, "jni")("translator").toString,
       nested(td, "jni")("header").toString,
       nested(td, "jni")("typename").toString,
-      nested(td, "jni")("typeSignature").toString)
-  )
+      nested(td, "jni")("typeSignature").toString),
+    MExtern.Cx(
+      nested(td, "cx")("typename").toString,
+      if(nested(td, "cx").contains("header")) Some(nested(td, "cx")("header").toString) else None,
+      nested(td, "cx")("boxed").toString,
+      nested(td, "cx")("reference").asInstanceOf[Boolean]),
+    MExtern.CxCpp(
+      nested(td, "cxcpp")("typename").toString,
+      nested(td, "cxcpp")("header").toString,
+      nested(td, "cxcpp")("byValue").asInstanceOf[Boolean])
+  );
 
   private def nested(td: ExternTypeDecl, key: String) = {
   	td.properties.get(key).collect { case m: JMap[_, _] => m.collect { case (k: String, v: Any) => (k, v) } } getOrElse(Map[String, Any]())

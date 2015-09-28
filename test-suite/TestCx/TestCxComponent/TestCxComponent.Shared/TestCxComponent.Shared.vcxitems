@@ -1,0 +1,97 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup Label="Globals">
+    <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+    <HasSharedItems>true</HasSharedItems>
+    <ItemsProjectGuid>{5d07379a-ae00-424d-b466-45896361de9a}</ItemsProjectGuid>
+    <ItemsRootNamespace>
+    </ItemsRootNamespace>
+    <ItemsProjectName>TestCxComponent.Shared</ItemsProjectName>
+    <CodeSharingProject>248F659F-DAC5-46E8-AC09-60EC9FC95053</CodeSharingProject>
+  </PropertyGroup>
+  <ItemDefinitionGroup>
+    <ClCompile>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories);$(MSBuildThisFileDirectory)</AdditionalIncludeDirectories>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ProjectCapability Include="SourceItemsFromImports" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\gen\cpp\assorted_primitives.hpp" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\gen\cpp\client_interface.hpp" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\gen\cpp\client_returned_record.hpp" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\gen\cpp\color.hpp" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\gen\cpp\constants.hpp" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\gen\cpp\constants_interface.hpp" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\gen\cpp\cpp_exception.hpp" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\gen\cpp\date_record.hpp" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\gen\cpp\empty_record.hpp" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\gen\cpp\map_date_record.hpp" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\gen\cpp\map_list_record.hpp" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\gen\cpp\map_record.hpp" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\gen\cpp\nested_collection.hpp" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\gen\cpp\primitive_list.hpp" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\gen\cpp\record_with_derivings.hpp" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\gen\cpp\record_with_duration_and_derivings.hpp" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\gen\cpp\record_with_nested_derivings.hpp" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\gen\cpp\set_record.hpp" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\gen\cpp\test_duration.hpp" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\gen\cpp\test_helpers.hpp" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\gen\cpp\token.hpp" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\gen\cx\AssortedPrimitives.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\gen\cx\ClientInterface.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\gen\cx\ClientInterfaceProxy.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\gen\cx\ClientReturnedRecord.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\gen\cx\Color.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\gen\cx\Constants.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\gen\cx\CppException.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\gen\cx\DateRecord.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\gen\cx\MapDateRecord.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\gen\cx\MapListRecord.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\gen\cx\MapRecord.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\gen\cx\NestedCollection.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\gen\cx\PrimitiveList.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\gen\cx\RecordWithDerivings.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\gen\cx\RecordWithNestedDerivings.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\gen\cx\SetRecord.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\gen\cx\TestDuration.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\gen\cx\TestHelpers.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\gen\cx\Token.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\gen\cx\TokenProxy.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\gen\cx\Translation.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\handwritten-src\cpp\cpp_exception_impl.hpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\gen\cpp\assorted_primitives.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\gen\cpp\constants.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\gen\cpp\constants_interface.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\gen\cpp\date_record.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\gen\cpp\record_with_derivings.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\gen\cpp\record_with_duration_and_derivings.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\gen\cpp\record_with_nested_derivings.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\gen\cx\AssortedPrimitives.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\gen\cx\ClientInterface.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\gen\cx\ClientReturnedRecord.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\gen\cx\Constants.cpp">
+      <ObjectFileName>$(IntDir)cpp\</ObjectFileName>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\gen\cx\CppException.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\gen\cx\DateRecord.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\gen\cx\MapDateRecord.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\gen\cx\MapListRecord.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\gen\cx\MapRecord.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\gen\cx\NestedCollection.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\gen\cx\PrimitiveList.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\gen\cx\RecordWithDerivings.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\gen\cx\RecordWithNestedDerivings.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\gen\cx\SetRecord.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\gen\cx\TestDuration.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\gen\cx\TestHelpers.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\gen\cx\Token.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\gen\cx\Translation.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\handwritten-src\cpp\cpp_exception_impl.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\handwritten-src\cpp\test_helpers.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\handwritten-src\cpp\TranslateDuration.cpp" />
+  </ItemGroup>
+</Project>
