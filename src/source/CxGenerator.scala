@@ -473,10 +473,7 @@ class CxGenerator(spec: Spec) extends Generator(spec) {
       )
       writeHxFile("translation", "", hx, List[String](), w=> {})
 
-      val cx = List[String](
-        "#include " + q(spec.cxBaseLibIncludePrefix + "translate.cpp")
-      )
-      writeCxFile("translation", "", cx, w => {})
+      writeCxFile("translation", "", List[String](), w => {})
       translationGenerated = true
     }
 
