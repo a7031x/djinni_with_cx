@@ -15,4 +15,15 @@ done
 base_dir=$(cd "`dirname "$loc"`" && pwd)
 
 "$base_dir/build"
-exec "$base_dir/target/start" "$@"
+
+# See https://github.com/dropbox/djinni/pull/200/commits/16cfab82ab8ae47e2d762f8148c8929300a85876
+# Determine os version and choose correspondent .sh or .bat file accordingly.
+os_version="`uname -a`"
+
+if [[ $os_version == *"MINGW"* ]]; then
+  echo "It's Windows MINGW!"
+  cmd //C "$base_dir/target/start.bat" "$@"
+else
+  echo "It's Linux or Mac OS!"
+  exec "$base_dir/target/start" "$@"
+fi
