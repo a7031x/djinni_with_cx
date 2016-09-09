@@ -94,11 +94,11 @@ namespace System {
 			return ref new Platform::String(utf8_to_unicode(str).c_str());
 		}
 
-		void translate_primitive::operator()(Platform::String^ cx, std::string& cpp)
+		void operator()(Platform::String^ cx, std::string& cpp)
 		{
 			cpp = convertToSTDString(cx);
 		}
-		void translate_primitive::operator()(const std::string& cpp, Platform::String^& cx)
+		void operator()(const std::string& cpp, Platform::String^& cx)
 		{
 			cx = convertToPlatformString(cpp);
 		}
