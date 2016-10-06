@@ -389,7 +389,7 @@ class CxGenerator(spec: Spec) extends Generator(spec) {
           }
           for(m <- i.methods) {
             val ret = m.ret.fold("void")(ty=>cppMarshal.toCppType(ty.resolved, Some(spec.cppNamespace)))
-            val params = m.params.map(p => cppMarshal.paramType(p.ty) + " " + idCpp.local(p.ident))
+            val params = m.params.map(p => cppMarshal.fqParamType(p.ty) + " " + idCpp.local(p.ident))
             val methodName = idCpp.method(m.ident)
             val call = "nativeRef()->" + idCx.method(m.ident)  + m.params.map(p=>translate(p.ty.resolved, idCpp.local(p.ident), Some(spec.cxNamespace))).mkString("(", ", ", ")")
 

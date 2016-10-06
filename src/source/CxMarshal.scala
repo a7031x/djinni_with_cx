@@ -310,12 +310,7 @@ def boxedTypename(td: TypeDecl) = td.body match {
       d.defType match {
         case DEnum => (withNs(namespace, idCx.enumType(d.name)), false)
         case DRecord => (withNs(namespace, idCx.ty(d.name)), true)
-        case DInterface =>
-          val ext = d.body.asInstanceOf[Interface].ext
-          if (ext.cpp && !ext.cx)
-            (idCx.ty(d.name), true)
-          else
-            (withNs(namespace, idCx.ty(d.name)), true)
+        case DInterface => (withNs(namespace, idCx.ty(d.name)), true)
       }
     case e: MExtern => e.body match {
       case i: Interface => (e.cx.typename, true)
