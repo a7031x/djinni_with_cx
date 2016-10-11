@@ -154,7 +154,8 @@ def references(m: Meta, exclude: String): Seq[SymbolReference] = m match {
     case "i8" | "i16" | "i32" | "i64" => List()
     case _ => List()
  }
-  case MString | MDate | MBinary | MOptional | MList | MSet | MMap  => List()
+  case MString | MDate | MOptional | MList | MSet | MMap  => List()
+  case MBinary => List(ImportRef("<stdint.h>"))
   case d: MDef => d.defType match {
     case DEnum | DRecord =>
       if (d.name != exclude) {
