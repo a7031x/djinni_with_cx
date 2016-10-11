@@ -345,7 +345,7 @@ class CxGenerator(spec: Spec) extends Generator(spec) {
             w.w("try").braced {
               if(false == m.ret.isEmpty) {
                 w.wl(s"auto cppRet = $call;")
-                w.wl("return " + translate(m.ret.get.resolved, "cppRet") + ";")
+                w.wl("return " + translate(m.ret.get.resolved, "cppRet", Some(spec.cxNamespace)) + ";")
               }
               else
                 w.wl(call + ";")
