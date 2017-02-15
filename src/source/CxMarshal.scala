@@ -151,7 +151,7 @@ private def helperTemplates(tm: MExpr): String = {
 
 def references(m: Meta, exclude: String): Seq[SymbolReference] = m match {
   case p: MPrimitive => p.idlName match {
-    case "i8" | "i16" | "i32" | "i64" => List()
+    case "i8" | "i16" | "i32" | "i64" => List(ImportRef("<stdint.h>"))
     case _ => List()
  }
   case MString | MDate | MOptional | MList | MSet | MMap  => List()
@@ -355,12 +355,11 @@ def boxedTypename(td: TypeDecl) = td.body match {
     name + (if(needRef) "^" else "")
   }
 
-private def toCxParamType(tm: MExpr, namespace: Option[String] = None): String = {
-  val r = toCxRefType(tm, namespace)
-  if(r != "Platform::Array<uint8_t>^")
-    r
-  else
-    "const " + r
-}
-
+  private def toCxParamType(tm: MExpr, namespace: Option[String] = None): String = {
+    val r = toCxRefType(tm, namespace)
+    if(r == "Platform::Array<uint8_t>^")
+      "const " + r
+    else
+      r
+  }
 }

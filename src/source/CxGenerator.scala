@@ -191,7 +191,7 @@ class CxGenerator(spec: Spec) extends Generator(spec) {
         // Constructor.
         if(r.fields.nonEmpty) {
           w.wl
-          writeAlignedCall(w, self + "(", r.fields, ")", f => cxMarshal.fieldType(f.ty) + " " + idCx.local(f.ident)).braced {
+          writeAlignedCall(w, self + "(", r.fields, ")", f => cxMarshal.paramType(f.ty) + " " + idCx.local(f.ident)).braced {
             r.fields.map(f => w.wl("this->" + idCx.field(f.ident) + " = " + idCx.local(f.ident) + ";"))
           }
         }
