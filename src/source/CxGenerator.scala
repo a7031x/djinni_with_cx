@@ -191,7 +191,7 @@ class CxGenerator(spec: Spec) extends Generator(spec) {
         // Constructor.
         if(r.fields.nonEmpty) {
           w.wl
-          writeAlignedCall(w, self + "(", r.fields, ")", f => cxMarshal.fieldType(f.ty) + " " + idCx.local(f.ident)).braced {
+          writeAlignedCall(w, self + "(", r.fields, ")", f => cxMarshal.paramType(f.ty) + " " + idCx.local(f.ident)).braced {
             r.fields.map(f => w.wl("this->" + idCx.field(f.ident) + " = " + idCx.local(f.ident) + ";"))
           }
         }
@@ -345,7 +345,7 @@ class CxGenerator(spec: Spec) extends Generator(spec) {
             w.w("try").braced {
               if(false == m.ret.isEmpty) {
                 w.wl(s"auto cppRet = $call;")
-                w.wl("return " + translate(m.ret.get.resolved, "cppRet") + ";")
+                w.wl("return " + translate(m.ret.get.resolved, "cppRet", Some(spec.cxNamespace)) + ";")
               }
               else
                 w.wl(call + ";")
@@ -389,7 +389,7 @@ class CxGenerator(spec: Spec) extends Generator(spec) {
           }
           for(m <- i.methods) {
             val ret = m.ret.fold("void")(ty=>cppMarshal.toCppType(ty.resolved, Some(spec.cppNamespace)))
-            val params = m.params.map(p => cppMarshal.paramType(p.ty) + " " + idCpp.local(p.ident))
+            val params = m.params.map(p => cppMarshal.fqParamType(p.ty) + " " + idCpp.local(p.ident))
             val methodName = idCpp.method(m.ident)
             val call = "nativeRef()->" + idCx.method(m.ident)  + m.params.map(p=>translate(p.ty.resolved, idCpp.local(p.ident), Some(spec.cxNamespace))).mkString("(", ", ", ")")
 
@@ -473,10 +473,7 @@ class CxGenerator(spec: Spec) extends Generator(spec) {
       )
       writeHxFile("translation", "", hx, List[String](), w=> {})
 
-      val cx = List[String](
-        "#include " + q(spec.cxBaseLibIncludePrefix + "translate.cpp")
-      )
-      writeCxFile("translation", "", cx, w => {})
+      writeCxFile("translation", "", List[String](), w => {})
       translationGenerated = true
     }
 
